@@ -1,1 +1,55 @@
+/**
+ * index.css - Hoja de estilos global
+ * Hoja de estilos global. Importa directivas de Tailwind (@tailwind base/components/utilities) 
+ * y define estilos CSS personalizados.
+ */
 
+/* Importamos las capas base de Tailwind CSS */
+/* base: resetea estilos por defecto del navegador */
+@tailwind base;
+/* components: clases de componentes reutilizables */
+@tailwind components;
+/* utilities: clases de utilidad para estilos rápidos */
+@tailwind utilities;
+
+/* Estilos personalizados en la capa base */
+@layer base {
+  /* Configuración del body - fuente y suavizado de texto */
+  body {
+    @apply font-sans antialiased;
+  }
+  
+  /* Los títulos usan la fuente display (Playfair) */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+/* Componentes personalizados reutilizables */
+@layer components {
+  /* Clase para botones primarios - estilo consistente */
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full 
+           font-medium transition-colors duration-300 ease-in-out;
+  }
+  
+  /* Clase para botones con estilo accent (dorado) */
+  .btn-accent {
+    @apply bg-accent hover:bg-accent-dark text-gray-900 px-6 py-3 rounded-full 
+           font-semibold transition-all duration-300 ease-in-out shadow-md hover:shadow-lg;
+  }
+  
+  /* Clase para tarjetas de contenido */
+  .card {
+    @apply bg-white dark:bg-dark-card rounded-xl shadow-md 
+           overflow-hidden transition-transform duration-300 hover:scale-105;
+  }
+}
+
+/* Utilidades personalizadas */
+@layer utilities {
+  /* Transición suave para cambio de tema oscuro */
+  .theme-transition {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+}

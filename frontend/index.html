@@ -1,1 +1,37 @@
+<!-- 
+  index.html - Plantilla HTML base
+  Plantilla HTML base. Define el <div id="root"> donde React monta la aplicación y carga el script principal.
+-->
+<!doctype html>
+<html lang="es">
+  <head>
+    <!-- Configuración de caracteres UTF-8 para soportar texto en español -->
+    <meta charset="UTF-8" />
+    
+    <!-- Configuración para hacer el sitio responsive en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Título que aparece en la pestaña del navegador -->
+    <title>Fundacion Cultura Local</title>
+    
+    <!-- Descripción para SEO y redes sociales -->
+    <meta name="description" content="Potenciamos la cultura local a través de la participación juvenil y el rescate de nuestras prácticas territoriales." />
+    
+    <!-- Favicon - icono que aparece en la pestaña -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    
+    <!-- Fuentes de Google Fonts - Inter para texto y Playfair Display para títulos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Contenedor principal donde React montará toda la aplicación -->
+    <div id="root"></div>
+    
+    <!-- Script principal que carga React y toda la aplicación -->
+    <!-- type="module" permite usar import/export de ES6 -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
 

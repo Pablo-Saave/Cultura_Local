@@ -1,22 +1,23 @@
 /**
- * Blog.jsx - P�gina de blog
- * P�gina de blog/noticias con art�culos culturales y novedades.
+ * BuscarPractica.jsx - Página de búsqueda de prácticas
+ * Página con buscador avanzado para encontrar prácticas culturales
  */
-function Blog() {
+
+function BuscarPractica() {
   return (
     <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-5xl md:text-6xl font-display font-bold text-primary dark:text-primary-light mb-6">
-          Blog Cultural
+          Buscar Práctica
         </h1>
         <p className="text-lg text-gray-700 dark:text-gray-300 mb-12 max-w-3xl">
-          Lee las últimas noticias, reflexiones y análisis sobre cultura local, 
-          patrimonio y participación comunitaria.
+          Explora y encuentra prácticas culturales específicas de tu interés. 
+          Navega por categorías, autores y temáticas.
         </p>
         
         <div className="text-center py-20">
           <p className="text-gray-500 dark:text-gray-400">
-            Próximamente: artículos del blog
+            Contenido en desarrollo
           </p>
         </div>
       </div>
@@ -24,4 +25,4 @@ function Blog() {
   )
 }
 
-export default Blog
+export default BuscarPractica
