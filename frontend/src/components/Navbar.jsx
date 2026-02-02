@@ -1,6 +1,6 @@
 /**
- * Navbar.jsx - Barra de navegaci�n
- * Barra de navegaci�n responsiva con enlaces, logo y men� m�vil.
+ * Navbar.jsx - Barra de navegacion
+ * Barra de navegacion responsiva con enlaces, logo y menu movil.
  */
 // Importamos React y hook para estado
 import { useState } from 'react'
@@ -25,10 +25,15 @@ function Navbar({ darkMode, toggleDarkMode }) {
       <div className="flex justify-between items-center h-20">
         
         {/* Logo con franja integrada */}
-        <Link to="/" className="relative z-10 flex items-center group bg-primary h-full px-8">
-          <div className="text-white font-sans font-semibold text-lg leading-tight tracking-wide">
-            <div>CULTURA</div>
-            <div>LOCAL</div>
+        <Link to="/" className="relative z-10 flex items-center group bg-primary h-full px-6">
+          <div className="text-white">
+            <div className="font-serif text-2xl leading-none tracking-tight">
+              <span className="font-light">Cultura</span>
+              <span className="font-normal">Local</span>
+            </div>
+            <div className="text-right text-[0.5rem] font-sans tracking-widest opacity-70 mt-0.5">
+              FUNDACIÓN
+            </div>
           </div>
         </Link>
         
