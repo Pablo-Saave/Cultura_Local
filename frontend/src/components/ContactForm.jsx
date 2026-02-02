@@ -1,4 +1,4 @@
 /**
  * ContactForm.jsx - Formulario de contacto
- * Formulario de contacto con validación, manejo de estado y envío al backend.
+ * Formulario de contacto con validacion, manejo de estado y envio al backend.
  */

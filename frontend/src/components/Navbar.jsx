@@ -1,7 +1,4 @@
-/**
- * Navbar.jsx - Barra de navegacion
- * Barra de navegacion responsiva con enlaces, logo y menu movil.
- */
+
 // Importamos React y hook para estado
 import { useState } from 'react'
 // Importamos Link para navegación sin recargar la página
@@ -22,10 +19,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
     // Nav fixed para que esté siempre visible al hacer scroll
     // backdrop-blur para efecto glassmorphism
     <nav className="fixed w-full top-0 z-50 shadow-sm theme-transition">
-      <div className="flex justify-between items-center h-20">
+      <div className="flex justify-between items-center h-16">
         
         {/* Logo con franja integrada */}
-        <Link to="/" className="relative z-10 flex items-center group bg-primary h-full px-6">
+        <Link to="/" className="relative z-10 flex items-center group bg-primary h-full px-8">
           <div className="text-white">
             <div className="font-serif text-2xl leading-none tracking-tight">
               <span className="font-light">Cultura</span>
@@ -46,10 +43,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
             {/* Array de enlaces del menú */}
             {[
               { name: 'PRESENTACIÓN', path: '/presentacion' },
-              { name: 'PUBLICACIONES', path: '/publicaciones' },
+              { name: 'PROYECTOS', path: '/publicaciones' },
               { name: 'EVENTOS', path: '/eventos' },
               { name: 'BLOG', path: '/blog' },
-              { name: 'BUSCAR PRÁCTICA', path: '/buscar' },
+              { name: 'PRÁCTICAS CULTURALES', path: '/buscar' },
             ].map((item) => (
               // Cada enlace del menú
               <Link

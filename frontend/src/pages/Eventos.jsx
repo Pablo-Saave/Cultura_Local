@@ -1,6 +1,6 @@
 /**
- * Eventos.jsx - P�gina de eventos
- * P�gina que lista eventos pr�ximos y pasados, consume endpoint /eventos del backend.
+ * Eventos.jsx - Pagina de eventos
+ * Pagina que lista eventos proximos y pasados, consume endpoint /eventos del backend.
  */
 function Eventos() {
   return (
