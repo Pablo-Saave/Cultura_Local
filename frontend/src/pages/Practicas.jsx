@@ -1,6 +1,6 @@
 /**
- * Practicas.jsx - P�gina de pr�cticas culturales
- * P�gina sobre pr�cticas culturales, metodolog�as o servicios ofrecidos.
+ * Practicas.jsx - Pagina de practicas culturales
+ * Pagina sobre practicas culturales, metodologias o servicios ofrecidos.
  */
 function Practicas() {
   return (

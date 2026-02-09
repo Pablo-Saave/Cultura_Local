@@ -9,11 +9,14 @@ import { useState, useEffect } from 'react'
 // Importamos el sistema de rutas de React Router
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
+// Importamos el contexto de autenticación
+import { AuthProvider } from './context/AuthContext'
+
 // Importamos los componentes de layout
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
-// Importamos las páginas
+// Importamos las páginas públicas
 import Home from './pages/Home'
 import BuscarPractica from './pages/BuscarPractica'
 import Presentacion from './pages/Presentacion'
@@ -23,6 +26,10 @@ import Blog from './pages/Blog'
 import Contacto from './pages/Contacto'
 import Practicas from './pages/Practicas'
 import Proyectos from './pages/Proyectos'
+
+// Importamos las páginas de administración
+import AdminLogin from './pages/AdminLogin'
+import AdminDashboard from './pages/AdminDashboard'
 
 function App() {
   // Estado para controlar el modo oscuro
@@ -54,39 +61,38 @@ function App() {
   return (
     // Router envuelve toda la aplicación para habilitar navegación
     <Router>
-      {/* Contenedor principal con fondo que cambia según el tema */}
-      <div className="min-h-screen bg-gray-50 dark:bg-dark-bg theme-transition">
-        {/* Navbar fijo en la parte superior */}
-        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        
-        {/* Contenedor principal del contenido */}
-        <main className="pt-20">
+      <AuthProvider>
+        {/* Contenedor principal con fondo que cambia según el tema */}
+        <div className="min-h-screen bg-gray-50 dark:bg-dark-bg theme-transition">
           {/* Definimos las rutas de la aplicación */}
           <Routes>
-            {/* Ruta principal - Presentación */}
-            <Route path="/" element={<Presentacion />} />
-            {/* Ruta de buscar práctica */}
-            <Route path="/buscar" element={<BuscarPractica />} />
-            {/* Ruta de presentación */}
-            <Route path="/presentacion" element={<Presentacion />} />
-            {/* Ruta de publicaciones */}
-            <Route path="/publicaciones" element={<Publicaciones />} />
-            {/* Ruta de eventos */}
-            <Route path="/eventos" element={<Eventos />} />
-            {/* Ruta del blog */}
-            <Route path="/blog" element={<Blog />} />
-            {/* Ruta de contacto */}
-            <Route path="/contacto" element={<Contacto />} />
-            {/* Ruta de prácticas */}
-            <Route path="/practicas" element={<Practicas />} />
-            {/* Ruta de proyectos */}
-            <Route path="/proyectos" element={<Proyectos />} />
+            {/* Rutas de administración (sin navbar/footer) */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            
+            {/* Rutas públicas (con navbar/footer) */}
+            <Route path="/*" element={
+              <>
+                <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+                <main className="pt-20">
+                  <Routes>
+                    <Route path="/" element={<Presentacion />} />
+                    <Route path="/buscar" element={<BuscarPractica />} />
+                    <Route path="/presentacion" element={<Presentacion />} />
+                    <Route path="/publicaciones" element={<Publicaciones />} />
+                    <Route path="/eventos" element={<Eventos />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/contacto" element={<Contacto />} />
+                    <Route path="/practicas" element={<Practicas />} />
+                    <Route path="/proyectos" element={<Proyectos />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </>
+            } />
           </Routes>
-        </main>
-        
-        {/* Footer al final de la página */}
-        <Footer />
-      </div>
+        </div>
+      </AuthProvider>
     </Router>
   )
 }

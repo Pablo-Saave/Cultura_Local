@@ -110,7 +110,7 @@ function Publicaciones() {
         <div className="max-w-7xl mx-auto">
           {/* Título principal */}
           <h1 className="text-6xl md:text-7xl font-display font-bold text-primary dark:text-primary-light mb-6">
-            Publicaciones
+            Proyectos
           </h1>
           
           {/* Descripción */}

@@ -1,6 +1,6 @@
 /**
- * Proyectos.jsx - P�gina de proyectos
- * P�gina que muestra galer�a de proyectos culturales con filtros y b�squeda.
+ * Proyectos.jsx - Pagina de proyectos
+ * P�gina que muestra galeria de proyectos culturales con filtros y busqueda.
  */
 function Proyectos() {
   return (

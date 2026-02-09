@@ -14,18 +14,18 @@ function Presentacion() {
         </h1>
 
         {/* Sección principal con logo y descripción */}
-        <div className="grid md:grid-cols-2 gap-12 items-start mb-20">
+        <div className="grid md:grid-cols-[300px_1fr] gap-8 items-start mb-20">
           
           {/* Logo cuadrado */}
-          <div className="bg-primary flex items-center justify-center aspect-square rounded-lg p-8">
+          <div className="bg-primary flex items-center justify-center aspect-square rounded-lg p-6">
             <div className="text-white text-center">
-              <div className="font-display font-bold text-4xl leading-tight">
+              <div className="font-display font-bold text-2xl leading-tight">
                 FUNDACIÓN
               </div>
-              <div className="font-display font-bold text-4xl leading-tight mt-2">
+              <div className="font-display font-bold text-2xl leading-tight mt-1">
                 CULTURA
               </div>
-              <div className="font-display font-bold text-4xl leading-tight mt-2">
+              <div className="font-display font-bold text-2xl leading-tight mt-1">
                 LOCAL
               </div>
             </div>
@@ -56,13 +56,13 @@ function Presentacion() {
             Equipo
           </h2>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl">
             {/* Placeholder para miembros del equipo */}
             {[1, 2, 3, 4, 5, 6].map((item) => (
               <div key={item} className="text-center">
-                <div className="bg-gray-200 dark:bg-gray-700 aspect-square rounded-lg mb-4"></div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Nombre del Miembro</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Cargo / Rol</p>
+                <div className="bg-gray-200 dark:bg-gray-700 aspect-square rounded-lg mb-3"></div>
+                <h3 className="font-semibold text-sm text-gray-900 dark:text-white">Nombre del Miembro</h3>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Cargo / Rol</p>
               </div>
             ))}
           </div>
