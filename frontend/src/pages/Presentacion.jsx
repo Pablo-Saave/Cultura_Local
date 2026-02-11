@@ -60,7 +60,7 @@ function Presentacion() {
             {/* Placeholder para miembros del equipo */}
             {[1, 2, 3, 4, 5, 6].map((item) => (
               <div key={item} className="text-center">
-                <div className="bg-gray-200 dark:bg-gray-700 aspect-square rounded-lg mb-3"></div>
+                <div className="bg-gray-100 dark:bg-gray-700 aspect-square rounded-lg mb-3"></div>
                 <h3 className="font-semibold text-sm text-gray-900 dark:text-white">Nombre del Miembro</h3>
                 <p className="text-xs text-gray-600 dark:text-gray-400">Cargo / Rol</p>
               </div>

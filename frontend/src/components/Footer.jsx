@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function Footer() {
   return (
     // Footer con fondo que cambia según el tema
-    <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 py-12 mt-20">
+    <footer className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-12 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           
@@ -88,7 +88,7 @@ function Footer() {
         </div>
 
         {/* Línea divisoria */}
-        <div className="border-t border-gray-300 dark:border-gray-700 pt-8">
+        <div className="pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* Copyright */}
             <p className="text-sm text-gray-400">

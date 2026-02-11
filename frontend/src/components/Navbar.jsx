@@ -17,8 +17,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
 
   return (
     // Nav fixed para que esté siempre visible al hacer scroll
-    // backdrop-blur para efecto glassmorphism
-    <nav className="fixed w-full top-0 z-50 shadow-sm theme-transition">
+    <nav className="fixed w-full top-0 z-50 theme-transition">
       <div className="flex justify-between items-center h-16">
         
         {/* Logo con franja integrada */}
@@ -35,7 +34,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
         </Link>
         
         {/* Contenedor derecho con fondo */}
-        <div className="flex-1 flex justify-end items-center h-full bg-white/90 dark:bg-dark-bg/90 backdrop-blur-md">
+        <div className="flex-1 flex justify-end items-center h-full bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         
           {/* Menú desktop - oculto en móvil */}

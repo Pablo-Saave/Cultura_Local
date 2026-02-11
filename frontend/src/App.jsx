@@ -63,7 +63,7 @@ function App() {
     <Router>
       <AuthProvider>
         {/* Contenedor principal con fondo que cambia según el tema */}
-        <div className="min-h-screen bg-gray-50 dark:bg-dark-bg theme-transition">
+        <div className="min-h-screen bg-white dark:bg-dark-bg theme-transition">
           {/* Definimos las rutas de la aplicación */}
           <Routes>
             {/* Rutas de administración (sin navbar/footer) */}
