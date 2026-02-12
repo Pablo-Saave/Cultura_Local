@@ -22,7 +22,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
         
         {/* Logo con franja integrada */}
         <Link to="/" className="relative z-10 flex items-center group bg-primary h-full px-8">
-          <div className="text-white">
+          {/* Línea superior diagonal */}
+          <div className="absolute top-1 left-0 w-full border-t-2 border-white" style={{transform: 'rotate(-3deg)'}}></div>
+          
+          <div className="text-white relative z-10">
             <div className="font-serif text-2xl leading-none tracking-tight">
               <span className="font-light">Cultura</span>
               <span className="font-normal">Local</span>
@@ -31,6 +34,9 @@ function Navbar({ darkMode, toggleDarkMode }) {
               FUNDACIÓN
             </div>
           </div>
+          
+          {/* Línea inferior diagonal */}
+          <div className="absolute bottom-1 left-0 w-full border-t-2 border-white" style={{transform: 'rotate(3deg)'}}></div>
         </Link>
         
         {/* Contenedor derecho con fondo */}

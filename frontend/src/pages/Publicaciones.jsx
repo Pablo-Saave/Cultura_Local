@@ -10,7 +10,7 @@ function Publicaciones() {
       id: 1,
       nombre: 'Creadoras Chile',
       descripcion: 'Plataforma que visibiliza y conecta a mujeres creadoras de Chile',
-      imagen: '/img/logo.jpg',
+      imagen: '/img/logo.jpeg',
       link: 'https://creadoraschile.cl/'
     }
   ]
@@ -19,7 +19,7 @@ function Publicaciones() {
     <div className="min-h-screen bg-white dark:bg-dark-bg py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Título principal */}
-        <h1 className="text-6xl md:text-7xl font-display font-bold text-primary dark:text-primary-light mb-6">
+        <h1 className="text-4xl md:text-5xl font-display font-bold text-primary dark:text-primary-light mb-6">
           Proyectos
         </h1>
 
