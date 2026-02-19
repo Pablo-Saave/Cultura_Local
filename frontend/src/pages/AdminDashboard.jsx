@@ -62,9 +62,9 @@ function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Panel de Administración</h1>
+              <h1 className="text-3xl font-bold text-primary" style={{ fontFamily: "'Aktifo A', sans-serif" }}>Panel de Administración</h1>
               <p className="text-sm text-gray-600 mt-1">
-                Bienvenido, <span className="font-semibold">{user.nombre}</span> ({user.role})
+                Bienvenido, <span className="font-semibold">{user.nombre}</span>
               </p>
             </div>
             <button
@@ -98,15 +98,13 @@ function AdminDashboard() {
         {/* Menú de administración */}
         <div className="bg-white rounded-lg shadow">
           <div className="p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Gestión de Contenidos</h2>
+            <h2 className="text-2xl font-bold text-primary mb-6" style={{ fontFamily: "'Aktifo A', sans-serif" }}>Gestión de Contenidos</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
                 { name: 'Blog', path: '/admin/blog', color: 'bg-blue-500' },
                 { name: 'Eventos', path: '/admin/eventos', color: 'bg-green-500' },
                 { name: 'Proyectos', path: '/admin/proyectos', color: 'bg-purple-500' },
-                { name: 'Prácticas Culturales', path: '/admin/practicas', color: 'bg-orange-500' },
                 { name: 'Contacto', path: '/admin/contacto', color: 'bg-pink-500' },
-                { name: 'Configuración', path: '/admin/settings', color: 'bg-gray-500' },
               ].map((item) => (
                 <a
                   key={item.path}
@@ -120,29 +118,6 @@ function AdminDashboard() {
                   </div>
                 </a>
               ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Info del usuario */}
-        <div className="mt-8 bg-primary/10 rounded-lg p-6">
-          <h3 className="font-semibold text-gray-900 mb-2">Información de Sesión</h3>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
-              <span className="text-gray-600">Usuario:</span>
-              <span className="ml-2 font-medium">{user.username}</span>
-            </div>
-            <div>
-              <span className="text-gray-600">Email:</span>
-              <span className="ml-2 font-medium">{user.email}</span>
-            </div>
-            <div>
-              <span className="text-gray-600">Rol:</span>
-              <span className="ml-2 font-medium capitalize">{user.role}</span>
-            </div>
-            <div>
-              <span className="text-gray-600">Estado:</span>
-              <span className="ml-2 font-medium text-green-600">Activo</span>
             </div>
           </div>
         </div>
