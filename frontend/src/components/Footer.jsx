@@ -92,7 +92,7 @@ function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* Copyright */}
             <p className="text-sm text-gray-400">
-              © 2025 FUNDACIÓN CULTURA LOCAL. TODOS LOS DERECHOS RESERVADOS.
+              © 2026 FUNDACIÓN CULTURA LOCAL. TODOS LOS DERECHOS RESERVADOS.
             </p>
             
             {/* Enlaces legales */}
