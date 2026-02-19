@@ -90,9 +90,8 @@ function BuscarPractica() {
             Completa el formulario y nos pondremos en contacto contigo
           </p>
           
-          {/* Reemplaza GOOGLE_FORM_URL con tu URL real */}
           <a 
-            href="GOOGLE_FORM_URL" 
+            href="https://docs.google.com/forms/d/e/1FAIpQLSez_I7wGowj2SSwzehujb1G7-sfdO35lGpBfa6DKGVgMj1INw/viewform" 
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-block bg-primary hover:bg-primary-dark text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors shadow-lg hover:shadow-xl"

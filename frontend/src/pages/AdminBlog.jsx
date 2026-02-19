@@ -170,7 +170,7 @@ function AdminBlog() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-bg py-8 px-4">
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -185,7 +185,7 @@ function AdminBlog() {
           </Link>
           
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900">
               Administrar Blog
             </h1>
             {!showForm && (
@@ -201,15 +201,15 @@ function AdminBlog() {
 
         {/* Formulario */}
         {showForm && (
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">
               {editingPost ? 'Editar Post' : 'Nuevo Post'}
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Título */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Título *
                 </label>
                 <input
@@ -218,21 +218,21 @@ function AdminBlog() {
                   value={formData.titulo}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Título del post"
                 />
               </div>
 
               {/* Categoría */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Categoría *
                 </label>
                 <select
                   name="categoria"
                   value={formData.categoria}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 >
                   <option value="ENTREVISTA">Entrevista</option>
                   <option value="NOTICIA">Noticia</option>
@@ -241,7 +241,7 @@ function AdminBlog() {
 
               {/* Descripción */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Descripción *
                 </label>
                 <textarea
@@ -250,28 +250,28 @@ function AdminBlog() {
                   onChange={handleInputChange}
                   required
                   rows="6"
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Contenido del post"
                 />
               </div>
 
               {/* Imagen */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                  Imagen *
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Imagen
                 </label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
                 {imagePreview && (
                   <div className="mt-4">
                     <img 
                       src={imagePreview} 
                       alt="Preview" 
-                      className="w-full max-w-md h-64 object-contain rounded-lg bg-gray-100 dark:bg-gray-700"
+                      className="w-full max-w-md h-64 object-contain rounded-lg bg-gray-100"
                     />
                   </div>
                 )}
@@ -289,7 +289,7 @@ function AdminBlog() {
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="px-6 py-3 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
+                  className="px-6 py-3 bg-gray-300 text-gray-900 rounded-lg hover:bg-gray-400 transition-colors"
                 >
                   Cancelar
                 </button>
@@ -301,35 +301,39 @@ function AdminBlog() {
         {/* Lista de Posts */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.length === 0 ? (
-            <div className="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
+            <div className="col-span-full text-center py-12 text-gray-500">
               No hay posts publicados aún
             </div>
           ) : (
             posts.map((post) => (
-              <div key={post._id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+              <div key={post._id} className="bg-gray-100 rounded-xl overflow-hidden">
                 {/* Imagen */}
-                <div className="relative h-48 bg-gray-200 dark:bg-gray-700">
-                  {post.imagen && (
+                <div className="relative bg-white p-4">
+                  {post.imagen ? (
                     <img 
                       src={`http://localhost:5000${post.imagen}`} 
                       alt={post.titulo}
-                      className="w-full h-full object-contain p-2"
+                      className="w-full h-48 object-contain"
                     />
+                  ) : (
+                    <div className="w-full h-48 flex items-center justify-center bg-gray-200">
+                      <span className="text-gray-400">Sin imagen</span>
+                    </div>
                   )}
-                  <span className="absolute top-4 right-4 px-3 py-1 bg-primary text-white text-xs font-semibold rounded">
+                  <span className="absolute top-6 right-6 px-3 py-1 bg-primary text-white text-xs font-semibold rounded uppercase">
                     {post.categoria}
                   </span>
                 </div>
                 
                 {/* Contenido */}
-                <div className="p-4">
-                  <h3 className="font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+                <div className="p-6 bg-white">
+                  <h3 className="font-bold text-gray-900 text-lg mb-3 line-clamp-2">
                     {post.titulo}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
                     {post.descripcion}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-500 mb-4">
+                  <p className="text-sm text-gray-500 mb-6">
                     {new Date(post.createdAt).toLocaleDateString('es-CL', { 
                       day: 'numeric', 
                       month: 'long', 
@@ -338,16 +342,16 @@ function AdminBlog() {
                   </p>
                   
                   {/* Acciones */}
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <button
                       onClick={() => handleEdit(post)}
-                      className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                      className="flex-1 px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
                     >
                       Editar
                     </button>
                     <button
-                      onClick={() => handleDelete(post.id)}
-                      className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm"
+                      onClick={() => handleDelete(post._id)}
+                      className="flex-1 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
                     >
                       Eliminar
                     </button>
