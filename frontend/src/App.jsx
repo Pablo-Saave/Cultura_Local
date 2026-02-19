@@ -32,6 +32,7 @@ import Proyectos from './pages/Proyectos'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminBlog from './pages/AdminBlog'
+import AdminEventos from './pages/AdminEventos'
 
 function App() {
   // Estado para controlar el modo oscuro
@@ -72,6 +73,7 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/blog" element={<AdminBlog />} />
+            <Route path="/admin/eventos" element={<AdminEventos />} />
             
             {/* Rutas públicas (con navbar/footer) */}
             <Route path="/*" element={
