@@ -1,6 +1,6 @@
 
-// Importamos React y hook para estado
-import { useState } from 'react'
+// Importamos React y hook para estado y efectos
+import { useState, useEffect } from 'react'
 // Importamos Link para navegación sin recargar la página
 import { Link, useLocation } from 'react-router-dom'
 
@@ -8,6 +8,10 @@ import { Link, useLocation } from 'react-router-dom'
 function Navbar({ darkMode, toggleDarkMode }) {
   // Estado para controlar si el menú móvil está abierto
   const [isOpen, setIsOpen] = useState(false)
+  // Estado para controlar si la navbar está visible
+  const [isVisible, setIsVisible] = useState(true)
+  // Estado para guardar la última posición del scroll
+  const [lastScrollY, setLastScrollY] = useState(0)
   
   // Hook para obtener la ruta actual y resaltar el enlace activo
   const location = useLocation()
@@ -15,9 +19,36 @@ function Navbar({ darkMode, toggleDarkMode }) {
   // Función auxiliar para verificar si un enlace está activo
   const isActive = (path) => location.pathname === path
 
+  // Efecto para manejar el scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+
+      // Si está en la parte superior, siempre mostrar la navbar
+      if (currentScrollY < 10) {
+        setIsVisible(true)
+      }
+      // Si hace scroll hacia abajo y ya pasó los 100px, ocultar navbar
+      else if (currentScrollY > 100) {
+        setIsVisible(false)
+        setIsOpen(false) // Cerrar menú móvil si está abierto
+      }
+
+      setLastScrollY(currentScrollY)
+    }
+
+    // Agregar listener de scroll
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    // Limpiar listener cuando se desmonte el componente
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
+
   return (
     // Nav fixed para que esté siempre visible al hacer scroll
-    <nav className="fixed w-full top-0 z-50 theme-transition">
+    <nav className={`fixed w-full top-0 z-50 theme-transition transition-transform duration-300 ${
+      isVisible ? 'translate-y-0' : '-translate-y-full'
+    }`}>
       <div className="flex justify-between items-center h-16">
         
         {/* Logo con franja integrada */}

@@ -84,7 +84,7 @@ function Publicaciones() {
             Instagram
           </h2>
           
-          <div className="flex flex-col md:flex-row items-center gap-8 bg-gray-50 dark:bg-gray-800 rounded-xl p-8">
+          <div className="flex flex-col md:flex-row items-center gap-8 bg-gray-50 dark:bg-dark-bg rounded-xl p-8">
             {/* Logo de la fundación */}
             <div className="w-48 h-48 flex-shrink-0">
               <img 
