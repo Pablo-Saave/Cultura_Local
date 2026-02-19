@@ -22,18 +22,21 @@ app.use(express.urlencoded({ extended: true }));
 
 // Servir archivos estáticos (uploads)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/img', express.static(path.join(__dirname, 'public/img')));
 
 // Rutas
 const authRoutes = require('./src/routes/auth.routes');
 const contactoRoutes = require('./src/routes/contacto.routes');
 const eventosRoutes = require('./src/routes/eventos.routes');
 const proyectosRoutes = require('./src/routes/proyectos.routes');
+const blogRoutes = require('./src/routes/blog.routes');
 
 // Registrar rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/contacto', contactoRoutes);
 app.use('/api/eventos', eventosRoutes);
 app.use('/api/proyectos', proyectosRoutes);
+app.use('/api/blog', blogRoutes);
 
 // Ruta de prueba
 app.get('/api/health', (req, res) => {

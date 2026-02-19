@@ -33,8 +33,20 @@ function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary-dark">
-      <div className="max-w-sm w-full mx-4">
+    <div className="min-h-screen flex items-center justify-center relative">
+      {/* Imagen de fondo */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(/img/9.jpeg)',
+          filter: 'brightness(0.9)'
+        }}
+      />
+      
+      {/* Overlay oscuro */}
+      <div className="absolute inset-0 bg-primary/20" />
+      
+      <div className="max-w-sm w-full mx-4 relative z-10">
         {/* Card de Login */}
         <div className="bg-white rounded-xl shadow-2xl p-6">
           {/* Logo/Título */}
@@ -45,7 +57,7 @@ function AdminLogin() {
                 <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
               </svg>
             </div>
-            <h1 className="text-2xl font-display font-bold text-gray-900 mb-1">
+            <h1 className="text-2xl font-bold text-gray-900 mb-1" style={{fontFamily: 'Aktifo A, sans-serif'}}>
               Panel de Administración
             </h1>
             <p className="text-sm text-gray-600">

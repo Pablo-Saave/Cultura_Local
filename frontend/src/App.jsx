@@ -23,6 +23,7 @@ import Presentacion from './pages/Presentacion'
 import Publicaciones from './pages/Publicaciones'
 import Eventos from './pages/Eventos'
 import Blog from './pages/Blog'
+import BlogDetalle from './pages/BlogDetalle'
 import Contacto from './pages/Contacto'
 import Practicas from './pages/Practicas'
 import Proyectos from './pages/Proyectos'
@@ -30,6 +31,7 @@ import Proyectos from './pages/Proyectos'
 // Importamos las páginas de administración
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
+import AdminBlog from './pages/AdminBlog'
 
 function App() {
   // Estado para controlar el modo oscuro
@@ -69,6 +71,7 @@ function App() {
             {/* Rutas de administración (sin navbar/footer) */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/blog" element={<AdminBlog />} />
             
             {/* Rutas públicas (con navbar/footer) */}
             <Route path="/*" element={
@@ -82,6 +85,7 @@ function App() {
                     <Route path="/publicaciones" element={<Publicaciones />} />
                     <Route path="/eventos" element={<Eventos />} />
                     <Route path="/blog" element={<Blog />} />
+                    <Route path="/blog/:id" element={<BlogDetalle />} />
                     <Route path="/contacto" element={<Contacto />} />
                     <Route path="/practicas" element={<Practicas />} />
                     <Route path="/proyectos" element={<Proyectos />} />
