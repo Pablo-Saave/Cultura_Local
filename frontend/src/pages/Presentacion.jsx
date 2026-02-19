@@ -91,7 +91,7 @@ function Presentacion() {
           {/* Logo imagen */}
           <div className="flex items-center justify-center rounded-lg overflow-hidden">
             <img 
-              src="/img/imagen1.png" 
+              src="/img/imagen12.png" 
               alt="Fundación Cultura Local"
               className="w-full h-auto"
             />

@@ -9,7 +9,7 @@ function BuscarPractica() {
       {/* Hero Section */}
       <section className="py-20 px-4 bg-white dark:bg-dark-bg">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-primary dark:text-primary-light mb-6">
+<h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-primary-light mb-6" style={{fontFamily: 'Aktifo A, sans-serif'}}>
             Práctica Profesional en Arquitectura
           </h1>
         </div>

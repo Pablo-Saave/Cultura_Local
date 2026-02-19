@@ -19,7 +19,7 @@ function Home() {
         
         {/* Contenido del hero */}
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-display font-bold text-white mb-6">
+          <h1 className="text-6xl md:text-8xl font-bold text-white mb-6" style={{fontFamily: 'Aktifo A, sans-serif'}}>
             Fundacion<br/>Cultura Local
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
