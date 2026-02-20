@@ -137,6 +137,8 @@ function AdminBlog() {
     })
     setImagePreview(`http://localhost:5000${post.imagen}`)
     setShowForm(true)
+    // Hacer scroll al top de la página donde está el formulario
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleDelete = async (id) => {
@@ -236,6 +238,7 @@ function AdminBlog() {
                 >
                   <option value="ENTREVISTA">Entrevista</option>
                   <option value="NOTICIA">Noticia</option>
+                  <option value="ARTICULO">Artículo</option>
                 </select>
               </div>
 

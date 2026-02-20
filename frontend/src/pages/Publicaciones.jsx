@@ -49,7 +49,7 @@ function Publicaciones() {
               rel="noopener noreferrer"
               className="group"
             >
-              <div className="bg-white dark:bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+              <div className="bg-white dark:bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 h-full flex flex-col">
                 {/* Logo del proyecto */}
                 <div className="aspect-square bg-white dark:bg-white flex items-center justify-center p-8">
                   <img 
@@ -65,13 +65,10 @@ function Publicaciones() {
                 </div>
                 
                 {/* Información del proyecto */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-900 mb-2 group-hover:text-primary transition-colors">
+                <div className="p-6 flex-grow flex items-center justify-center">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-900 text-center group-hover:text-primary transition-colors">
                     {proyecto.nombre}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-600 text-sm">
-                    {proyecto.descripcion}
-                  </p>
                 </div>
               </div>
             </a>
