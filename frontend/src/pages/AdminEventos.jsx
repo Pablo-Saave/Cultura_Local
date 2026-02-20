@@ -183,16 +183,21 @@ function AdminEventos() {
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-primary" style={{ fontFamily: "'Aktifo A', sans-serif" }}>
-            Gestión de Eventos
-          </h1>
-          <Link
-            to="/admin/dashboard"
-            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
+        {/* Header */}
+        <div className="mb-8">
+          <Link 
+            to="/admin/dashboard" 
+            className="inline-flex items-center text-primary hover:text-primary/80 mb-4"
           >
+            <svg className="w-5 h-5 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M15 19l-7-7 7-7"></path>
+            </svg>
             Volver al Dashboard
           </Link>
+          
+          <h1 className="text-3xl font-bold text-gray-900">
+            Gestión de Eventos
+          </h1>
         </div>
 
         {/* Formulario */}
