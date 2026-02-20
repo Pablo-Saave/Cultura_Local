@@ -39,6 +39,23 @@ function AdminBlog() {
     }
   }
 
+  const getCategoriaLabel = (post) => {
+    // Verificar si es reciente (últimas 2 semanas)
+    const haceDosSemanass = new Date()
+    haceDosSemanass.setDate(haceDosSemanass.getDate() - 14) // 2 semanas = 14 días
+    const fechaPost = new Date(post.createdAt)
+    
+    if (fechaPost >= haceDosSemanass) {
+      return 'RECIENTE'
+    }
+    
+    // Si no es reciente, mostrar la categoría
+    if (post.categoria === 'NOTICIA') return 'NOTICIAS'
+    if (post.categoria === 'ENTREVISTA') return 'ENTREVISTAS'
+    if (post.categoria === 'ARTICULO') return 'ARTÍCULOS'
+    return post.categoria
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -323,8 +340,8 @@ function AdminBlog() {
                       <span className="text-gray-400">Sin imagen</span>
                     </div>
                   )}
-                  <span className="absolute top-6 right-6 px-3 py-1 bg-primary text-white text-xs font-semibold rounded uppercase">
-                    {post.categoria}
+                  <span className="absolute top-6 right-6 px-4 py-1.5 bg-accent text-white text-xs font-bold rounded-full uppercase">
+                    {getCategoriaLabel(post)}
                   </span>
                 </div>
                 

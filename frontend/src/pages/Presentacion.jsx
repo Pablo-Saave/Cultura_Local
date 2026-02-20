@@ -3,7 +3,7 @@
  * Página que presenta la fundación, su misión y equipo
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function Presentacion() {
   // Estado para el carrusel de imágenes
@@ -16,25 +16,25 @@ function Presentacion() {
     '/img/slide3.jpeg'
   ]
   
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % carouselImages.length)
-  }
-  
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + carouselImages.length) % carouselImages.length)
-  }
+  // Cambiar slide automáticamente cada 5 segundos
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselImages.length)
+    }, 5000)
+    
+    return () => clearInterval(timer)
+  }, [carouselImages.length])
   
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-bg py-16">
+    <div className="min-h-screen bg-white dark:bg-dark-bg">
       <div className="max-w-6xl mx-auto px-4">
-
-        {/* Carrusel de imágenes */}
-        <div className="relative w-full h-[400px] md:h-[500px] mb-16 overflow-hidden rounded-lg">
+        {/* Carrusel de imágenes - con bordes blancos laterales */}
+        <div className="relative w-full overflow-hidden -mt-20" style={{ height: '420px' }}>
           {/* Imágenes */}
           {carouselImages.map((img, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-500 ${
+              className={`absolute inset-0 transition-opacity duration-1000 ${
                 index === currentSlide ? 'opacity-100' : 'opacity-0'
               }`}
             >
@@ -42,6 +42,7 @@ function Presentacion() {
                 src={img} 
                 alt={`Slide ${index + 1}`}
                 className="w-full h-full object-cover"
+                style={{ objectPosition: 'center 40%' }}
                 onError={(e) => {
                   e.target.src = ''
                   e.target.parentElement.classList.add('bg-gray-200', 'dark:bg-gray-700')
@@ -50,40 +51,11 @@ function Presentacion() {
               />
             </div>
           ))}
-          
-          {/* Botón anterior */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 p-3 rounded-full transition-all"
-          >
-            <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M15 19l-7-7 7-7"></path>
-            </svg>
-          </button>
-          
-          {/* Botón siguiente */}
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 p-3 rounded-full transition-all"
-          >
-            <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M9 5l7 7-7 7"></path>
-            </svg>
-          </button>
-          
-          {/* Indicadores */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-            {carouselImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  index === currentSlide ? 'bg-white w-8' : 'bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
         </div>
+      </div>
+
+      {/* Contenido principal */}
+      <div className="max-w-6xl mx-auto px-4 py-16">
 
         {/* Sección principal con logo y descripción */}
         <div className="grid md:grid-cols-[300px_1fr] gap-8 items-start mb-20">

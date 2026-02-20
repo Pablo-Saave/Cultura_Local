@@ -37,7 +37,7 @@ function Contacto() {
               </svg>
               <div>
                 <p className="font-semibold text-gray-900 dark:text-white">Email</p>
-                <a href="mailto:contacto.culturalocal@gmail.com" className="text-primary hover:underline">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contacto.culturalocal@gmail.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                   contacto.culturalocal@gmail.com
                 </a>
               </div>

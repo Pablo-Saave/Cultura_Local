@@ -25,14 +25,15 @@ function AdminDashboard() {
   const fetchStats = async () => {
     try {
       // Obtener contadores
-      const [blogRes, proyectosRes] = await Promise.all([
+      const [blogRes, eventosRes, proyectosRes] = await Promise.all([
         axios.get('http://localhost:5000/api/blog'),
+        axios.get('http://localhost:5000/api/eventos'),
         axios.get('http://localhost:5000/api/proyectos')
       ]);
       
       setStats({
         blog: blogRes.data.length,
-        eventos: 0, // Por ahora 0, cuando implementes eventos se conectará
+        eventos: eventosRes.data.length,
         proyectos: proyectosRes.data.length
       });
     } catch (error) {
@@ -104,7 +105,6 @@ function AdminDashboard() {
                 { name: 'Blog', path: '/admin/blog', color: 'bg-blue-500' },
                 { name: 'Eventos', path: '/admin/eventos', color: 'bg-green-500' },
                 { name: 'Proyectos', path: '/admin/proyectos', color: 'bg-purple-500' },
-                { name: 'Contacto', path: '/admin/contacto', color: 'bg-pink-500' },
               ].map((item) => (
                 <a
                   key={item.path}

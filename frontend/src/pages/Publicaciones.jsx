@@ -2,27 +2,81 @@
  * Publicaciones.jsx - Página de proyectos
  * Página que muestra los proyectos de la fundación
  */
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function Publicaciones() {
-  // Array de proyectos
-  const proyectos = [
-    {
-      id: 1,
-      slug: 'creadoras-chile',
-      nombre: 'Creadoras Chile',
-      descripcion: 'Plataforma que visibiliza y conecta a mujeres creadoras de Chile',
-      imagen: '/img/logo.jpeg',
-      link: 'https://creadoraschile.cl/'
-    },
-    {
-      id: 2,
-      slug: 'concepcion-reversiones',
-      nombre: 'Concepción: Reversiones Fotográficas',
-      descripcion: 'Portafolio fotográfico que explora la ciudad de Concepción a través de reversiones visuales',
-      imagen: '/img/proyecto2.png',
-      link: 'https://gustavoburgos.cl/concepcion-reversiones-fotograficas'
+  const [proyectos, setProyectos] = useState([]);
+  const [filtroActivo, setFiltroActivo] = useState('todo');
+  const [proyectosFiltrados, setProyectosFiltrados] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProyectos();
+  }, []);
+
+  useEffect(() => {
+    filtrarProyectos();
+  }, [proyectos, filtroActivo]);
+
+  const fetchProyectos = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/proyectos');
+      setProyectos(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error al cargar proyectos:', error);
+      setLoading(false);
     }
-  ]
+  };
+
+  const filtrarProyectos = () => {
+    let filtrados = [...proyectos];
+
+    if (filtroActivo === 'destacado') {
+      filtrados = filtrados.filter(p => p.destacado);
+    } else if (filtroActivo === 'educativo') {
+      filtrados = filtrados.filter(p => p.educativo);
+    } else if (filtroActivo === 'recientes') {
+      const haceDosSemanass = new Date();
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
+      filtrados = filtrados.filter(p => {
+        if (p.fechaRealizacion) {
+          const fechaProyecto = new Date(p.fechaRealizacion);
+          return fechaProyecto >= haceDosSemanass;
+        }
+        return false;
+      });
+    }
+
+    setProyectosFiltrados(filtrados);
+  };
+
+  const getCategoriaLabel = (proyecto) => {
+    if (proyecto.destacado) return { label: 'DESTACADO', color: 'bg-accent' };
+    if (proyecto.educativo) return { label: 'EDUCATIVO', color: 'bg-accent' };
+    
+    if (proyecto.fechaRealizacion) {
+      const fechaProyecto = new Date(proyecto.fechaRealizacion);
+      const haceDosSemanass = new Date();
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
+      if (fechaProyecto >= haceDosSemanass) {
+        return { label: 'RECIENTE', color: 'bg-accent' };
+      }
+    }
+    return null;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Cargando proyectos...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg py-16 px-4">
@@ -35,45 +89,111 @@ function Publicaciones() {
         <div className="w-32 h-1 bg-accent mb-6"></div>
         
         {/* Subtítulo */}
-        <p className="text-lg text-gray-700 dark:text-gray-300 mb-12 max-w-4xl">
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-4xl">
           Explora las iniciativas que estamos impulsando para transformar nuestro entorno a través del arte, la educación y la cultura local.
         </p>
 
-        {/* Grid de proyectos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {proyectos.map((proyecto) => (
-            <a
-              key={proyecto.id}
-              href={proyecto.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group"
-            >
-              <div className="bg-white dark:bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 h-full flex flex-col">
-                {/* Logo del proyecto */}
-                <div className="aspect-square bg-white dark:bg-white flex items-center justify-center p-8">
-                  <img 
-                    src={proyecto.imagen} 
-                    alt={proyecto.nombre}
-                    className="w-full h-full object-contain"
-                    onError={(e) => {
-                      // Si la imagen no carga, mostrar placeholder con el nombre
-                      e.target.style.display = 'none'
-                      e.target.parentElement.innerHTML = `<div class="text-white text-4xl font-bold text-center">${proyecto.nombre}</div>`
-                    }}
-                  />
-                </div>
-                
-                {/* Información del proyecto */}
-                <div className="p-6 flex-grow flex items-center justify-center">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-900 text-center group-hover:text-primary transition-colors">
-                    {proyecto.nombre}
-                  </h3>
-                </div>
-              </div>
-            </a>
-          ))}
+        {/* Filtros de categorías */}
+        <div className="flex flex-wrap gap-3 mb-10">
+          <button
+            onClick={() => setFiltroActivo('todo')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'todo'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Todo
+          </button>
+          <button
+            onClick={() => setFiltroActivo('destacado')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'destacado'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Destacado
+          </button>
+          <button
+            onClick={() => setFiltroActivo('recientes')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'recientes'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Recientes
+          </button>
+          <button
+            onClick={() => setFiltroActivo('educativo')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'educativo'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Educativos
+          </button>
         </div>
+
+        {/* Grid de proyectos */}
+        {proyectosFiltrados.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-gray-500 dark:text-gray-400">
+              No hay proyectos en esta categoría
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {proyectosFiltrados.map((proyecto) => {
+              const categoria = getCategoriaLabel(proyecto);
+              
+              return (
+                <a
+                  key={proyecto._id}
+                  href={proyecto.linkExterno || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
+                  <div className="bg-white dark:bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 h-full flex flex-col">
+                    {/* Imagen del proyecto con badge */}
+                    <div className="relative aspect-square bg-white dark:bg-white flex items-center justify-center p-8">
+                      {proyecto.imagenPrincipal ? (
+                        <img 
+                          src={`http://localhost:5000${proyecto.imagenPrincipal}`} 
+                          alt={proyecto.nombre}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="text-gray-400 text-4xl font-bold text-center">
+                          {proyecto.nombre}
+                        </div>
+                      )}
+                      
+                      {/* Badge de categoría */}
+                      {categoria && (
+                        <div className="absolute top-4 right-4">
+                          <span className={`${categoria.color} text-white text-xs font-bold px-4 py-1.5 rounded-full`}>
+                            {categoria.label}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Información del proyecto */}
+                    <div className="p-6 flex-grow flex items-center justify-center">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-gray-900 text-center group-hover:text-primary transition-colors">
+                        {proyecto.nombre}
+                      </h3>
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        )}
 
         {/* Sección de Instagram */}
         <div className="mt-20">

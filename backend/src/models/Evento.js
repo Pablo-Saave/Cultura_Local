@@ -44,8 +44,8 @@ const eventoSchema = new mongoose.Schema({
   },
   categoria: {
     type: String,
-    enum: ['Taller', 'Charla', 'Exposición', 'Encuentro', 'Festival', 'Otro'],
-    default: 'Otro'
+    enum: ['Taller', 'Charla', 'Exposición', 'Encuentro', 'Festival'],
+    default: 'Taller'
   },
   organizador: {
     type: String,

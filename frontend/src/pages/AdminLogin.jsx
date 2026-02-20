@@ -60,9 +60,6 @@ function AdminLogin() {
             <h1 className="text-2xl font-bold text-gray-900 mb-1" style={{fontFamily: 'Aktifo A, sans-serif'}}>
               Panel de Administración
             </h1>
-            <p className="text-sm text-gray-600">
-              Fundación Cultura Local
-            </p>
           </div>
 
           {/* Formulario */}
@@ -131,13 +128,6 @@ function AdminLogin() {
               )}
             </button>
           </form>
-
-          {/* Info adicional */}
-          <div className="mt-4 text-center">
-            <p className="text-xs text-gray-500">
-              Acceso restringido solo para personal autorizado
-            </p>
-          </div>
         </div>
 
         {/* Volver al inicio */}

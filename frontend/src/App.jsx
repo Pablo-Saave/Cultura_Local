@@ -7,7 +7,7 @@
 // Importamos React y hooks necesarios
 import { useState, useEffect } from 'react'
 // Importamos el sistema de rutas de React Router
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 
 // Importamos el contexto de autenticación
 import { AuthProvider } from './context/AuthContext'
@@ -22,17 +22,29 @@ import BuscarPractica from './pages/BuscarPractica'
 import Presentacion from './pages/Presentacion'
 import Publicaciones from './pages/Publicaciones'
 import Eventos from './pages/Eventos'
+import EventoDetalle from './pages/EventoDetalle'
 import Blog from './pages/Blog'
 import BlogDetalle from './pages/BlogDetalle'
 import Contacto from './pages/Contacto'
 import Practicas from './pages/Practicas'
-import Proyectos from './pages/Proyectos'
 
 // Importamos las páginas de administración
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminBlog from './pages/AdminBlog'
 import AdminEventos from './pages/AdminEventos'
+import AdminProyectos from './pages/AdminProyectos'
+
+// Componente para hacer scroll al inicio en cada cambio de ruta
+function ScrollToTop() {
+  const location = useLocation()
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+  
+  return null
+}
 
 function App() {
   // Estado para controlar el modo oscuro
@@ -64,6 +76,7 @@ function App() {
   return (
     // Router envuelve toda la aplicación para habilitar navegación
     <Router>
+      <ScrollToTop />
       <AuthProvider>
         {/* Contenedor principal con fondo que cambia según el tema */}
         <div className="min-h-screen bg-white dark:bg-dark-bg theme-transition">
@@ -74,6 +87,7 @@ function App() {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/blog" element={<AdminBlog />} />
             <Route path="/admin/eventos" element={<AdminEventos />} />
+            <Route path="/admin/proyectos" element={<AdminProyectos />} />
             
             {/* Rutas públicas (con navbar/footer) */}
             <Route path="/*" element={
@@ -86,11 +100,11 @@ function App() {
                     <Route path="/presentacion" element={<Presentacion />} />
                     <Route path="/publicaciones" element={<Publicaciones />} />
                     <Route path="/eventos" element={<Eventos />} />
+                    <Route path="/eventos/:id" element={<EventoDetalle />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:id" element={<BlogDetalle />} />
                     <Route path="/contacto" element={<Contacto />} />
                     <Route path="/practicas" element={<Practicas />} />
-                    <Route path="/proyectos" element={<Proyectos />} />
                   </Routes>
                 </main>
                 <Footer />
