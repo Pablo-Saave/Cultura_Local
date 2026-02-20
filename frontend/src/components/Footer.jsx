@@ -57,6 +57,11 @@ function Footer() {
                   Blog
                 </Link>
               </li>
+              <li>
+                <Link to="/buscar" className="hover:text-primary transition-colors">
+                  Prácticas Culturales
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -70,7 +75,7 @@ function Footer() {
                      strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                <a href="mailto:contacto.culturalocal@gmail.com" className="hover:text-primary transition-colors">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contacto.culturalocal@gmail.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                   contacto.culturalocal@gmail.com
                 </a>
               </li>

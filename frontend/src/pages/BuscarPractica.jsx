@@ -125,7 +125,9 @@ function BuscarPractica() {
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
             Escríbenos a{' '}
             <a 
-              href="mailto:contacto.culturalocal@gmail.com" 
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=contacto.culturalocal@gmail.com" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-primary hover:underline font-semibold"
             >
               contacto.culturalocal@gmail.com

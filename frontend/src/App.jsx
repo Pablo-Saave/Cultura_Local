@@ -7,7 +7,7 @@
 // Importamos React y hooks necesarios
 import { useState, useEffect } from 'react'
 // Importamos el sistema de rutas de React Router
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 
 // Importamos el contexto de autenticación
 import { AuthProvider } from './context/AuthContext'
@@ -33,6 +33,17 @@ import AdminDashboard from './pages/AdminDashboard'
 import AdminBlog from './pages/AdminBlog'
 import AdminEventos from './pages/AdminEventos'
 import AdminProyectos from './pages/AdminProyectos'
+
+// Componente para hacer scroll al inicio en cada cambio de ruta
+function ScrollToTop() {
+  const location = useLocation()
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+  
+  return null
+}
 
 function App() {
   // Estado para controlar el modo oscuro
@@ -64,6 +75,7 @@ function App() {
   return (
     // Router envuelve toda la aplicación para habilitar navegación
     <Router>
+      <ScrollToTop />
       <AuthProvider>
         {/* Contenedor principal con fondo que cambia según el tema */}
         <div className="min-h-screen bg-white dark:bg-dark-bg theme-transition">
