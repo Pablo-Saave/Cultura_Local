@@ -26,7 +26,6 @@ import Blog from './pages/Blog'
 import BlogDetalle from './pages/BlogDetalle'
 import Contacto from './pages/Contacto'
 import Practicas from './pages/Practicas'
-import Proyectos from './pages/Proyectos'
 
 // Importamos las páginas de administración
 import AdminLogin from './pages/AdminLogin'
@@ -92,7 +91,6 @@ function App() {
                     <Route path="/blog/:id" element={<BlogDetalle />} />
                     <Route path="/contacto" element={<Contacto />} />
                     <Route path="/practicas" element={<Practicas />} />
-                    <Route path="/proyectos" element={<Proyectos />} />
                   </Routes>
                 </main>
                 <Footer />

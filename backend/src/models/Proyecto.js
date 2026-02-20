@@ -49,11 +49,11 @@ const proyectoSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  publicado: {
+  destacado: {
     type: Boolean,
     default: false
   },
-  destacado: {
+  educativo: {
     type: Boolean,
     default: false
   },

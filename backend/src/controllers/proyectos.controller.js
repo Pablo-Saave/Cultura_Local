@@ -53,8 +53,8 @@ exports.crearProyecto = async (req, res) => {
       colaboradores,
       fechaRealizacion,
       ubicacion,
-      publicado,
       destacado,
+      educativo,
       linkExterno
     } = req.body;
 
@@ -89,8 +89,8 @@ exports.crearProyecto = async (req, res) => {
       colaboradores: colaboradores ? JSON.parse(colaboradores) : [],
       fechaRealizacion: fechaRealizacion || null,
       ubicacion,
-      publicado: publicado === 'true',
       destacado: destacado === 'true',
+      educativo: educativo === 'true',
       linkExterno
     });
 
@@ -121,8 +121,8 @@ exports.actualizarProyecto = async (req, res) => {
       colaboradores,
       fechaRealizacion,
       ubicacion,
-      publicado,
       destacado,
+      educativo,
       linkExterno
     } = req.body;
 
@@ -141,8 +141,8 @@ exports.actualizarProyecto = async (req, res) => {
     proyecto.colaboradores = colaboradores ? JSON.parse(colaboradores) : proyecto.colaboradores;
     proyecto.fechaRealizacion = fechaRealizacion || proyecto.fechaRealizacion;
     proyecto.ubicacion = ubicacion || proyecto.ubicacion;
-    proyecto.publicado = publicado !== undefined ? publicado === 'true' : proyecto.publicado;
     proyecto.destacado = destacado !== undefined ? destacado === 'true' : proyecto.destacado;
+    proyecto.educativo = educativo !== undefined ? educativo === 'true' : proyecto.educativo;
     proyecto.linkExterno = linkExterno || proyecto.linkExterno;
 
     // Procesar nuevas imágenes si existen

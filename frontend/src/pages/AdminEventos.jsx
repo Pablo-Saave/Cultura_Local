@@ -33,6 +33,7 @@ function AdminEventos() {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   useEffect(() => {
     fetchEventos();
@@ -138,6 +139,7 @@ function AdminEventos() {
     });
     setImagenPreview(evento.imagen ? `http://localhost:5000${evento.imagen}` : '');
     setEditingId(evento._id);
+    setMostrarFormulario(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -178,6 +180,7 @@ function AdminEventos() {
     setImagen(null);
     setImagenPreview('');
     setEditingId(null);
+    setMostrarFormulario(false);
   };
 
   return (
@@ -185,22 +188,31 @@ function AdminEventos() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <Link 
-            to="/admin/dashboard" 
-            className="inline-flex items-center text-primary hover:text-primary/80 mb-4"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M15 19l-7-7 7-7"></path>
-            </svg>
-            Volver al Dashboard
-          </Link>
-          
-          <h1 className="text-3xl font-bold text-gray-900">
-            Gestión de Eventos
-          </h1>
+          <div className="flex items-center justify-between gap-4">
+            <Link 
+              to="/admin/dashboard" 
+              className="inline-flex items-center text-primary hover:text-primary/80"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M15 19l-7-7 7-7"></path>
+              </svg>
+              Volver al Dashboard
+            </Link>
+            
+            {!mostrarFormulario && (
+              <button
+                onClick={() => setMostrarFormulario(true)}
+                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+              >
+                <span>+</span>
+                <span>Nuevo Evento</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Formulario */}
+        {mostrarFormulario && (
         <div className="bg-white rounded-lg shadow p-6 mb-8">
           <h2 className="text-xl font-bold text-gray-900 mb-4">
             {editingId ? 'Editar Evento' : 'Crear Nuevo Evento'}
@@ -453,6 +465,7 @@ function AdminEventos() {
             </div>
           </form>
         </div>
+        )}
 
         {/* Lista de eventos */}
         <div className="bg-white rounded-lg shadow p-6">
