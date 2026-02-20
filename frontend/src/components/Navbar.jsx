@@ -28,10 +28,14 @@ function Navbar({ darkMode, toggleDarkMode }) {
       if (currentScrollY < 10) {
         setIsVisible(true)
       }
-      // Si hace scroll hacia abajo y ya pasó los 100px, ocultar navbar
-      else if (currentScrollY > 100) {
+      // Si hace scroll hacia abajo, ocultar navbar
+      else if (currentScrollY > lastScrollY) {
         setIsVisible(false)
         setIsOpen(false) // Cerrar menú móvil si está abierto
+      }
+      // Si hace scroll hacia arriba, mostrar navbar
+      else if (currentScrollY < lastScrollY) {
+        setIsVisible(true)
       }
 
       setLastScrollY(currentScrollY)
@@ -46,15 +50,13 @@ function Navbar({ darkMode, toggleDarkMode }) {
 
   return (
     // Nav fixed para que esté siempre visible al hacer scroll
-    <nav className={`fixed w-full top-0 z-50 theme-transition transition-transform duration-300 ${
+    <nav className={`fixed w-full top-0 z-50 theme-transition transition-transform duration-500 ease-in-out ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     }`}>
       <div className="flex justify-between items-center h-16">
         
         {/* Logo con franja integrada */}
         <Link to="/" className="relative z-10 flex items-center group bg-primary h-full px-8">
-          {/* Línea superior diagonal */}
-          <div className="absolute top-1 left-0 w-full border-t-2 border-white" style={{transform: 'rotate(-3deg)'}}></div>
           
           <div className="text-white relative z-10">
             <div className="font-serif text-2xl leading-none tracking-tight">
@@ -66,8 +68,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
             </div>
           </div>
           
-          {/* Línea inferior diagonal */}
-          <div className="absolute bottom-1 left-0 w-full border-t-2 border-white" style={{transform: 'rotate(3deg)'}}></div>
         </Link>
         
         {/* Contenedor derecho con fondo */}

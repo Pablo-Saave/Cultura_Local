@@ -49,12 +49,12 @@ function Footer() {
               </li>
               <li>
                 <Link to="/eventos" className="hover:text-primary transition-colors">
-                  Nuestros Eventos
+                  Eventos
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="hover:text-primary transition-colors">
-                  Blog Cultural
+                  Blog
                 </Link>
               </li>
             </ul>
