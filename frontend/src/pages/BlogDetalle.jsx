@@ -27,6 +27,23 @@ function BlogDetalle() {
     }
   }
 
+  const getCategoriaLabel = (post) => {
+    // Verificar si es reciente (últimas 2 semanas)
+    const haceDosSemanass = new Date()
+    haceDosSemanass.setDate(haceDosSemanass.getDate() - 14) // 2 semanas = 14 días
+    const fechaPost = new Date(post.createdAt)
+    
+    if (fechaPost >= haceDosSemanass) {
+      return 'RECIENTE'
+    }
+    
+    // Si no es reciente, mostrar la categoría
+    if (post.categoria === 'NOTICIA') return 'NOTICIAS'
+    if (post.categoria === 'ENTREVISTA') return 'ENTREVISTAS'
+    if (post.categoria === 'ARTICULO') return 'ARTÍCULOS'
+    return post.categoria
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-white dark:bg-dark-bg py-20 px-4 flex items-center justify-center">
@@ -81,8 +98,8 @@ function BlogDetalle() {
               alt={post.titulo}
               className="w-full h-full object-contain"
             />
-            <span className="absolute top-6 right-6 px-4 py-2 bg-[#D88A9A] text-white text-sm font-semibold uppercase tracking-wider">
-              {post.categoria === 'NOTICIA' ? 'NOTICIAS' : 'ENTREVISTAS'}
+            <span className="absolute top-6 right-6 px-4 py-2 bg-accent text-white text-sm font-bold uppercase tracking-wider rounded-full">
+              {getCategoriaLabel(post)}
             </span>
           </div>
 

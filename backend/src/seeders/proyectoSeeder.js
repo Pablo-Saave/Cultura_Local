@@ -24,6 +24,7 @@ const proyectosIniciales = [
     nombre: 'Concepción: Reversiones Fotográficas',
     descripcion: 'Portafolio fotográfico que explora la ciudad de Concepción a través de reversiones visuales. Una mirada artística que transforma y reinterpreta los espacios urbanos mediante técnicas fotográficas innovadoras.',
     categoria: 'Fotografía',
+    imagenPrincipal: 'proyecto2.jpeg',
     linkExterno: 'https://gustavoburgos.cl/concepcion-reversiones-fotograficas',
     publicado: true,
     destacado: false,

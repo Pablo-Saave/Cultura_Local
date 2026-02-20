@@ -25,14 +25,15 @@ function AdminDashboard() {
   const fetchStats = async () => {
     try {
       // Obtener contadores
-      const [blogRes, proyectosRes] = await Promise.all([
+      const [blogRes, eventosRes, proyectosRes] = await Promise.all([
         axios.get('http://localhost:5000/api/blog'),
+        axios.get('http://localhost:5000/api/eventos'),
         axios.get('http://localhost:5000/api/proyectos')
       ]);
       
       setStats({
         blog: blogRes.data.length,
-        eventos: 0, // Por ahora 0, cuando implementes eventos se conectará
+        eventos: eventosRes.data.length,
         proyectos: proyectosRes.data.length
       });
     } catch (error) {

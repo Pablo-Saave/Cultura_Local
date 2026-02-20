@@ -153,9 +153,9 @@ function AdminProyectos() {
     
     if (proyecto.fechaRealizacion) {
       const fechaProyecto = new Date(proyecto.fechaRealizacion);
-      const haceUnMes = new Date();
-      haceUnMes.setMonth(haceUnMes.getMonth() - 1);
-      if (fechaProyecto >= haceUnMes) {
+      const haceDosSemanass = new Date();
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
+      if (fechaProyecto >= haceDosSemanass) {
         return { label: 'RECIENTE', color: 'bg-accent' };
       }
     }

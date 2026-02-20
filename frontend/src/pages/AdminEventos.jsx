@@ -20,7 +20,7 @@ function AdminEventos() {
     horaFin: '',
     ubicacion: '',
     direccion: '',
-    categoria: 'Otro',
+    categoria: 'Taller',
     organizador: '',
     cuposMaximos: '',
     inscripcionAbierta: true,
@@ -121,10 +121,14 @@ function AdminEventos() {
   };
 
   const handleEdit = (evento) => {
+    // Extraer la fecha en formato UTC para evitar problemas de zona horaria
+    const fechaUTC = new Date(evento.fecha);
+    const fechaStr = fechaUTC.toISOString().split('T')[0];
+    
     setFormData({
       titulo: evento.titulo,
       descripcion: evento.descripcion,
-      fecha: evento.fecha.split('T')[0],
+      fecha: fechaStr,
       horaInicio: evento.horaInicio,
       horaFin: evento.horaFin || '',
       ubicacion: evento.ubicacion,
@@ -169,7 +173,7 @@ function AdminEventos() {
       horaFin: '',
       ubicacion: '',
       direccion: '',
-      categoria: 'Otro',
+      categoria: 'Taller',
       organizador: '',
       cuposMaximos: '',
       inscripcionAbierta: true,
@@ -262,7 +266,6 @@ function AdminEventos() {
                   <option value="Exposición">Exposición</option>
                   <option value="Encuentro">Encuentro</option>
                   <option value="Festival">Festival</option>
-                  <option value="Otro">Otro</option>
                 </select>
               </div>
 
@@ -501,7 +504,7 @@ function AdminEventos() {
                         )}
                       </div>
                       <p className="text-sm text-gray-600 mb-2">
-                        📅 {new Date(evento.fecha).toLocaleDateString('es-CL')} • 
+                        📅 {new Date(evento.fecha).toLocaleDateString('es-CL', { timeZone: 'UTC' })} • 
                         🕐 {evento.horaInicio} {evento.horaFin && `- ${evento.horaFin}`} • 
                         📍 {evento.ubicacion}
                       </p>

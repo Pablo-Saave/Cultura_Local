@@ -38,12 +38,12 @@ function Publicaciones() {
     } else if (filtroActivo === 'educativo') {
       filtrados = filtrados.filter(p => p.educativo);
     } else if (filtroActivo === 'recientes') {
-      const haceUnMes = new Date();
-      haceUnMes.setMonth(haceUnMes.getMonth() - 1);
+      const haceDosSemanass = new Date();
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
       filtrados = filtrados.filter(p => {
         if (p.fechaRealizacion) {
           const fechaProyecto = new Date(p.fechaRealizacion);
-          return fechaProyecto >= haceUnMes;
+          return fechaProyecto >= haceDosSemanass;
         }
         return false;
       });
@@ -58,9 +58,9 @@ function Publicaciones() {
     
     if (proyecto.fechaRealizacion) {
       const fechaProyecto = new Date(proyecto.fechaRealizacion);
-      const haceUnMes = new Date();
-      haceUnMes.setMonth(haceUnMes.getMonth() - 1);
-      if (fechaProyecto >= haceUnMes) {
+      const haceDosSemanass = new Date();
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
+      if (fechaProyecto >= haceDosSemanass) {
         return { label: 'RECIENTE', color: 'bg-accent' };
       }
     }

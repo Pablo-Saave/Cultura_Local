@@ -22,6 +22,7 @@ import BuscarPractica from './pages/BuscarPractica'
 import Presentacion from './pages/Presentacion'
 import Publicaciones from './pages/Publicaciones'
 import Eventos from './pages/Eventos'
+import EventoDetalle from './pages/EventoDetalle'
 import Blog from './pages/Blog'
 import BlogDetalle from './pages/BlogDetalle'
 import Contacto from './pages/Contacto'
@@ -99,6 +100,7 @@ function App() {
                     <Route path="/presentacion" element={<Presentacion />} />
                     <Route path="/publicaciones" element={<Publicaciones />} />
                     <Route path="/eventos" element={<Eventos />} />
+                    <Route path="/eventos/:id" element={<EventoDetalle />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:id" element={<BlogDetalle />} />
                     <Route path="/contacto" element={<Contacto />} />

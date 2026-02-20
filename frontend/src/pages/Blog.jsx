@@ -10,10 +10,16 @@ import axios from 'axios'
 function Blog() {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [filtroActivo, setFiltroActivo] = useState('todo')
+  const [postsFiltrados, setPostsFiltrados] = useState([])
 
   useEffect(() => {
     fetchPosts()
   }, [])
+
+  useEffect(() => {
+    filtrarPosts()
+  }, [posts, filtroActivo])
 
   const fetchPosts = async () => {
     try {
@@ -24,6 +30,38 @@ function Blog() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const filtrarPosts = () => {
+    if (filtroActivo === 'todo') {
+      setPostsFiltrados(posts)
+    } else if (filtroActivo === 'recientes') {
+      const haceDosSemanass = new Date()
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14) // 2 semanas = 14 días
+      setPostsFiltrados(posts.filter(post => {
+        const fechaPost = new Date(post.createdAt)
+        return fechaPost >= haceDosSemanass
+      }))
+    } else {
+      setPostsFiltrados(posts.filter(post => post.categoria === filtroActivo))
+    }
+  }
+
+  const getCategoriaLabel = (post) => {
+    // Verificar si es reciente (últimas 2 semanas)
+    const haceDosSemanass = new Date()
+    haceDosSemanass.setDate(haceDosSemanass.getDate() - 14) // 2 semanas = 14 días
+    const fechaPost = new Date(post.createdAt)
+    
+    if (fechaPost >= haceDosSemanass) {
+      return 'RECIENTE'
+    }
+    
+    // Si no es reciente, mostrar la categoría
+    if (post.categoria === 'NOTICIA') return 'NOTICIAS'
+    if (post.categoria === 'ENTREVISTA') return 'ENTREVISTAS'
+    if (post.categoria === 'ARTICULO') return 'ARTÍCULOS'
+    return post.categoria
   }
 
   if (loading) {
@@ -40,23 +78,82 @@ function Blog() {
   return (
     <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg">
       <div className="max-w-7xl mx-auto">
-<h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-primary-light mb-6" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+        {/* Título principal */}
+        <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>
           Blog Cultural
         </h1>
-        <p className="text-lg text-gray-700 dark:text-gray-300 mb-12 max-w-3xl">
+        {/* Subrayado dorado */}
+        <div className="w-32 h-1 bg-accent mb-6"></div>
+        
+        {/* Subtítulo */}
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-3xl">
           Lee las últimas noticias, reflexiones y análisis sobre cultura local, 
           patrimonio y participación comunitaria.
         </p>
+
+        {/* Filtros de categorías */}
+        <div className="flex flex-wrap gap-3 mb-10">
+          <button
+            onClick={() => setFiltroActivo('todo')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'todo'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Todo
+          </button>
+          <button
+            onClick={() => setFiltroActivo('recientes')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'recientes'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Recientes
+          </button>
+          <button
+            onClick={() => setFiltroActivo('NOTICIA')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'NOTICIA'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Noticias
+          </button>
+          <button
+            onClick={() => setFiltroActivo('ARTICULO')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'ARTICULO'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Artículos
+          </button>
+          <button
+            onClick={() => setFiltroActivo('ENTREVISTA')}
+            className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+              filtroActivo === 'ENTREVISTA'
+                ? 'bg-primary text-white'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+            }`}
+          >
+            Entrevistas
+          </button>
+        </div>
         
-        {posts.length === 0 ? (
+        {postsFiltrados.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-gray-500 dark:text-gray-400">
-              No hay publicaciones aún
+              No hay publicaciones en esta categoría
             </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
+            {postsFiltrados.map((post) => (
               <Link 
                 key={post._id} 
                 to={`/blog/${post._id}`}
@@ -71,8 +168,8 @@ function Blog() {
                       className="w-full h-full object-contain"
                     />
                   )}
-                  <span className="absolute top-4 right-4 px-4 py-1 bg-[#D88A9A] text-white text-xs font-semibold uppercase tracking-wider">
-                    {post.categoria === 'NOTICIA' ? 'NOTICIAS' : 'ENTREVISTAS'}
+                  <span className="absolute top-4 right-4 px-4 py-1.5 bg-accent text-white text-xs font-bold uppercase tracking-wider rounded-full">
+                    {getCategoriaLabel(post)}
                   </span>
                 </div>
                 

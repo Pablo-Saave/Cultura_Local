@@ -1,9 +1,10 @@
 /**
  * Eventos.jsx - Pagina de eventos
- * Pagina que lista eventos proximos y pasados, consume endpoint /eventos del backend.
+ * Pagina que lista eventos con diseño de cards, filtros y calendario.
  */
 
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function Eventos() {
@@ -12,6 +13,7 @@ function Eventos() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [filtroActivo, setFiltroActivo] = useState('todo');
 
   useEffect(() => {
     fetchEventos();
@@ -47,18 +49,18 @@ function Eventos() {
   const hasEventsOnDate = (day) => {
     return eventos.some(evento => {
       const eventoDate = new Date(evento.fecha);
-      return eventoDate.getDate() === day &&
-             eventoDate.getMonth() === currentMonth &&
-             eventoDate.getFullYear() === currentYear;
+      return eventoDate.getUTCDate() === day &&
+             eventoDate.getUTCMonth() === currentMonth &&
+             eventoDate.getUTCFullYear() === currentYear;
     });
   };
 
   const getEventsForDate = (day) => {
     return eventos.filter(evento => {
       const eventoDate = new Date(evento.fecha);
-      return eventoDate.getDate() === day &&
-             eventoDate.getMonth() === currentMonth &&
-             eventoDate.getFullYear() === currentYear;
+      return eventoDate.getUTCDate() === day &&
+             eventoDate.getUTCMonth() === currentMonth &&
+             eventoDate.getUTCFullYear() === currentYear;
     });
   };
 
@@ -120,160 +122,166 @@ function Eventos() {
   };
 
   const selectedDateEvents = selectedDate ? getEventsForDate(selectedDate) : [];
-  const upcomingEvents = eventos
-    .filter(e => new Date(e.fecha) >= new Date())
-    .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
-    .slice(0, 3);
+  
+  // Filtrar eventos según categoría activa
+  const eventosFiltrados = eventos.filter(evento => {
+    if (!evento.publicado) return false;
+    
+    if (filtroActivo === 'todo') return true;
+    
+    if (filtroActivo === 'recientes') {
+      const haceDosSemanass = new Date();
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
+      const fechaEvento = new Date(evento.fecha);
+      return fechaEvento >= haceDosSemanass;
+    }
+    
+    return evento.categoria.toLowerCase() === filtroActivo.toLowerCase();
+  });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-dark-bg py-20 px-4 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Cargando eventos...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-primary-light mb-6" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+        {/* Título principal */}
+        <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>
           Nuestros Eventos
         </h1>
-        <p className="text-lg text-gray-700 dark:text-gray-300 mb-12 max-w-3xl">
+        {/* Subrayado dorado */}
+        <div className="w-32 h-1 bg-accent mb-6"></div>
+        
+        {/* Subtítulo */}
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-3xl">
           Descubre los próximos encuentros culturales, talleres y actividades comunitarias 
           que organizamos para fortalecer nuestra identidad local.
         </p>
-        
+
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Lista de eventos */}
+          {/* Sección principal con filtros y eventos */}
           <div className="flex-1">
-            {loading ? (
-              <p className="text-center text-gray-500 py-20">Cargando eventos...</p>
-            ) : selectedDate ? (
-              <div>
-                <div className="flex items-center gap-4 mb-6">
-                  <button
-                    onClick={() => setSelectedDate(null)}
-                    className="text-primary hover:text-primary/80 font-semibold"
-                  >
-                    ← Volver
-                  </button>
-                  <h2 className="text-2xl font-bold text-primary">
-                    {selectedDate} de {months[currentMonth]} {currentYear}
-                  </h2>
-                </div>
-                {selectedDateEvents.length === 0 ? (
-                  <p className="text-center text-gray-500 py-20">
-                    No hay eventos para esta fecha
-                  </p>
-                ) : (
-                  <div className="space-y-6">
-                    {selectedDateEvents.map(evento => (
-                      <div key={evento._id} className="bg-white dark:bg-white rounded-lg shadow-lg overflow-hidden">
-                        {evento.imagen && (
-                          <img
-                            src={`http://localhost:5000${evento.imagen}`}
-                            alt={evento.titulo}
-                            className="w-full h-64 object-contain bg-white p-4"
-                          />
-                        )}
-                        <div className="p-6">
-                          <div className="flex items-center gap-2 mb-3">
-                            <span className="text-xs px-3 py-1 bg-primary/20 text-primary rounded-full font-semibold">
-                              {evento.categoria}
-                            </span>
-                            {evento.destacado && (
-                              <span className="text-xs px-3 py-1 bg-accent/20 text-accent rounded-full font-semibold">
-                                Destacado
-                              </span>
-                            )}
-                          </div>
-                          <h3 className="text-2xl font-bold text-primary mb-3">{evento.titulo}</h3>
-                          <div className="space-y-2 text-gray-600 dark:text-gray-600 mb-4">
-                            <p>📅 {new Date(evento.fecha).toLocaleDateString('es-CL', { 
-                              day: 'numeric', 
-                              month: 'long', 
-                              year: 'numeric' 
-                            })}</p>
-                            <p>🕐 {evento.horaInicio} {evento.horaFin && `- ${evento.horaFin}`}</p>
-                            <p>📍 {evento.ubicacion} {evento.direccion && `- ${evento.direccion}`}</p>
-                            {evento.organizador && <p>👥 Organiza: {evento.organizador}</p>}
-                          </div>
-                          <p className="text-gray-700 dark:text-gray-700 whitespace-pre-line mb-4">
-                            {evento.descripcion}
-                          </p>
-                          {evento.cuposMaximos && (
-                            <p className="text-sm text-gray-600 dark:text-gray-600 mb-4">
-                              📊 Cupos disponibles: {evento.cuposMaximos}
-                            </p>
-                          )}
-                          {evento.inscripcionAbierta && evento.linkInscripcion && (
-                            <a
-                              href={evento.linkInscripcion}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
-                            >
-                              Inscribirse al evento
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+            {/* Filtros de categorías */}
+            <div className="flex flex-wrap gap-3 mb-10">
+              <button
+                onClick={() => setFiltroActivo('todo')}
+                className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+                  filtroActivo === 'todo'
+                    ? 'bg-primary text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+                }`}
+              >
+                Todo
+              </button>
+              <button
+                onClick={() => setFiltroActivo('recientes')}
+                className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+                  filtroActivo === 'recientes'
+                    ? 'bg-primary text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+                }`}
+              >
+                Recientes
+              </button>
+              <button
+                onClick={() => setFiltroActivo('taller')}
+                className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+                  filtroActivo === 'taller'
+                    ? 'bg-primary text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+                }`}
+              >
+                Taller
+              </button>
+              <button
+                onClick={() => setFiltroActivo('charla')}
+                className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+                  filtroActivo === 'charla'
+                    ? 'bg-primary text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+                }`}
+              >
+                Charla
+              </button>
+              <button
+                onClick={() => setFiltroActivo('exposición')}
+                className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+                  filtroActivo === 'exposición'
+                    ? 'bg-primary text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+                }`}
+              >
+                Exposición
+              </button>
+              <button
+                onClick={() => setFiltroActivo('festival')}
+                className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+                  filtroActivo === 'festival'
+                    ? 'bg-primary text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+                }`}
+              >
+                Festival
+              </button>
+            </div>
+
+            {/* Grid de eventos */}
+            {eventosFiltrados.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-gray-500 dark:text-gray-400">
+                  No hay eventos en esta categoría
+                </p>
               </div>
             ) : (
-              <div>
-                <h2 className="text-2xl font-bold text-primary mb-6">Próximos Eventos</h2>
-                {upcomingEvents.length === 0 ? (
-                  <p className="text-center text-gray-500 py-20">
-                    No hay eventos próximos programados
-                  </p>
-                ) : (
-                  <div className="space-y-6">
-                    {upcomingEvents.map(evento => (
-                      <div key={evento._id} className="bg-white dark:bg-white rounded-lg shadow-lg overflow-hidden">
-                        {evento.imagen && (
-                          <img
-                            src={`http://localhost:5000${evento.imagen}`}
-                            alt={evento.titulo}
-                            className="w-full h-64 object-contain bg-white p-4"
-                          />
-                        )}
-                        <div className="p-6">
-                          <div className="flex items-center gap-2 mb-3">
-                            <span className="text-xs px-3 py-1 bg-primary/20 text-primary rounded-full font-semibold">
-                              {evento.categoria}
-                            </span>
-                            {evento.destacado && (
-                              <span className="text-xs px-3 py-1 bg-accent/20 text-accent rounded-full font-semibold">
-                                Destacado
-                              </span>
-                            )}
-                          </div>
-                          <h3 className="text-2xl font-bold text-primary mb-3">{evento.titulo}</h3>
-                          <div className="space-y-2 text-gray-600 dark:text-gray-600 mb-4">
-                            <p>📅 {new Date(evento.fecha).toLocaleDateString('es-CL', { 
-                              day: 'numeric', 
-                              month: 'long', 
-                              year: 'numeric' 
-                            })}</p>
-                            <p>🕐 {evento.horaInicio} {evento.horaFin && `- ${evento.horaFin}`}</p>
-                            <p>📍 {evento.ubicacion}</p>
-                          </div>
-                          <p className="text-gray-700 dark:text-gray-700 mb-4">
-                            {evento.descripcion.length > 200 
-                              ? `${evento.descripcion.substring(0, 200)}...` 
-                              : evento.descripcion}
-                          </p>
-                          {evento.inscripcionAbierta && evento.linkInscripcion && (
-                            <a
-                              href={evento.linkInscripcion}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
-                            >
-                              Más información
-                            </a>
-                          )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {eventosFiltrados.map((evento) => (
+                  <Link
+                    key={evento._id}
+                    to={`/eventos/${evento._id}`}
+                    className="bg-white dark:bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 block"
+                  >
+                    {/* Imagen */}
+                    <div className="relative h-64 bg-white dark:bg-white overflow-hidden flex items-center justify-center p-4">
+                      {evento.imagen ? (
+                        <img 
+                          src={`http://localhost:5000${evento.imagen}`} 
+                          alt={evento.titulo}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="text-gray-400 text-2xl font-bold text-center">
+                          {evento.titulo}
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                      )}
+                      <span className="absolute top-4 right-4 px-4 py-1.5 bg-accent text-white text-xs font-bold uppercase tracking-wider rounded-full">
+                        {evento.categoria}
+                      </span>
+                    </div>
+                    
+                    {/* Contenido */}
+                    <div className="p-6 bg-white dark:bg-white">
+                      <h3 className="font-bold text-primary text-xl mb-4">
+                        {evento.titulo}
+                      </h3>
+                      <p className="text-center text-sm text-gray-500 dark:text-gray-500">
+                        {new Date(evento.fecha).toLocaleDateString('es-CL', { 
+                          day: 'numeric', 
+                          month: 'long', 
+                          year: 'numeric',
+                          timeZone: 'UTC'
+                        })}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
               </div>
             )}
           </div>
