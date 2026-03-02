@@ -7,6 +7,7 @@ import { useContext, useState, useEffect } from 'react';
 import { Navigate, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api.config';
 
 function AdminDashboard() {
   const { user, loading, logout } = useContext(AuthContext);
@@ -27,9 +28,9 @@ function AdminDashboard() {
     try {
       // Obtener contadores
       const [blogRes, eventosRes, proyectosRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/blog'),
-        axios.get('http://localhost:5000/api/eventos'),
-        axios.get('http://localhost:5000/api/proyectos')
+        axios.get(API_ENDPOINTS.blog),
+        axios.get(API_ENDPOINTS.eventos),
+        axios.get(API_ENDPOINTS.proyectos)
       ]);
       
       setStats({

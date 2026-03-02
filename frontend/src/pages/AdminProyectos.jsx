@@ -7,6 +7,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
 
 function AdminProyectos() {
   const { user, loading: authLoading } = useContext(AuthContext);
@@ -35,7 +36,7 @@ function AdminProyectos() {
 
   const fetchProyectos = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/proyectos');
+      const response = await axios.get(API_ENDPOINTS.proyectos);
       setProyectos(response.data);
       setLoading(false);
     } catch (error) {
@@ -83,10 +84,10 @@ function AdminProyectos() {
       };
 
       if (editando) {
-        await axios.put(`http://localhost:5000/api/proyectos/${editando}`, data, config);
+        await axios.put(API_ENDPOINTS.proyectoById(editando), data, config);
         alert('Proyecto actualizado exitosamente');
       } else {
-        await axios.post('http://localhost:5000/api/proyectos', data, config);
+        await axios.post(API_ENDPOINTS.proyectos, data, config);
         alert('Proyecto creado exitosamente');
       }
 
@@ -119,7 +120,7 @@ function AdminProyectos() {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/proyectos/${id}`, {
+      await axios.delete(API_ENDPOINTS.proyectoById(id), {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       alert('Proyecto eliminado exitosamente');
@@ -365,7 +366,7 @@ function AdminProyectos() {
                     <div className="relative aspect-video bg-gray-100">
                       {proyecto.imagenPrincipal ? (
                         <img 
-                          src={`http://localhost:5000${proyecto.imagenPrincipal}`} 
+                          src={getImageUrl(proyecto.imagenPrincipal)} 
                           alt={proyecto.nombre}
                           className="w-full h-full object-cover"
                         />

@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
 
 function Eventos() {
   const [eventos, setEventos] = useState([]);
@@ -21,7 +22,7 @@ function Eventos() {
 
   const fetchEventos = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/eventos');
+      const response = await axios.get(API_ENDPOINTS.eventos);
       setEventos(response.data.filter(e => e.publicado));
       setLoading(false);
     } catch (error) {
@@ -252,7 +253,7 @@ function Eventos() {
                     <div className="relative h-64 bg-white dark:bg-white overflow-hidden flex items-center justify-center p-4">
                       {evento.imagen ? (
                         <img 
-                          src={`http://localhost:5000${evento.imagen}`} 
+                          src={getImageUrl(evento.imagen)} 
                           alt={evento.titulo}
                           className="w-full h-full object-contain"
                         />

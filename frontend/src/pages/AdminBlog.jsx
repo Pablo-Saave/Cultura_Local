@@ -7,8 +7,9 @@ import { useState, useEffect, useContext } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
+import { API_URL, getImageUrl } from '../config/api.config'
 
-const API_URL = 'http://localhost:5000/api/blog'
+const BLOG_URL = `${API_URL}/api/blog`
 
 function AdminBlog() {
   const { user, loading: authLoading } = useContext(AuthContext)
@@ -31,7 +32,7 @@ function AdminBlog() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get(API_URL)
+      const response = await axios.get(BLOG_URL)
       setPosts(response.data)
     } catch (error) {
       console.error('Error al cargar posts:', error)
@@ -98,7 +99,7 @@ function AdminBlog() {
       if (editingPost) {
         // Actualizar post existente
         await axios.put(
-          `${API_URL}/${editingPost._id}`,
+          `${BLOG_URL}/${editingPost._id}`,
           formDataToSend,
           {
             headers: {
@@ -111,7 +112,7 @@ function AdminBlog() {
       } else {
         // Crear nuevo post
         await axios.post(
-          API_URL,
+          BLOG_URL,
           formDataToSend,
           {
             headers: {
@@ -152,7 +153,7 @@ function AdminBlog() {
       categoria: post.categoria,
       imagen: null
     })
-    setImagePreview(`http://localhost:5000${post.imagen}`)
+    setImagePreview(getImageUrl(post.imagen))
     setShowForm(true)
     // Hacer scroll al top de la página donde está el formulario
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -162,7 +163,7 @@ function AdminBlog() {
     if (window.confirm('¿Estás seguro de eliminar este post?')) {
       try {
         const token = localStorage.getItem('token')
-        await axios.delete(`${API_URL}/${id}`, {
+        await axios.delete(`${BLOG_URL}/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -347,7 +348,7 @@ function AdminBlog() {
                 <div className="relative bg-white p-4">
                   {post.imagen ? (
                     <img 
-                      src={`http://localhost:5000${post.imagen}`} 
+                      src={getImageUrl(post.imagen)} 
                       alt={post.titulo}
                       className="w-full h-48 object-contain"
                     />

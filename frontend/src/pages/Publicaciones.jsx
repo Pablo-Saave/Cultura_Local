@@ -4,6 +4,7 @@
  */
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
 
 function Publicaciones() {
   const [proyectos, setProyectos] = useState([]);
@@ -21,7 +22,7 @@ function Publicaciones() {
 
   const fetchProyectos = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/proyectos');
+      const response = await axios.get(API_ENDPOINTS.proyectos);
       setProyectos(response.data);
       setLoading(false);
     } catch (error) {
@@ -162,7 +163,7 @@ function Publicaciones() {
                     <div className="relative aspect-square bg-white dark:bg-white flex items-center justify-center p-8">
                       {proyecto.imagenPrincipal ? (
                         <img 
-                          src={`http://localhost:5000${proyecto.imagenPrincipal}`} 
+                          src={getImageUrl(proyecto.imagenPrincipal)} 
                           alt={proyecto.nombre}
                           className="w-full h-full object-contain"
                         />

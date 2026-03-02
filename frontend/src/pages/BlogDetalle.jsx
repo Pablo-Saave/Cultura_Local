@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
+import { API_ENDPOINTS, getImageUrl } from '../config/api.config'
 
 function BlogDetalle() {
   const { id } = useParams()
@@ -18,7 +19,7 @@ function BlogDetalle() {
 
   const fetchPost = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/blog/${id}`)
+      const response = await axios.get(API_ENDPOINTS.blogById(id))
       setPost(response.data)
     } catch (error) {
       console.error('Error al cargar post:', error)
@@ -94,7 +95,7 @@ function BlogDetalle() {
           {/* Imagen */}
           <div className="relative h-96 bg-white rounded-xl overflow-hidden mb-12 flex items-center justify-center">
             <img 
-              src={`http://localhost:5000${post.imagen}`} 
+              src={getImageUrl(post.imagen)} 
               alt={post.titulo}
               className="w-full h-full object-contain"
             />

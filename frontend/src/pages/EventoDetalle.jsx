@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
+import { API_ENDPOINTS, getImageUrl } from '../config/api.config'
 
 function EventoDetalle() {
   const { id } = useParams()
@@ -18,7 +19,7 @@ function EventoDetalle() {
 
   const fetchEvento = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/eventos/${id}`)
+      const response = await axios.get(API_ENDPOINTS.eventoById(id))
       setEvento(response.data)
     } catch (error) {
       console.error('Error al cargar evento:', error)
@@ -78,7 +79,7 @@ function EventoDetalle() {
           {evento.imagen && (
             <div className="relative h-96 bg-white rounded-xl overflow-hidden mb-12 flex items-center justify-center">
               <img 
-                src={`http://localhost:5000${evento.imagen}`} 
+                src={getImageUrl(evento.imagen)} 
                 alt={evento.titulo}
                 className="w-full h-full object-contain"
               />

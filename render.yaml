@@ -1,0 +1,34 @@
+# Render Deployment Configuration
+# Este archivo configura el deploy automático en Render.com
+
+services:
+  # Backend API
+  - type: web
+    name: cultura-local-backend
+    env: node
+    region: oregon
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false # Lo configurarás en el dashboard
+      - key: JWT_SECRET
+        generateValue: true # Genera un valor seguro automáticamente
+      - key: CORS_ORIGIN
+        sync: false # URL del frontend (lo configuras después)
+    healthCheckPath: /api/health
+
+  # Frontend (opcional - también puedes usar Vercel/Netlify)
+  - type: web
+    name: cultura-local-frontend
+    env: static
+    region: oregon
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false # URL del backend (ej: https://tu-backend.onrender.com)

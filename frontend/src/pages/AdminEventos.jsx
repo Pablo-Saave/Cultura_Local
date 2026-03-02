@@ -7,6 +7,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { Link, Navigate } from 'react-router-dom';
+import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
 
 function AdminEventos() {
   const { user, token, loading: authLoading } = useContext(AuthContext);
@@ -41,7 +42,7 @@ function AdminEventos() {
 
   const fetchEventos = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/eventos');
+      const response = await axios.get(API_ENDPOINTS.eventos);
       setEventos(response.data);
       setLoading(false);
     } catch (error) {
@@ -88,7 +89,7 @@ function AdminEventos() {
 
       if (editingId) {
         await axios.put(
-          `http://localhost:5000/api/eventos/${editingId}`,
+          API_ENDPOINTS.eventoById(editingId),
           formDataToSend,
           {
             headers: {
@@ -100,7 +101,7 @@ function AdminEventos() {
         setSuccess('Evento actualizado exitosamente');
       } else {
         await axios.post(
-          'http://localhost:5000/api/eventos',
+          API_ENDPOINTS.eventos,
           formDataToSend,
           {
             headers: {
@@ -141,7 +142,7 @@ function AdminEventos() {
       publicado: evento.publicado,
       destacado: evento.destacado
     });
-    setImagenPreview(evento.imagen ? `http://localhost:5000${evento.imagen}` : '');
+    setImagenPreview(evento.imagen ? getImageUrl(evento.imagen) : '');
     setEditingId(evento._id);
     setMostrarFormulario(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -153,7 +154,7 @@ function AdminEventos() {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/api/eventos/${id}`, {
+      await axios.delete(API_ENDPOINTS.eventoById(id), {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setSuccess('Evento eliminado exitosamente');

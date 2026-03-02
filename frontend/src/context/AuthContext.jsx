@@ -5,10 +5,11 @@
 
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config/api.config';
 
 export const AuthContext = createContext();
 
-const API_URL = 'http://localhost:5000/api/auth';
+const AUTH_URL = `${API_URL}/api/auth`;
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -33,7 +34,7 @@ export function AuthProvider({ children }) {
       }
 
       try {
-        const response = await axios.get(`${API_URL}/verify`);
+        const response = await axios.get(`${AUTH_URL}/verify`);
         setUser(response.data.data);
       } catch (error) {
         console.error('Token inválido:', error);
@@ -51,9 +52,9 @@ export function AuthProvider({ children }) {
   // Login
   const login = async (username, password) => {
     try {
-      console.log('Intentando login con:', { username, url: `${API_URL}/login` });
+      console.log('Intentando login con:', { username, url: `${AUTH_URL}/login` });
       
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await axios.post(`${AUTH_URL}/login`, {
         username,
         password
       });
