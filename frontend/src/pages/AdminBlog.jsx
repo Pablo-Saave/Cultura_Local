@@ -4,14 +4,14 @@
  */
 
 import { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
 
 const API_URL = 'http://localhost:5000/api/blog'
 
 function AdminBlog() {
-  const { user } = useContext(AuthContext)
+  const { user, loading: authLoading } = useContext(AuthContext)
   const [posts, setPosts] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [editingPost, setEditingPost] = useState(null)
@@ -186,6 +186,22 @@ function AdminBlog() {
     setImagePreview('')
     setShowForm(false)
     setEditingPost(null)
+  }
+
+  // Verificar autenticación
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600">Cargando...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/admin/login" replace />;
   }
 
   return (

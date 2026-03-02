@@ -4,19 +4,13 @@ import { useState, useEffect } from 'react'
 // Importamos Link para navegación sin recargar la página
 import { Link, useLocation } from 'react-router-dom'
 
-// Componente Navbar - recibe darkMode y toggleDarkMode como props
-function Navbar({ darkMode, toggleDarkMode }) {
-  // Estado para controlar si el menú móvil está abierto
-  const [isOpen, setIsOpen] = useState(false)
-  // Estado para controlar si la navbar está visible
-  const [isVisible, setIsVisible] = useState(true)
-  // Estado para guardar la última posición del scroll
-  const [lastScrollY, setLastScrollY] = useState(0)
-  
-  // Hook para obtener la ruta actual y resaltar el enlace activo
-  const location = useLocation()
 
-  // Función auxiliar para verificar si un enlace está activo
+function Navbar({ darkMode, toggleDarkMode }) {
+ 
+  const [isOpen, setIsOpen] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const location = useLocation()
   const isActive = (path) => location.pathname === path
 
   // Efecto para manejar el scroll

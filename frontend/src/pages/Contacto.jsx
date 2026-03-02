@@ -51,7 +51,14 @@ function Contacto() {
               </svg>
               <div>
                 <p className="font-semibold text-gray-900 dark:text-white">Ubicación</p>
-                <p className="text-gray-700 dark:text-gray-300">Concepción, Chile</p>
+                <a 
+                  href="https://www.google.com/maps/place/Concepción,+Chile" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors cursor-pointer"
+                >
+                  Concepción, Chile
+                </a>
               </div>
             </div>
             

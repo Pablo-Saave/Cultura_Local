@@ -3,8 +3,8 @@
  * Ruta oculta para que los administradores inicien sesión
  */
 
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 function AdminLogin() {
@@ -13,8 +13,15 @@ function AdminLogin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  const { login } = useContext(AuthContext);
+  const { login, user, loading: authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // Si el usuario ya está autenticado, redirigir al dashboard
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate('/admin/dashboard', { replace: true });
+    }
+  }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,9 +139,9 @@ function AdminLogin() {
 
         {/* Volver al inicio */}
         <div className="text-center mt-4">
-          <a href="/" className="text-white hover:text-white/80 text-xs transition-colors">
+          <Link to="/" className="text-white hover:text-white/80 text-xs transition-colors">
             ← Volver al sitio web
-          </a>
+          </Link>
         </div>
       </div>
     </div>

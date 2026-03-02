@@ -1,6 +1,6 @@
 /**
  * BuscarPractica.jsx - Página de práctica profesional
- * Información sobre práctica profesional para estudiantes de arquitectura
+ * Información sobre prácticas profesionales para estudiantes universitarios
  */
 
 function BuscarPractica() {
@@ -10,7 +10,7 @@ function BuscarPractica() {
       <section className="py-20 px-4 bg-white dark:bg-dark-bg">
         <div className="max-w-4xl mx-auto text-center">
 <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-primary-light mb-6" style={{fontFamily: 'Aktifo A, sans-serif'}}>
-            Práctica Profesional en Arquitectura
+            Prácticas Profesionales
           </h1>
         </div>
       </section>
@@ -28,15 +28,15 @@ function BuscarPractica() {
             <ul className="space-y-3 text-gray-700 dark:text-gray-300">
               <li className="flex items-start">
                 <span className="text-primary mr-3">•</span>
-                <span>Elaboración de planos técnicos y levantamientos arquitectónicos</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-primary mr-3">•</span>
-                <span>Documentación y análisis de patrimonio cultural y arquitectónico</span>
+                <span>Investigación y documentación de patrimonio cultural</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary mr-3">•</span>
                 <span>Apoyo en proyectos de investigación en curso</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-3">•</span>
+                <span>Trabajo de campo y registro de prácticas culturales</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary mr-3">•</span>
@@ -57,7 +57,7 @@ function BuscarPractica() {
             <ul className="space-y-3 text-gray-700 dark:text-gray-300">
               <li className="flex items-start">
                 <span className="text-primary mr-3 text-xl">✓</span>
-                <span>Ser estudiante universitario de Arquitectura</span>
+                <span>Ser estudiante universitario</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary mr-3 text-xl">✓</span>
@@ -66,10 +66,6 @@ function BuscarPractica() {
               <li className="flex items-start">
                 <span className="text-primary mr-3 text-xl">✓</span>
                 <span>Disponibilidad para realizar las horas requeridas por tu universidad</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-primary mr-3 text-xl">✓</span>
-                <span>Manejo de software de diseño y planimetría (AutoCAD, Revit, etc.)</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary mr-3 text-xl">✓</span>

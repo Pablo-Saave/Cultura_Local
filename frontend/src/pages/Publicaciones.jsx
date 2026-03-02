@@ -39,7 +39,7 @@ function Publicaciones() {
       filtrados = filtrados.filter(p => p.educativo);
     } else if (filtroActivo === 'recientes') {
       const haceDosSemanass = new Date();
-      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); 
       filtrados = filtrados.filter(p => {
         if (p.fechaRealizacion) {
           const fechaProyecto = new Date(p.fechaRealizacion);
@@ -59,7 +59,7 @@ function Publicaciones() {
     if (proyecto.fechaRealizacion) {
       const fechaProyecto = new Date(proyecto.fechaRealizacion);
       const haceDosSemanass = new Date();
-      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
+      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); 
       if (fechaProyecto >= haceDosSemanass) {
         return { label: 'RECIENTE', color: 'bg-accent' };
       }

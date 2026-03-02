@@ -7,7 +7,7 @@
 // Importamos React y hooks necesarios
 import { useState, useEffect } from 'react'
 // Importamos el sistema de rutas de React Router
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 
 // Importamos el contexto de autenticación
 import { AuthProvider } from './context/AuthContext'
@@ -88,6 +88,7 @@ function App() {
             <Route path="/admin/blog" element={<AdminBlog />} />
             <Route path="/admin/eventos" element={<AdminEventos />} />
             <Route path="/admin/proyectos" element={<AdminProyectos />} />
+            <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
             
             {/* Rutas públicas (con navbar/footer) */}
             <Route path="/*" element={

@@ -4,12 +4,13 @@
  */
 
 import { useContext, useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 
 function AdminDashboard() {
   const { user, loading, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
     blog: 0,
     eventos: 0,
@@ -41,6 +42,12 @@ function AdminDashboard() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    // Redirigir al login
+    navigate('/admin/login', { replace: true });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -69,7 +76,7 @@ function AdminDashboard() {
               </p>
             </div>
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
             >
               Cerrar Sesión
@@ -106,9 +113,9 @@ function AdminDashboard() {
                 { name: 'Eventos', path: '/admin/eventos', color: 'bg-green-500' },
                 { name: 'Proyectos', path: '/admin/proyectos', color: 'bg-purple-500' },
               ].map((item) => (
-                <a
+                <Link
                   key={item.path}
-                  href={item.path}
+                  to={item.path}
                   className="flex items-center p-4 rounded-lg border-2 border-gray-200 
                            hover:border-primary hover:shadow-md transition-all group"
                 >
@@ -116,7 +123,7 @@ function AdminDashboard() {
                     <h3 className="font-semibold text-gray-900">{item.name}</h3>
                     <p className="text-sm text-gray-500">Gestionar</p>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>

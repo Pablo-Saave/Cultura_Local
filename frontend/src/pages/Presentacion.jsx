@@ -16,7 +16,7 @@ function Presentacion() {
     '/img/slide3.jpeg'
   ]
   
-  // Cambiar slide automáticamente cada 5 segundos
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselImages.length)

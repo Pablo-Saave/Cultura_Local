@@ -37,17 +37,17 @@ async function seed() {
   try {
     // Conectar a MongoDB
     await mongoose.connect(MONGO_URI);
-    console.log('✅ Conectado a MongoDB');
+    console.log('Conectado a MongoDB');
 
     // Limpiar colección de proyectos (opcional)
     // await Proyecto.deleteMany({});
-    // console.log('🗑️  Colección de proyectos limpiada');
+    // console.log('Colección de proyectos limpiada');
 
     // Verificar si ya existen proyectos
     const proyectosExistentes = await Proyecto.find({});
     if (proyectosExistentes.length > 0) {
-      console.log(`ℹ️  Ya existen ${proyectosExistentes.length} proyectos en la base de datos`);
-      console.log('💡 Si deseas reemplazarlos, descomenta la línea de deleteMany() en el seeder');
+      console.log(`Ya existen ${proyectosExistentes.length} proyectos en la base de datos`);
+      console.log('para reemplazar descomenta la línea de deleteMany() en el seeder');
       await mongoose.connection.close();
       return;
     }
@@ -61,10 +61,10 @@ async function seed() {
 
     // Cerrar conexión
     await mongoose.connection.close();
-    console.log('✅ Seeder completado, conexión cerrada');
+    console.log('Seeder completado, conexión cerrada');
     process.exit(0);
   } catch (error) {
-    console.error('❌ Error en el seeder:', error);
+    console.error('Error en el seeder:', error);
     process.exit(1);
   }
 }

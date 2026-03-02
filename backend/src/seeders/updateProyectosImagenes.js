@@ -13,7 +13,7 @@ async function updateImagenes() {
   try {
     // Conectar a MongoDB
     await mongoose.connect(MONGO_URI);
-    console.log('✅ Conectado a MongoDB');
+    console.log('Conectado a MongoDB');
 
     // Actualizar Creadoras Chile
     const creadoras = await Proyecto.findOne({ nombre: 'Creadoras Chile' });
@@ -21,7 +21,7 @@ async function updateImagenes() {
       creadoras.imagenPrincipal = '/img/logo.jpeg';
       creadoras.imagenes = ['/img/logo.jpeg'];
       await creadoras.save();
-      console.log('✅ Actualizado: Creadoras Chile');
+      console.log('Actualizado: Creadoras Chile');
     }
 
     // Actualizar Concepción: Reversiones Fotográficas
@@ -30,15 +30,15 @@ async function updateImagenes() {
       concepcion.imagenPrincipal = '/img/proyecto2.png';
       concepcion.imagenes = ['/img/proyecto2.png'];
       await concepcion.save();
-      console.log('✅ Actualizado: Concepción: Reversiones Fotográficas');
+      console.log('Actualizado: Concepción: Reversiones Fotográficas');
     }
 
     // Cerrar conexión
     await mongoose.connection.close();
-    console.log('✅ Actualización completada');
+    console.log('Actualización completada');
     process.exit(0);
   } catch (error) {
-    console.error('❌ Error:', error);
+    console.error('Error:', error);
     process.exit(1);
   }
 }
