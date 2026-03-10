@@ -83,7 +83,7 @@ exports.crearProyecto = async (req, res) => {
       descripcion,
       imagenPrincipal,
       imagenes,
-      categoria,
+      categoria: categoria && categoria.trim() !== '' ? categoria : 'Otro',
       etiquetas: etiquetas ? JSON.parse(etiquetas) : [],
       autor,
       colaboradores: colaboradores ? JSON.parse(colaboradores) : [],
@@ -135,7 +135,7 @@ exports.actualizarProyecto = async (req, res) => {
     // Actualizar campos
     proyecto.nombre = nombre || proyecto.nombre;
     proyecto.descripcion = descripcion || proyecto.descripcion;
-    proyecto.categoria = categoria || proyecto.categoria;
+    proyecto.categoria = categoria && categoria.trim() !== '' ? categoria : (proyecto.categoria || 'Otro');
     proyecto.etiquetas = etiquetas ? JSON.parse(etiquetas) : proyecto.etiquetas;
     proyecto.autor = autor || proyecto.autor;
     proyecto.colaboradores = colaboradores ? JSON.parse(colaboradores) : proyecto.colaboradores;
