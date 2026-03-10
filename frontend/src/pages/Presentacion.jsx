@@ -61,7 +61,7 @@ function Presentacion() {
         <div className="grid md:grid-cols-[300px_1fr] gap-6 sm:gap-8 items-start mb-12 sm:mb-16 md:mb-20">
           
           {/* Logo imagen */}
-          <div className="flex items-center justify-center rounded-lg overflow-hidden mx-auto md:mx-0 max-w-xs md:max-w-none">
+          <div className="flex items-center justify-center rounded-lg overflow-hidden mx-auto md:mx-0 w-48 sm:w-56 md:w-full">
             <img 
               src="/img/imagen12.png" 
               alt="Fundación Cultura Local"

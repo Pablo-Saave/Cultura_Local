@@ -47,7 +47,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
     <nav className={`fixed w-full top-0 z-50 theme-transition transition-transform duration-500 ease-in-out ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     }`}>
-      <div className="flex flex-col md:flex-row">
       <div className="flex justify-between items-center h-16">
         
         {/* Logo con franja integrada */}
@@ -164,11 +163,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
           </div>
         </div>
         </div>
-      </div>
 
         {/* Menú móvil desplegable */}
         {isOpen && (
-          <div className="md:hidden pb-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+          <div className="md:hidden absolute top-16 left-0 right-0 py-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="flex flex-col space-y-2 px-4">
               {/* Enlaces del menú móvil */}
               {[
