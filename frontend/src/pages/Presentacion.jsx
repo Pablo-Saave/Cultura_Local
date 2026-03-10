@@ -29,7 +29,7 @@ function Presentacion() {
     <div className="min-h-screen bg-white dark:bg-dark-bg">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Carrusel de imágenes - con bordes blancos laterales */}
-        <div className="relative w-full overflow-hidden -mt-4 sm:-mt-12 md:-mt-20 h-48 sm:h-72 md:h-96 lg:h-[420px]">
+        <div className="relative w-full overflow-hidden -mt-4 sm:-mt-12 md:-mt-20 h-64 sm:h-80 md:h-[32rem] lg:h-[36rem]">
           {/* Imágenes */}
           {carouselImages.map((img, index) => (
             <div

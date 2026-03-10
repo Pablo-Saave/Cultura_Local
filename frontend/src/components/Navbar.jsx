@@ -171,11 +171,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
               {/* Enlaces del menú móvil */}
               {[
                 { name: 'PRESENTACIÓN', path: '/presentacion' },
-                { name: 'PUBLICACIONES', path: '/publicaciones' },
+                { name: 'PROYECTOS', path: '/publicaciones' },
                 { name: 'EVENTOS', path: '/eventos' },
                 { name: 'BLOG', path: '/blog' },
-                { name: 'BUSCAR PRÁCTICA', path: '/buscar' },
-                { name: 'CONTACTO', path: '/contacto' },
+                { name: 'PRÁCTICAS CULTURALES', path: '/buscar' },
               ].map((item) => (
                 <Link
                   key={item.path}
@@ -190,6 +189,15 @@ function Navbar({ darkMode, toggleDarkMode }) {
                   {item.name}
                 </Link>
               ))}
+              
+              {/* Botón de contacto en móvil */}
+              <Link
+                to="/contacto"
+                onClick={() => setIsOpen(false)}
+                className="mx-4 mt-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-full font-bold transition-all duration-300 text-center"
+              >
+                CONTACTO
+              </Link>
             </div>
           </div>
         )}

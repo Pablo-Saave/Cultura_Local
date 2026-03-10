@@ -146,7 +146,7 @@ function Publicaciones() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {proyectosFiltrados.map((proyecto) => {
               const categoria = getCategoriaLabel(proyecto);
               
@@ -160,7 +160,7 @@ function Publicaciones() {
                 >
                   <div className="bg-white dark:bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 h-full flex flex-col">
                     {/* Imagen del proyecto con badge */}
-                    <div className="relative aspect-square bg-white dark:bg-white flex items-center justify-center p-8">
+                    <div className="relative aspect-square bg-white dark:bg-white flex items-center justify-center p-4 sm:p-6 md:p-8">
                       {proyecto.imagenPrincipal ? (
                         <img 
                           src={getImageUrl(proyecto.imagenPrincipal)} 
@@ -175,8 +175,8 @@ function Publicaciones() {
                       
                       {/* Badge de categoría */}
                       {categoria && (
-                        <div className="absolute top-4 right-4">
-                          <span className={`${categoria.color} text-white text-xs font-bold px-4 py-1.5 rounded-full`}>
+                        <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
+                          <span className={`${categoria.color} text-white text-xs font-bold px-3 py-1 rounded-full`}>
                             {categoria.label}
                           </span>
                         </div>
@@ -184,8 +184,8 @@ function Publicaciones() {
                     </div>
                     
                     {/* Información del proyecto */}
-                    <div className="p-6 flex-grow flex items-center justify-center">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-gray-900 text-center group-hover:text-primary transition-colors">
+                    <div className="p-4 sm:p-6 flex-grow flex items-center justify-center">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-900 text-center group-hover:text-primary transition-colors">
                         {proyecto.nombre}
                       </h3>
                     </div>
