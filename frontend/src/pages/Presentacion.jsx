@@ -27,9 +27,9 @@ function Presentacion() {
   
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Carrusel de imágenes - con bordes blancos laterales */}
-        <div className="relative w-full overflow-hidden -mt-20" style={{ height: '420px' }}>
+        <div className="relative w-full overflow-hidden -mt-4 sm:-mt-12 md:-mt-20 h-48 sm:h-72 md:h-96 lg:h-[420px]">
           {/* Imágenes */}
           {carouselImages.map((img, index) => (
             <div
@@ -55,13 +55,13 @@ function Presentacion() {
       </div>
 
       {/* Contenido principal */}
-      <div className="max-w-6xl mx-auto px-4 py-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
 
         {/* Sección principal con logo y descripción */}
-        <div className="grid md:grid-cols-[300px_1fr] gap-8 items-start mb-20">
+        <div className="grid md:grid-cols-[300px_1fr] gap-6 sm:gap-8 items-start mb-12 sm:mb-16 md:mb-20">
           
           {/* Logo imagen */}
-          <div className="flex items-center justify-center rounded-lg overflow-hidden">
+          <div className="flex items-center justify-center rounded-lg overflow-hidden mx-auto md:mx-0 max-w-xs md:max-w-none">
             <img 
               src="/img/imagen12.png" 
               alt="Fundación Cultura Local"
@@ -70,8 +70,8 @@ function Presentacion() {
           </div>
 
           {/* Descripción */}
-          <div className="space-y-6">
-            <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
+          <div className="space-y-4 sm:space-y-6">
+            <p className="text-sm sm:text-base text-gray-800 dark:text-gray-200 leading-relaxed">
               <strong className="text-primary">Fundación Cultura Local</strong> es un proyecto colaborativo 
               impulsado por un equipo interdisciplinario comprometido con relevar, investigar y difundir 
               la labor cultural en Chile, con especial énfasis en lo desarrollado durante el siglo XXI. 
@@ -80,7 +80,7 @@ function Presentacion() {
               de la historia cultural nacional.
             </p>
 
-            <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-800 dark:text-gray-200 leading-relaxed">
               Nuestro equipo está conformado por gestores culturales, artistas, investigadores, periodistas 
               y profesionales de diversas áreas unidos por el interés común de reconocer el trabajo de las 
               comunidades que han aportado al paisaje cultural desde su oficio y vocación.
