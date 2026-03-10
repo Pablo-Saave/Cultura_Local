@@ -27,9 +27,9 @@ function Presentacion() {
   
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-0 sm:px-4 md:px-6">
         {/* Carrusel de imágenes - con bordes blancos laterales */}
-        <div className="relative w-full overflow-hidden -mt-4 sm:-mt-12 md:-mt-20 h-64 sm:h-80 md:h-[32rem] lg:h-[36rem]">
+        <div className="relative w-full overflow-hidden mt-0 sm:-mt-8 md:-mt-16 lg:-mt-20 h-[320px] sm:h-96 md:h-[420px] lg:h-[480px]">
           {/* Imágenes */}
           {carouselImages.map((img, index) => (
             <div

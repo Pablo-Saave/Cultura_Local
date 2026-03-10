@@ -194,7 +194,8 @@ function Navbar({ darkMode, toggleDarkMode }) {
               <Link
                 to="/contacto"
                 onClick={() => setIsOpen(false)}
-                className="mx-4 mt-2 bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-full font-bold transition-all duration-300 text-center"
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-accent hover:bg-accent-dark text-white
+                            ${isActive('/contacto') ? 'bg-accent-dark' : ''}`}
               >
                 CONTACTO
               </Link>
