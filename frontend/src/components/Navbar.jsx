@@ -191,10 +191,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
               ))}
               
               {/* Botón de contacto en móvil */}
-              <Link
+<Link
                 to="/contacto"
                 onClick={() => setIsOpen(false)}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-accent hover:bg-accent-dark text-white
+                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors bg-accent hover:bg-accent-dark text-white
                             ${isActive('/contacto') ? 'bg-accent-dark' : ''}`}
               >
                 CONTACTO

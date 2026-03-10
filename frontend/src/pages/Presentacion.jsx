@@ -27,9 +27,36 @@ function Presentacion() {
   
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg">
-      <div className="max-w-6xl mx-auto px-0 sm:px-4 md:px-6">
-        {/* Carrusel de imágenes - con bordes blancos laterales */}
-        <div className="relative w-full overflow-hidden mt-0 sm:-mt-8 md:-mt-16 lg:-mt-20 h-[320px] sm:h-96 md:h-[420px] lg:h-[480px]">
+      {/* Carrusel en móvil - mantener igual */}
+      <div className="md:hidden">
+        <div className="relative w-full overflow-hidden mt-0 h-[320px]">
+          {/* Imágenes */}
+          {carouselImages.map((img, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <img 
+                src={img} 
+                alt={`Slide ${index + 1}`}
+                className="w-full h-full object-cover"
+                style={{ objectPosition: 'center 40%' }}
+                onError={(e) => {
+                  e.target.src = ''
+                  e.target.parentElement.classList.add('bg-gray-200', 'dark:bg-gray-700')
+                  e.target.parentElement.innerHTML += '<div class="absolute inset-0 flex items-center justify-center text-gray-400">Imagen ' + (index + 1) + '</div>'
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Carrusel en desktop - ancho completo */}
+      <div className="hidden md:block max-w-7xl mx-auto px-0 lg:px-8">
+        <div className="relative w-full overflow-hidden -mt-16 lg:-mt-20 h-96 md:h-[420px] lg:h-[480px]">
           {/* Imágenes */}
           {carouselImages.map((img, index) => (
             <div
