@@ -5,6 +5,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
+import SEO from '../components/SEO';
 
 function Publicaciones() {
   const [proyectos, setProyectos] = useState([]);
@@ -81,6 +82,11 @@ function Publicaciones() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg py-16 px-4">
+      <SEO 
+        title="Proyectos y Publicaciones"
+        description="Conoce los proyectos culturales, educativos y territoriales de Fundación Cultura Local. Iniciativas de rescate y difusión del patrimonio cultural chileno."
+        keywords="proyectos culturales chile, proyectos educativos cultura, iniciativas culturales, patrimonio cultural, cultura territorial"
+      />
       <div className="max-w-7xl mx-auto">
         {/* Título principal */}
         <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>

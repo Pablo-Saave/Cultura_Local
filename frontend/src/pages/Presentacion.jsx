@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect } from 'react'
+import SEO from '../components/SEO'
 
 function Presentacion() {
   // Estado para el carrusel de imágenes
@@ -27,6 +28,11 @@ function Presentacion() {
   
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg">
+      <SEO 
+        title="Quiénes Somos"
+        description="Fundación Cultura Local es una organización dedicada al rescate y promoción de prácticas culturales territoriales mediante la participación juvenil en Chile."
+        keywords="fundación cultura local, quiénes somos, misión cultural, organización cultural chile, participación juvenil cultura"
+      />
       {/* Carrusel en móvil - mantener igual */}
       <div className="md:hidden">
         <div className="relative w-full overflow-hidden mt-0 h-[320px]">

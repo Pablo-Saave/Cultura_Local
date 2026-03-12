@@ -3,10 +3,17 @@
  * PPagina de inicio. Hero section, introduccion al proyecto y destacados.
  */
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 
 function Home() {
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Inicio"
+        description="Fundación Cultura Local - Potenciamos la cultura local a través de la participación juvenil y el rescate de nuestras prácticas territoriales en Chile."
+        keywords="fundación cultura local, cultura chilena, participación juvenil, prácticas territoriales, patrimonio cultural chile"
+      />
+      
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary-dark overflow-hidden">
         {/* Patrón decorativo de fondo */}

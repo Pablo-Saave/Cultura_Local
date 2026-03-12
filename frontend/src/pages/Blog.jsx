@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { API_ENDPOINTS, getImageUrl } from '../config/api.config'
+import SEO from '../components/SEO'
 
 function Blog() {
   const [posts, setPosts] = useState([])
@@ -78,6 +79,11 @@ function Blog() {
 
   return (
     <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg">
+      <SEO 
+        title="Blog"
+        description="Descubre artículos, noticias y entrevistas sobre cultura local en Chile. Contenido actualizado sobre prácticas culturales, eventos y proyectos territoriales."
+        keywords="blog cultura local, noticias culturales chile, artículos cultura, entrevistas cultura local"
+      />
       <div className="max-w-7xl mx-auto">
         {/* Título principal */}
         <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>

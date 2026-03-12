@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
+import SEO from '../components/SEO';
 
 function Eventos() {
   const [eventos, setEventos] = useState([]);
@@ -153,6 +154,11 @@ function Eventos() {
 
   return (
     <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg">
+      <SEO 
+        title="Eventos"
+        description="Descubre los eventos culturales de Fundación Cultura Local. Talleres, charlas, encuentros y actividades territoriales en Chile."
+        keywords="eventos cultura local, eventos culturales chile, talleres cultura, actividades culturales, encuentros territoriales"
+      />
       <div className="max-w-7xl mx-auto">
         {/* Título principal */}
         <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>

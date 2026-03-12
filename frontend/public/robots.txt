@@ -1,0 +1,13 @@
+# robots.txt para Cultura Local
+# Permite a todos los bots indexar todo el sitio
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://culturalocal-frontend.onrender.com/sitemap.xml
+
+# Bloquear acceso al panel de administración
+User-agent: *
+Disallow: /admin
+Disallow: /admin/*

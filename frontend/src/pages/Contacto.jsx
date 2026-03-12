@@ -2,9 +2,16 @@
  * Contacto.jsx - P�gina de contacto
  * P�gina de contacto con formulario, informaci�n de ubicaci�n y redes sociales.
  */
+import SEO from '../components/SEO'
+
 function Contacto() {
   return (
     <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg">
+      <SEO 
+        title="Contacto"
+        description="Contáctanos para colaboraciones, proyectos culturales o consultas sobre Fundación Cultura Local. Estamos en La Serena, Chile."
+        keywords="contacto cultura local, colaboración cultural, proyectos culturales la serena, fundación cultura contacto"
+      />
       <div className="max-w-4xl mx-auto">
 <h1 className="text-4xl md:text-5xl font-bold text-primary dark:text-primary-light mb-6" style={{fontFamily: 'Aktifo A, sans-serif'}}>
           Contacto
