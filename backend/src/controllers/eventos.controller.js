@@ -4,8 +4,6 @@
  * y eliminación de eventos en MongoDB.
  */
 const Evento = require('../models/Evento');
-const fs = require('fs');
-const path = require('path');
 
 // GET todos los eventos
 exports.getEventos = async (req, res) => {
@@ -39,7 +37,7 @@ exports.createEvento = async (req, res) => {
   try {
     const eventoData = {
       ...req.body,
-      imagen: req.file ? `/img/eventos/${req.file.filename}` : ''
+      imagen: req.file ? req.file.path : '' // Cloudinary devuelve la URL en file.path
     };
 
     const evento = new Evento(eventoData);
@@ -48,15 +46,6 @@ exports.createEvento = async (req, res) => {
     res.status(201).json(evento);
   } catch (error) {
     console.error('Error al crear evento:', error);
-    
-    // Si hay error, eliminar la imagen subida
-    if (req.file) {
-      const imagePath = path.join(__dirname, '../../public/img/eventos', req.file.filename);
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-      }
-    }
-    
     res.status(500).json({ message: 'Error al crear evento', error: error.message });
   }
 };
@@ -71,12 +60,9 @@ exports.updateEvento = async (req, res) => {
     }
 
     // Si hay nueva imagen, eliminar la anterior
-    if (req.file && evento.imagen) {
-      const oldImagePath = path.join(__dirname, '../../public', evento.imagen);
-      if (fs.existsSync(oldImagePath)) {
-        fs.unlinkSync(oldImagePath);
-      }
-      req.body.imagen = `/img/eventos/${req.file.filename}`;
+    // Si hay nueva imagen, actualizar
+    if (req.file) {
+      req.body.imagen = req.file.path; // Cloudinary devuelve la URL en file.path
     }
 
     // Actualizar campos
@@ -101,14 +87,7 @@ exports.deleteEvento = async (req, res) => {
       return res.status(404).json({ message: 'Evento no encontrado' });
     }
 
-    // Eliminar imagen si existe
-    if (evento.imagen) {
-      const imagePath = path.join(__dirname, '../../public', evento.imagen);
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-      }
-    }
-
+    // Con Cloudinary, las imágenes permanecen en la nube
     await Evento.findByIdAndDelete(req.params.id);
     res.json({ message: 'Evento eliminado exitosamente' });
   } catch (error) {

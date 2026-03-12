@@ -70,10 +70,11 @@ exports.crearProyecto = async (req, res) => {
     const imagenes = [];
 
     if (req.files && req.files.length > 0) {
-      imagenPrincipal = `/img/proyectos/${req.files[0].filename}`;
+      // Cloudinary devuelve la URL completa en file.path
+      imagenPrincipal = req.files[0].path;
       
       req.files.forEach(file => {
-        imagenes.push(`/img/proyectos/${file.filename}`);
+        imagenes.push(file.path);
       });
     }
 
@@ -149,7 +150,8 @@ exports.actualizarProyecto = async (req, res) => {
     if (req.files && req.files.length > 0) {
       const nuevasImagenes = [];
       req.files.forEach(file => {
-        nuevasImagenes.push(`/img/proyectos/${file.filename}`);
+        // Cloudinary devuelve la URL completa en file.path
+        nuevasImagenes.push(file.path);
       });
       
       proyecto.imagenPrincipal = nuevasImagenes[0];

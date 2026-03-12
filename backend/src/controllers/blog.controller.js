@@ -4,8 +4,6 @@
  */
 
 const Blog = require('../models/Blog');
-const path = require('path');
-const fs = require('fs').promises;
 
 // Obtener todos los posts
 const getPosts = async (req, res) => {
@@ -48,14 +46,11 @@ const createPost = async (req, res) => {
       return res.status(400).json({ message: 'La imagen es requerida' });
     }
     
-    // Crear el path relativo de la imagen
-    const imagePath = `/img/blog/${req.file.filename}`;
-    
     const newPost = new Blog({
       titulo,
       descripcion,
       categoria,
-      imagen: imagePath,
+      imagen: req.file.path, // Cloudinary devuelve la URL en file.path
       autor: req.user.id
     });
     
@@ -67,13 +62,6 @@ const createPost = async (req, res) => {
     res.status(201).json(newPost);
   } catch (error) {
     console.error('Error al crear post:', error);
-    
-    // Si hubo error, eliminar la imagen subida
-    if (req.file) {
-      const imagePath = path.join(__dirname, '../../public/img/blog', req.file.filename);
-      await fs.unlink(imagePath).catch(err => console.error('Error al eliminar imagen:', err));
-    }
-    
     res.status(500).json({ message: 'Error al crear post', error: error.message });
   }
 };
@@ -95,12 +83,7 @@ const updatePost = async (req, res) => {
     
     // Si se subió una nueva imagen
     if (req.file) {
-      // Eliminar imagen anterior
-      const oldImagePath = path.join(__dirname, '../..', post.imagen);
-      await fs.unlink(oldImagePath).catch(err => console.error('Error al eliminar imagen anterior:', err));
-      
-      // Actualizar con nueva imagen
-      post.imagen = `/img/blog/${req.file.filename}`;
+      post.imagen = req.file.path; // Cloudinary devuelve la URL en file.path
     }
     
     await post.save();
@@ -122,10 +105,7 @@ const deletePost = async (req, res) => {
       return res.status(404).json({ message: 'Post no encontrado' });
     }
     
-    // Eliminar imagen del servidor
-    const imagePath = path.join(__dirname, '../..', post.imagen);
-    await fs.unlink(imagePath).catch(err => console.error('Error al eliminar imagen:', err));
-    
+    // Con Cloudinary, las imágenes permanecen en la nube
     await Blog.findByIdAndDelete(req.params.id);
     
     res.json({ message: 'Post eliminado correctamente' });
