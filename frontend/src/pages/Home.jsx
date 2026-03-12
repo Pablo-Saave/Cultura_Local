@@ -1,6 +1,6 @@
 /**
  * Home.jsx - Pagina de inicio
- * PPagina de inicio. Hero section, introduccion al proyecto y destacados.
+ * Pagina de inicio.introduccion al proyecto y destacados.
  */
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
