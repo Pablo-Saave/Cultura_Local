@@ -2,10 +2,17 @@
  * BuscarPractica.jsx - Página de práctica profesional
  * Información sobre prácticas profesionales para estudiantes universitarios
  */
+import SEO from '../components/SEO'
 
 function BuscarPractica() {
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg">
+      <SEO 
+        title="Prácticas"
+        description="Información sobre prácticas profesionales en Fundación Cultura Local. Oportunidades para estudiantes universitarios en el área de investigación de patrimonio cultural."
+        keywords="prácticas profesionales, prácticas culturales, estudiantes, investigación cultural, patrimonio"
+      />
+      
       {/* Hero Section */}
       <section className="py-20 px-4 bg-white dark:bg-dark-bg">
         <div className="max-w-4xl mx-auto text-center">
