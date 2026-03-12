@@ -83,7 +83,7 @@ function Publicaciones() {
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg py-16 px-4">
       <SEO 
-        title="Proyectos y Publicaciones"
+        title="Proyectos"
         description="Conoce los proyectos culturales, educativos y territoriales de Fundación Cultura Local. Iniciativas de rescate y difusión del patrimonio cultural chileno."
         keywords="proyectos culturales chile, proyectos educativos cultura, iniciativas culturales, patrimonio cultural, cultura territorial"
       />

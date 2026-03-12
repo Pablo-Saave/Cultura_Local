@@ -8,7 +8,7 @@ function Practicas() {
   return (
     <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg">
       <SEO 
-        title="Prácticas Culturales"
+        title="Prácticas"
         description="Conoce las metodologías y prácticas que utilizamos para el rescate y difusión del patrimonio cultural local en Chile."
         keywords="prácticas culturales, metodologías culturales, patrimonio cultural local, rescate cultural"
       />
