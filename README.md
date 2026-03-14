@@ -25,11 +25,12 @@ El objetivo es implementar un sitio web funcional y sostenible para la Fundació
 ---
 
 ## Tecnologías Utilizadas
-- Frontend: HTML5, CSS3, JavaScript (framework/librería a definir según requerimientos).
-- Backend: Node.js / Express (o equivalente).
-- Base de Datos: MySQL / PostgreSQL.
-- Control de versiones: Git + GitHub.
-- Herramientas adicionales: pruebas en navegadores, diseño responsivo, APIs REST.
+- **Frontend**: React 18, Vite, Tailwind CSS, React Router, Axios, React Helmet (SEO).
+- **Backend**: Node.js, Express.js, MongoDB, Mongoose, JWT (autenticación).
+- **Base de Datos**: MongoDB Atlas.
+- **Herramientas de desarrollo**: Git + GitHub, Postman (pruebas de API).
+- **Deployment**: Render (backend y frontend), Cloudflare (DNS y redirecciones).
+- **Herramientas adicionales**: Responsive design, APIs REST, SEO optimizado.
 
 ---
 
