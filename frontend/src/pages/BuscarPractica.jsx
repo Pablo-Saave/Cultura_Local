@@ -64,7 +64,7 @@ function BuscarPractica() {
             <ul className="space-y-3 text-gray-700 dark:text-gray-300">
               <li className="flex items-start">
                 <span className="text-primary mr-3 text-xl">✓</span>
-                <span>Ser estudiante universitario</span>
+                <span>Estudiantes de cualquier carrera (Arquitectura, Ingeniería, Diseño, Humanidades, etc.)</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary mr-3 text-xl">✓</span>
