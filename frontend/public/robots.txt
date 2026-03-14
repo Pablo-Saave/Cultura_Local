@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://culturalocal-frontend.onrender.com/sitemap.xml
+Sitemap: https://www.culturalocal.cl/sitemap.xml
 
 # Bloquear acceso al panel de administración
 User-agent: *

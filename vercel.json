@@ -19,6 +19,13 @@
       "dest": "/index.html"
     }
   ],
+  "redirects": [
+    {
+      "source": "/:path((?!www\\.).*)",
+      "destination": "https://www.culturalocal.cl/:path",
+      "permanent": true
+    }
+  ],
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/dist",
   "env": {

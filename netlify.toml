@@ -9,6 +9,18 @@
   },
   "redirects": [
     {
+      "from": "http://culturalocal.cl/*",
+      "to": "https://www.culturalocal.cl/:splat",
+      "status": 301,
+      "force": true
+    },
+    {
+      "from": "https://culturalocal.cl/*",
+      "to": "https://www.culturalocal.cl/:splat",
+      "status": 301,
+      "force": true
+    },
+    {
       "source": "/*",
       "destination": "/index.html",
       "type": 301,
