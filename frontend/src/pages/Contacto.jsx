@@ -27,7 +27,7 @@ function Contacto() {
             <img 
               src="/img/imagen12.png" 
               alt="Fundación Cultura Local"
-              className="w-full h-auto"
+              className="w-56 sm:w-64 md:w-80 h-auto"
             />
           </div>
           

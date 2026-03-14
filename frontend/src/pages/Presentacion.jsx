@@ -33,9 +33,9 @@ function Presentacion() {
         description="Fundación Cultura Local es una organización dedicada al rescate y promoción de prácticas culturales territoriales mediante la participación juvenil en Chile."
         keywords="fundación cultura local, presentación, misión cultural, organización cultural chile, participación juvenil cultura"
       />
-      {/* Carrusel en móvil - mantener igual */}
+      {/* Carrusel en móvil */}
       <div className="md:hidden">
-        <div className="relative w-full overflow-hidden mt-0 h-[320px]">
+        <div className="relative w-full overflow-hidden -mt-16 h-[320px]">
           {/* Imágenes */}
           {carouselImages.map((img, index) => (
             <div
