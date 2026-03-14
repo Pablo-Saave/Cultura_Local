@@ -17,10 +17,8 @@ function AdminProyectos() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
-    descripcion: '',
     categoria: '',
     fechaRealizacion: '',
-    ubicacion: '',
     linkExterno: '',
     destacado: false,
     educativo: false
@@ -103,10 +101,8 @@ function AdminProyectos() {
     setEditando(proyecto._id);
     setFormData({
       nombre: proyecto.nombre,
-      descripcion: proyecto.descripcion,
       categoria: proyecto.categoria || '',
       fechaRealizacion: proyecto.fechaRealizacion ? proyecto.fechaRealizacion.split('T')[0] : '',
-      ubicacion: proyecto.ubicacion || '',
       linkExterno: proyecto.linkExterno || '',
       destacado: proyecto.destacado || false,
       educativo: proyecto.educativo || false
@@ -134,10 +130,8 @@ function AdminProyectos() {
   const resetForm = () => {
     setFormData({
       nombre: '',
-      descripcion: '',
       categoria: '',
       fechaRealizacion: '',
-      ubicacion: '',
       linkExterno: '',
       destacado: false,
       educativo: false
@@ -243,33 +237,7 @@ function AdminProyectos() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Descripción
-              </label>
-              <textarea
-                name="descripcion"
-                value={formData.descripcion}
-                onChange={handleInputChange}
-                rows="4"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-              />
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ubicación
-                </label>
-                <input
-                  type="text"
-                  name="ubicacion"
-                  value={formData.ubicacion}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                />
-              </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Link Externo
