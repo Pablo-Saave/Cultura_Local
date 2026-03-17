@@ -81,7 +81,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
               { name: 'EVENTOS', path: '/eventos' },
               { name: 'BLOG', path: '/blog' },
               { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
-              { name: 'CONTACTO', path: '/contacto' },
             ].map((item) => (
               // Cada enlace del menú
               <Link
@@ -147,21 +146,21 @@ function Navbar({ darkMode, toggleDarkMode }) {
               )}
             </button>
 
-            {/* Botón hamburguesa */}
+            {}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-lg text-gray-700 dark:text-gray-300 
                        hover:bg-gray-100 dark:hover:bg-gray-700"
               aria-label="Menú"
             >
-              {/* Icono hamburguesa o X según el estado */}
+              {}
               <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" 
                    strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                 {isOpen ? (
                   // Icono X para cerrar
                   <path d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  // Icono hamburguesa
+                  
                   <path d="M4 6h16M4 12h16M4 18h16" />
                 )}
               </svg>
@@ -181,7 +180,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 { name: 'EVENTOS', path: '/eventos' },
                 { name: 'BLOG', path: '/blog' },
                   { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
-                  { name: 'CONTACTO', path: '/contacto' },
               ].map((item) => (
                 <Link
                   key={item.path}
