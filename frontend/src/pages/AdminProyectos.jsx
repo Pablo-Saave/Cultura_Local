@@ -83,17 +83,17 @@ function AdminProyectos() {
 
       if (editando) {
         await axios.put(API_ENDPOINTS.proyectoById(editando), data, config);
-        alert('Proyecto actualizado exitosamente');
+        alert('Publicación actualizada exitosamente');
       } else {
         await axios.post(API_ENDPOINTS.proyectos, data, config);
-        alert('Proyecto creado exitosamente');
+        alert('Publicación creada exitosamente');
       }
 
       resetForm();
       fetchProyectos();
     } catch (error) {
-      console.error('Error al guardar proyecto:', error);
-      alert('Error al guardar el proyecto');
+      console.error('Error al guardar publicación:', error);
+      alert('Error al guardar la publicación');
     }
   };
 
@@ -112,18 +112,18 @@ function AdminProyectos() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('¿Estás seguro de eliminar este proyecto?')) return;
+    if (!window.confirm('¿Estás seguro de eliminar esta publicación?')) return;
 
     try {
       const token = localStorage.getItem('token');
       await axios.delete(API_ENDPOINTS.proyectoById(id), {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      alert('Proyecto eliminado exitosamente');
+      alert('Publicación eliminada exitosamente');
       fetchProyectos();
     } catch (error) {
-      console.error('Error al eliminar proyecto:', error);
-      alert('Error al eliminar el proyecto');
+      console.error('Error al eliminar publicación:', error);
+      alert('Error al eliminar la publicación');
     }
   };
 
@@ -192,7 +192,7 @@ function AdminProyectos() {
                 onClick={() => setMostrarFormulario(true)}
                 className="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg transition-colors font-semibold"
               >
-                + Nuevo Proyecto
+                + Nueva Publicación
               </button>
             )}
           </div>
@@ -204,14 +204,14 @@ function AdminProyectos() {
         {mostrarFormulario && (
           <div className="bg-white rounded-lg shadow p-6 mb-8">
             <h2 className="text-2xl font-bold text-primary mb-6">
-              {editando ? 'Editar Proyecto' : 'Nuevo Proyecto'}
+              {editando ? 'Editar Publicación' : 'Nueva Publicación'}
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nombre del Proyecto *
+                  Nombre de la publicación *
                 </label>
                 <input
                   type="text"
@@ -302,7 +302,7 @@ function AdminProyectos() {
                 type="submit"
                 className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg transition-colors"
               >
-                {editando ? 'Actualizar' : 'Crear'} Proyecto
+                {editando ? 'Actualizar' : 'Crear'} Publicación
               </button>
               {editando && (
                 <button
@@ -318,12 +318,12 @@ function AdminProyectos() {
         </div>
         )}
 
-        {/* Lista de Proyectos */}
+        {/* Lista de Publicaciones */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-2xl font-bold text-primary mb-6">Gestión de Proyectos</h2>
+          <h2 className="text-2xl font-bold text-primary mb-6">Gestión de Publicaciones</h2>
           
           {proyectos.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No hay proyectos registrados</p>
+            <p className="text-gray-500 text-center py-8">No hay publicaciones registradas</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {proyectos.map((proyecto) => {

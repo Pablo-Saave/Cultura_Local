@@ -97,6 +97,7 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Presentacion />} />
                     <Route path="/buscar" element={<Navigate to="/practicas" replace />} />
+                    <Route path="/buscar-practica" element={<Navigate to="/practicas" replace />} />
                     <Route path="/presentacion" element={<Presentacion />} />
                     <Route path="/publicaciones" element={<Publicaciones />} />
                     <Route path="/eventos" element={<Eventos />} />

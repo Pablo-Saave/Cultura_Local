@@ -71,9 +71,9 @@ function Navbar({ darkMode, toggleDarkMode }) {
           {/* Menú desktop - oculto en móvil */}
           <div className="hidden md:flex items-center space-x-1">
             {/* Array de enlaces del menú */}
-            {[
+            {[ 
               { name: 'PRESENTACIÓN', path: '/presentacion' },
-              { name: 'PROYECTOS', path: '/publicaciones' },
+              { name: 'PUBLICACIONES', path: '/publicaciones' },
               { name: 'EVENTOS', path: '/eventos' },
               { name: 'BLOG', path: '/blog' },
               { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
@@ -169,9 +169,9 @@ function Navbar({ darkMode, toggleDarkMode }) {
           <div className="md:hidden absolute top-16 left-0 right-0 py-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="flex flex-col space-y-2 px-4">
               {/* Enlaces del menú móvil */}
-              {[
+              {[ 
                 { name: 'PRESENTACIÓN', path: '/presentacion' },
-                { name: 'PROYECTOS', path: '/publicaciones' },
+                { name: 'PUBLICACIONES', path: '/publicaciones' },
                 { name: 'EVENTOS', path: '/eventos' },
                 { name: 'BLOG', path: '/blog' },
                   { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },

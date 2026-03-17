@@ -99,7 +99,7 @@ function AdminDashboard() {
             <p className="text-3xl font-bold text-primary mt-2">{stats.eventos}</p>
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-gray-500 text-sm font-medium">Proyectos</h3>
+            <h3 className="text-gray-500 text-sm font-medium">Publicaciones</h3>
             <p className="text-3xl font-bold text-primary mt-2">{stats.proyectos}</p>
           </div>
         </div>
@@ -112,7 +112,7 @@ function AdminDashboard() {
               {[
                 { name: 'Blog', path: '/admin/blog', color: 'bg-blue-500' },
                 { name: 'Eventos', path: '/admin/eventos', color: 'bg-green-500' },
-                { name: 'Proyectos', path: '/admin/proyectos', color: 'bg-purple-500' },
+                { name: 'Publicaciones', path: '/admin/proyectos', color: 'bg-purple-500' },
               ].map((item) => (
                 <Link
                   key={item.path}

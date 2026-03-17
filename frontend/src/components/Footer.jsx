@@ -78,7 +78,7 @@ function Footer() {
               </li>
               <li>
                 <Link to="/publicaciones" className="hover:text-primary transition-colors">
-                  Proyectos
+                  Publicaciones
                 </Link>
               </li>
               <li>
