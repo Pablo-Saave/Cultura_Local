@@ -138,21 +138,10 @@ function Footer() {
 
         {/* Línea divisoria */}
         <div className="pt-8">
-          <div className="flex flex-col items-center text-center space-y-2">
-            {/* Copyright */}
+          <div className="flex flex-col items-center text-center">
             <p className="text-xs sm:text-sm text-gray-400">
               © 2026 FUNDACIÓN CULTURA LOCAL. TODOS LOS DERECHOS RESERVADOS.
             </p>
-
-            {/* Enlaces legales */}
-            <div className="flex space-x-6 text-xs sm:text-sm">
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                PRIVACIDAD
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                TÉRMINOS
-              </a>
-            </div>
           </div>
         </div>
       </div>
