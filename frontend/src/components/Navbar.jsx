@@ -123,6 +123,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
           </div>
 
           {/* Botón hamburguesa para móvil */}
+          <div className="md:hidden flex items-center space-x-2">
             {/* Botón de modo oscuro en móvil */}
             <button
               onClick={toggleDarkMode}
