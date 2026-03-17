@@ -86,7 +86,8 @@ function App() {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/blog" element={<AdminBlog />} />
             <Route path="/admin/eventos" element={<AdminEventos />} />
-            <Route path="/admin/proyectos" element={<AdminProyectos />} />
+            <Route path="/admin/publicaciones" element={<AdminProyectos />} />
+            <Route path="/admin/proyectos" element={<Navigate to="/admin/publicaciones" replace />} />
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
             
             {/* Rutas públicas (con navbar/footer) */}

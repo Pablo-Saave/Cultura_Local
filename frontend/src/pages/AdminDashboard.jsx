@@ -112,7 +112,7 @@ function AdminDashboard() {
               {[
                 { name: 'Blog', path: '/admin/blog', color: 'bg-blue-500' },
                 { name: 'Eventos', path: '/admin/eventos', color: 'bg-green-500' },
-                { name: 'Publicaciones', path: '/admin/proyectos', color: 'bg-purple-500' },
+                { name: 'Publicaciones', path: '/admin/publicaciones', color: 'bg-purple-500' },
               ].map((item) => (
                 <Link
                   key={item.path}
