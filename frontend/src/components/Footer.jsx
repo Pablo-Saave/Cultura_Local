@@ -80,8 +80,8 @@ function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/publicaciones" onClick={scrollToTop} className="hover:text-primary transition-colors">
-                  Publicaciones
+                <Link to="/proyectos" onClick={scrollToTop} className="hover:text-primary transition-colors">
+                  Proyectos
                 </Link>
               </li>
               <li>

@@ -77,7 +77,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
             {/* Array de enlaces del menú */}
             {[ 
               { name: 'PRESENTACIÓN', path: '/presentacion' },
-              { name: 'PUBLICACIONES', path: '/publicaciones' },
+              { name: 'PROYECTOS', path: '/proyectos' },
               { name: 'EVENTOS', path: '/eventos' },
               { name: 'BLOG', path: '/blog' },
               { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
@@ -176,7 +176,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
               {/* Enlaces del menú móvil */}
               {[ 
                 { name: 'PRESENTACIÓN', path: '/presentacion' },
-                { name: 'PUBLICACIONES', path: '/publicaciones' },
+                { name: 'PROYECTOS', path: '/proyectos' },
                 { name: 'EVENTOS', path: '/eventos' },
                 { name: 'BLOG', path: '/blog' },
                   { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },

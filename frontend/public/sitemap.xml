@@ -17,9 +17,9 @@
     <priority>0.9</priority>
   </url>
   
-  <!-- Publicaciones / Proyectos -->
+  <!-- Proyectos -->
   <url>
-    <loc>https://www.culturalocal.cl/publicaciones</loc>
+    <loc>https://www.culturalocal.cl/proyectos</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>

@@ -34,8 +34,8 @@ function Home() {
             y el rescate de nuestras prácticas territoriales
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/publicaciones" className="btn-accent text-lg">
-              Explorar Publicaciones
+            <Link to="/proyectos" className="btn-accent text-lg">
+              Explorar Proyectos
             </Link>
             <Link to="/contacto" className="bg-white/20 hover:bg-white/30 text-white px-8 py-3 
                                            rounded-full font-semibold transition-all">

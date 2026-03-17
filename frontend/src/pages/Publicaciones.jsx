@@ -74,7 +74,7 @@ function Publicaciones() {
       <div className="min-h-screen py-20 px-4 bg-white dark:bg-dark-bg flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">Cargando publicaciones...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando proyectos...</p>
         </div>
       </div>
     );
@@ -83,14 +83,14 @@ function Publicaciones() {
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg py-16 px-4">
       <SEO 
-        title="Publicaciones"
-        description="Conoce las publicaciones culturales, educativas y territoriales de Fundación Cultura Local. Iniciativas de rescate y difusión del patrimonio cultural chileno."
-        keywords="publicaciones culturales chile, proyectos culturales, iniciativas culturales, patrimonio cultural, cultura territorial"
+        title="Proyectos"
+        description="Conoce los proyectos culturales, educativos y territoriales de Fundación Cultura Local. Iniciativas de rescate y difusión del patrimonio cultural chileno."
+        keywords="proyectos culturales chile, proyectos educativos cultura, iniciativas culturales, patrimonio cultural, cultura territorial"
       />
       <div className="max-w-7xl mx-auto">
         {/* Título principal */}
         <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>
-          Publicaciones
+          Proyectos
         </h1>
         {/* Subrayado dorado */}
         <div className="w-32 h-1 bg-accent mb-6"></div>
@@ -144,11 +144,11 @@ function Publicaciones() {
           </button>
         </div>
 
-        {/* Grid de publicaciones */}
+        {/* Grid de proyectos */}
         {proyectosFiltrados.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-gray-500 dark:text-gray-400">
-              No hay publicaciones en esta categoría
+              No hay proyectos en esta categoría
             </p>
           </div>
         ) : (

@@ -86,8 +86,8 @@ function App() {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/blog" element={<AdminBlog />} />
             <Route path="/admin/eventos" element={<AdminEventos />} />
-            <Route path="/admin/publicaciones" element={<AdminProyectos />} />
-            <Route path="/admin/proyectos" element={<Navigate to="/admin/publicaciones" replace />} />
+            <Route path="/admin/proyectos" element={<AdminProyectos />} />
+            <Route path="/admin/publicaciones" element={<Navigate to="/admin/proyectos" replace />} />
             <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
             
             {/* Rutas públicas (con navbar/footer) */}
@@ -100,7 +100,8 @@ function App() {
                     <Route path="/buscar" element={<Navigate to="/practicas" replace />} />
                     <Route path="/buscar-practica" element={<Navigate to="/practicas" replace />} />
                     <Route path="/presentacion" element={<Presentacion />} />
-                    <Route path="/publicaciones" element={<Publicaciones />} />
+                    <Route path="/proyectos" element={<Publicaciones />} />
+                    <Route path="/publicaciones" element={<Navigate to="/proyectos" replace />} />
                     <Route path="/eventos" element={<Eventos />} />
                     <Route path="/eventos/:id" element={<EventoDetalle />} />
                     <Route path="/blog" element={<Blog />} />
