@@ -92,7 +92,7 @@ function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/buscar" className="hover:text-primary transition-colors">
+                <Link to="/practicas" className="hover:text-primary transition-colors">
                   Prácticas Culturales
                 </Link>
               </li>

@@ -26,7 +26,6 @@ import EventoDetalle from './pages/EventoDetalle'
 import Blog from './pages/Blog'
 import BlogDetalle from './pages/BlogDetalle'
 import Contacto from './pages/Contacto'
-import Practicas from './pages/Practicas'
 
 // Importamos las páginas de administración
 import AdminLogin from './pages/AdminLogin'
@@ -97,7 +96,7 @@ function App() {
                 <main className="pt-20">
                   <Routes>
                     <Route path="/" element={<Presentacion />} />
-                    <Route path="/buscar" element={<BuscarPractica />} />
+                    <Route path="/buscar" element={<Navigate to="/practicas" replace />} />
                     <Route path="/presentacion" element={<Presentacion />} />
                     <Route path="/publicaciones" element={<Publicaciones />} />
                     <Route path="/eventos" element={<Eventos />} />
@@ -105,7 +104,7 @@ function App() {
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:id" element={<BlogDetalle />} />
                     <Route path="/contacto" element={<Contacto />} />
-                    <Route path="/practicas" element={<Practicas />} />
+                    <Route path="/practicas" element={<BuscarPractica />} />
                   </Routes>
                 </main>
                 <Footer />

@@ -49,14 +49,6 @@
     <priority>0.7</priority>
   </url>
   
-  <!-- Buscar Práctica -->
-  <url>
-    <loc>https://www.culturalocal.cl/buscar-practica</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
   <!-- Contacto -->
   <url>
     <loc>https://www.culturalocal.cl/contacto</loc>

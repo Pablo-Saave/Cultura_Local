@@ -76,7 +76,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
               { name: 'PROYECTOS', path: '/publicaciones' },
               { name: 'EVENTOS', path: '/eventos' },
               { name: 'BLOG', path: '/blog' },
-              { name: 'PRÁCTICAS CULTURALES', path: '/buscar' },
+              { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
             ].map((item) => (
               // Cada enlace del menú
               <Link
@@ -123,7 +123,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
           </div>
 
           {/* Botón hamburguesa para móvil */}
-          <div className="md:hidden flex items-center space-x-2">
+                { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
             {/* Botón de modo oscuro en móvil */}
             <button
               onClick={toggleDarkMode}
@@ -174,7 +174,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 { name: 'PROYECTOS', path: '/publicaciones' },
                 { name: 'EVENTOS', path: '/eventos' },
                 { name: 'BLOG', path: '/blog' },
-                { name: 'PRÁCTICAS CULTURALES', path: '/buscar' },
+                  { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
               ].map((item) => (
                 <Link
                   key={item.path}
