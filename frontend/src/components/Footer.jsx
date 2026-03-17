@@ -99,6 +99,11 @@ function Footer() {
                   Prácticas Culturales
                 </Link>
               </li>
+              <li>
+                <Link to="/contacto" onClick={scrollToTop} className="hover:text-primary transition-colors">
+                  Contacto
+                </Link>
+              </li>
             </ul>
           </div>
 
