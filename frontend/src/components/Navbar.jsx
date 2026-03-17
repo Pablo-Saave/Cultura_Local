@@ -81,6 +81,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
               { name: 'EVENTOS', path: '/eventos' },
               { name: 'BLOG', path: '/blog' },
               { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
+              { name: 'CONTACTO', path: '/contacto' },
             ].map((item) => (
               // Cada enlace del menú
               <Link
@@ -180,6 +181,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 { name: 'EVENTOS', path: '/eventos' },
                 { name: 'BLOG', path: '/blog' },
                   { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
+                  { name: 'CONTACTO', path: '/contacto' },
               ].map((item) => (
                 <Link
                   key={item.path}
