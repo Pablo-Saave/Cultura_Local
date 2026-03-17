@@ -4,7 +4,7 @@
   <!-- Página de inicio -->
   <url>
     <loc>https://www.culturalocal.cl/</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,7 +12,7 @@
   <!-- Presentación / Quiénes Somos -->
   <url>
     <loc>https://www.culturalocal.cl/presentacion</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -20,7 +20,7 @@
   <!-- Proyectos -->
   <url>
     <loc>https://www.culturalocal.cl/proyectos</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -28,7 +28,7 @@
   <!-- Eventos -->
   <url>
     <loc>https://www.culturalocal.cl/eventos</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -36,7 +36,7 @@
   <!-- Blog -->
   <url>
     <loc>https://www.culturalocal.cl/blog</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -44,7 +44,7 @@
   <!-- Prácticas Culturales -->
   <url>
     <loc>https://www.culturalocal.cl/practicas</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -52,7 +52,7 @@
   <!-- Contacto -->
   <url>
     <loc>https://www.culturalocal.cl/contacto</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
