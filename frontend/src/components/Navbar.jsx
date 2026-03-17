@@ -123,7 +123,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
           </div>
 
           {/* Botón hamburguesa para móvil */}
-                { name: 'PRÁCTICAS CULTURALES', path: '/practicas' },
             {/* Botón de modo oscuro en móvil */}
             <button
               onClick={toggleDarkMode}
