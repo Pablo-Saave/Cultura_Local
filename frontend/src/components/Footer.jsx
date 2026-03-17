@@ -2,6 +2,9 @@
 import { Link } from 'react-router-dom'
 
 function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   const handleShare = () => {
     const shareData = {
       title: 'Fundación Cultura Local',
@@ -72,27 +75,27 @@ function Footer() {
             <h3 className="text-primary dark:text-primary-light font-semibold text-lg mb-4">SECCIONES</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/presentacion" className="hover:text-primary transition-colors">
+                <Link to="/presentacion" onClick={scrollToTop} className="hover:text-primary transition-colors">
                   Presentación
                 </Link>
               </li>
               <li>
-                <Link to="/publicaciones" className="hover:text-primary transition-colors">
+                <Link to="/publicaciones" onClick={scrollToTop} className="hover:text-primary transition-colors">
                   Publicaciones
                 </Link>
               </li>
               <li>
-                <Link to="/eventos" className="hover:text-primary transition-colors">
+                <Link to="/eventos" onClick={scrollToTop} className="hover:text-primary transition-colors">
                   Eventos
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="hover:text-primary transition-colors">
+                <Link to="/blog" onClick={scrollToTop} className="hover:text-primary transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link to="/practicas" className="hover:text-primary transition-colors">
+                <Link to="/practicas" onClick={scrollToTop} className="hover:text-primary transition-colors">
                   Prácticas Culturales
                 </Link>
               </li>

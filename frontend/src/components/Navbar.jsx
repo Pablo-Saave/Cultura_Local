@@ -13,6 +13,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
   const location = useLocation()
   const isActive = (path) => location.pathname === path
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   // Efecto para manejar el scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -82,6 +86,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={scrollToTop}
                 className={`px-4 py-2 text-xs font-medium rounded-lg transition-colors
                           ${isActive(item.path)
                             ? 'text-primary dark:text-primary-light bg-primary/10'
@@ -179,7 +184,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 <Link
                   key={item.path}
                   to={item.path}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false)
+                    scrollToTop()
+                  }}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors
                             ${isActive(item.path)
                               ? 'text-primary dark:text-primary-light bg-primary/10'
@@ -193,7 +201,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
               {/* Botón de contacto en móvil */}
 <Link
                 to="/contacto"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false)
+                  scrollToTop()
+                }}
                 className={`px-4 py-2 text-sm font-medium rounded-full transition-colors bg-accent hover:bg-accent-dark text-white
                             ${isActive('/contacto') ? 'bg-accent-dark' : ''}`}
               >
