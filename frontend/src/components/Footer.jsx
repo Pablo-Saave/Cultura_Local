@@ -62,11 +62,12 @@ function Footer() {
                 className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
                 aria-label="Compartir sitio"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <circle cx="18" cy="5" r="3"/>
                   <circle cx="6" cy="12" r="3"/>
                   <circle cx="18" cy="19" r="3"/>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.59 13.51l6.82-3.02M8.59 10.49l6.82 3.02"/>
+                  <line x1="8.59" y1="12" x2="15.41" y2="8.59" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <line x1="8.59" y1="12" x2="15.41" y2="15.41" stroke="currentColor" strokeWidth="2" fill="none"/>
                 </svg>
               </button>
             </div>

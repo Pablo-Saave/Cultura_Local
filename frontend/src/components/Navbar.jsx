@@ -89,7 +89,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 onClick={scrollToTop}
                 className={`px-4 py-2 text-xs font-medium rounded-lg transition-colors
                           ${isActive(item.path)
-                            ? 'text-primary dark:text-primary-light bg-primary/10'
+                            ? 'text-primary dark:text-primary-light'
                             : 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light'
                           }`}
               >
