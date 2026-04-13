@@ -164,7 +164,7 @@ function Publicaciones() {
                   rel="noopener noreferrer"
                   className="group"
                 >
-                  <div className="bg-white dark:bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 h-full flex flex-col">
+                  <div className="bg-white dark:bg-white rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 h-full flex flex-col">
                     {/* Imagen del proyecto con badge */}
                     <div className="relative aspect-square bg-white dark:bg-white flex items-center justify-center p-4 sm:p-6 md:p-8">
                       {proyecto.imagenPrincipal ? (
@@ -208,9 +208,9 @@ function Publicaciones() {
             Instagram
           </h2>
           
-          <div className="flex flex-col md:flex-row items-center gap-8 bg-gray-50 dark:bg-dark-bg rounded-xl p-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 bg-gray-50 dark:bg-dark-bg rounded-xl p-6 lg:p-12 w-full">
             {/* Logo de la fundación */}
-            <div className="w-48 h-48 flex-shrink-0">
+            <div className="w-40 h-40 lg:w-56 lg:h-56 flex-shrink-0">
               <img 
                 src="/img/imagen12.png" 
                 alt="Fundación Cultura Local"
@@ -219,7 +219,7 @@ function Publicaciones() {
             </div>
             
             {/* Contenido */}
-            <div className="flex-1 text-center md:text-left">
+            <div className="flex-1 text-center lg:text-left">
               <p className="text-xl text-gray-700 dark:text-gray-300 mb-6">
                 Síguenos en Instagram para estar al tanto de nuestras actividades y proyectos culturales.
               </p>

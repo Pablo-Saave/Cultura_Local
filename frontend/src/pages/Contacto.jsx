@@ -21,13 +21,13 @@ function Contacto() {
           Estamos aquí para escucharte.
         </p>
         
-        <div className="grid md:grid-cols-[300px_1fr] gap-8 mb-12">
+        <div className="grid md:grid-cols-[300px_1fr] lg:grid-cols-[400px_1fr] gap-8 lg:gap-12 mb-12 items-start">
           {/* Logo */}
           <div className="flex items-center justify-center">
             <img 
               src="/img/imagen12.png" 
               alt="Fundación Cultura Local"
-              className="w-56 sm:w-64 md:w-80 h-auto"
+              className="w-56 sm:w-64 md:w-80 lg:w-full h-auto"
             />
           </div>
           

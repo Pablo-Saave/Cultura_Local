@@ -248,12 +248,12 @@ function Eventos() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {eventosFiltrados.map((evento) => (
                   <Link
                     key={evento._id}
                     to={`/eventos/${evento._id}`}
-                    className="bg-white dark:bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 block"
+                    className="bg-white dark:bg-white rounded-xl overflow-hidden transition-all duration-300 block hover:scale-105"
                   >
                     {/* Imagen */}
                     <div className="relative h-64 bg-white dark:bg-white overflow-hidden flex items-center justify-center p-4">
@@ -294,8 +294,8 @@ function Eventos() {
           </div>
 
           {/* Calendario */}
-          <div className="lg:w-96">
-            <div className="bg-white dark:bg-white rounded-lg shadow-lg p-6 sticky top-24">
+          <div className="w-full lg:w-96">
+            <div className="bg-white dark:bg-white rounded-lg p-6 sticky top-24">
               <div className="flex items-center justify-between mb-6">
                 <button
                   onClick={goToPreviousMonth}

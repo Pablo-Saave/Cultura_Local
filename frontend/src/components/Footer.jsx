@@ -63,8 +63,10 @@ function Footer() {
                 aria-label="Compartir sitio"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v13m0 0l-4-4m4 4l4-4" />
+                  <circle cx="18" cy="5" r="3"/>
+                  <circle cx="6" cy="12" r="3"/>
+                  <circle cx="18" cy="19" r="3"/>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.59 13.51l6.82-3.02M8.59 10.49l6.82 3.02"/>
                 </svg>
               </button>
             </div>
