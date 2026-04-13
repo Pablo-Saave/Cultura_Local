@@ -5,7 +5,6 @@
  */
 
 /* Importamos las capas base de Tailwind CSS */
-/* base: resetea estilos por defecto del navegador */
 @tailwind base;
 /* components: clases de componentes reutilizables */
 @tailwind components;
