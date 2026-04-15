@@ -191,7 +191,7 @@ function Publicaciones() {
                   </div>
                   
                   {/* Nombre del proyecto */}
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-gray-900 group-hover:text-primary transition-colors mt-2">
+                  <h3 className="text-sm font-bold text-primary dark:text-primary-light transition-colors mt-2 group-hover:text-black dark:group-hover:text-white">
                     {proyecto.nombre}
                   </h3>
                 </a>
