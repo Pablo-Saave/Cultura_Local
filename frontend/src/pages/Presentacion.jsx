@@ -121,6 +121,43 @@ function Presentacion() {
           </div>
         </div>
 
+        {/* Accesos directos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 mt-8">
+          {/* Acceso a Proyectos */}
+          <a
+            href="/proyectos"
+            className="group relative h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden"
+          >
+            <img 
+              src="/img/enlace1.jpeg" 
+              alt="Proyectos"
+              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 group-hover:translate-x-2"
+            />
+            <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/45 transition-all duration-300 flex items-end justify-start px-5 pb-9 md:px-6 md:pb-10">
+              <span className="text-white text-xl sm:text-2xl font-bold text-left leading-none transition-transform duration-500 ease-out group-hover:translate-x-1" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+                PROYECTOS
+              </span>
+            </div>
+          </a>
+
+          {/* Acceso a Eventos */}
+          <a
+            href="/eventos"
+            className="group relative h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden"
+          >
+            <img 
+              src="/img/enlace.jpeg" 
+              alt="Eventos"
+              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 group-hover:translate-x-2"
+            />
+            <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/45 transition-all duration-300 flex items-end justify-start px-5 pb-9 md:px-6 md:pb-10">
+              <span className="text-white text-xl sm:text-2xl font-bold text-left leading-none transition-transform duration-500 ease-out group-hover:translate-x-1" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+                EVENTOS
+              </span>
+            </div>
+          </a>
+        </div>
+
       </div>
     </div>
   )

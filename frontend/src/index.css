@@ -51,4 +51,13 @@
   .theme-transition {
     @apply transition-colors duration-300 ease-in-out;
   }
+
+  /* Animación para hover de imagen que se mueve al lado */
+  .image-shift-hover {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .image-shift-hover:hover {
+    transform: translateX(8px);
+  }
 }

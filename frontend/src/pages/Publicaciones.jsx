@@ -162,40 +162,38 @@ function Publicaciones() {
                   href={proyecto.linkExterno || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group"
+                  className="group flex flex-col"
                 >
-                  <div className="bg-white dark:bg-white rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 h-full flex flex-col">
-                    {/* Imagen del proyecto con badge */}
-                    <div className="relative aspect-square bg-white dark:bg-white flex items-center justify-center p-4 sm:p-6 md:p-8">
-                      {proyecto.imagenPrincipal ? (
-                        <img 
-                          src={getImageUrl(proyecto.imagenPrincipal)} 
-                          alt={proyecto.nombre}
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <div className="text-gray-400 text-4xl font-bold text-center">
+                  {/* Contenedor de imagen */}
+                  <div className="relative aspect-square overflow-hidden">
+                    {proyecto.imagenPrincipal ? (
+                      <img 
+                        src={getImageUrl(proyecto.imagenPrincipal)} 
+                        alt={proyecto.nombre}
+                        className="w-full h-full object-cover image-shift-hover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <span className="text-gray-500 text-xs font-bold text-center px-2">
                           {proyecto.nombre}
-                        </div>
-                      )}
-                      
-                      {/* Badge de categoría */}
-                      {categoria && (
-                        <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
-                          <span className={`${categoria.color} text-white text-xs font-bold px-3 py-1 rounded-full`}>
-                            {categoria.label}
-                          </span>
-                        </div>
-                      )}
-                    </div>
+                        </span>
+                      </div>
+                    )}
                     
-                    {/* Información del proyecto */}
-                    <div className="p-4 sm:p-6 flex-grow flex items-center justify-center">
-                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-900 text-center group-hover:text-primary transition-colors">
-                        {proyecto.nombre}
-                      </h3>
-                    </div>
+                    {/* Badge de categoría */}
+                    {categoria && (
+                      <div className="absolute top-2 right-2">
+                        <span className={`${categoria.color} text-white text-xs font-bold px-2 py-1 rounded-full`}>
+                          {categoria.label}
+                        </span>
+                      </div>
+                    )}
                   </div>
+                  
+                  {/* Nombre del proyecto */}
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-gray-900 group-hover:text-primary transition-colors mt-2">
+                    {proyecto.nombre}
+                  </h3>
                 </a>
               );
             })}

@@ -190,7 +190,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                   }}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors
                             ${isActive(item.path)
-                              ? 'text-primary dark:text-primary-light bg-primary/10'
+                              ? 'text-primary dark:text-primary-light'
                               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                             }`}
                 >
