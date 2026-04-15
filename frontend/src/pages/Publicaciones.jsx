@@ -89,7 +89,7 @@ function Publicaciones() {
       />
       <div className="max-w-7xl mx-auto">
         {/* Título principal */}
-        <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+        <h1 className="text-5xl md:text-6xl font-display font-bold text-primary dark:text-primary-light mb-4">
           Proyectos
         </h1>
         {/* Subrayado dorado */}
@@ -202,7 +202,7 @@ function Publicaciones() {
 
         {/* Sección de Instagram */}
         <div className="mt-20">
-          <h2 className="text-4xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+          <h2 className="text-4xl font-display font-bold text-primary dark:text-primary-light mb-4">
             Instagram
           </h2>
           

@@ -86,7 +86,7 @@ function Blog() {
       />
       <div className="max-w-7xl mx-auto">
         {/* Título principal */}
-        <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+        <h1 className="text-5xl md:text-6xl font-display font-bold text-primary dark:text-primary-light mb-4">
           Blog Cultural
         </h1>
         {/* Subrayado dorado */}
@@ -201,7 +201,7 @@ function Blog() {
 
       {/* Sección de Instagram */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-        <h2 className="text-4xl font-bold text-primary mb-4" style={{ fontFamily: "'Aktifo A', sans-serif" }}>
+        <h2 className="text-4xl font-display font-bold text-primary dark:text-primary-light mb-4">
           Instagram
         </h2>
         <div className="w-32 h-1 bg-accent mb-6"></div>

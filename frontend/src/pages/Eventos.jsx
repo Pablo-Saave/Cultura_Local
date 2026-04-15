@@ -161,7 +161,7 @@ function Eventos() {
       />
       <div className="max-w-7xl mx-auto">
         {/* Título principal */}
-        <h1 className="text-5xl md:text-6xl font-bold text-primary dark:text-primary-light mb-4" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+        <h1 className="text-5xl md:text-6xl font-display font-bold text-primary dark:text-primary-light mb-4">
           Nuestros Eventos
         </h1>
         {/* Subrayado dorado */}
