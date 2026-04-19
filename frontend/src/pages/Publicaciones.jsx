@@ -201,29 +201,29 @@ function Publicaciones() {
         )}
 
         {/* Sección de Instagram */}
-        <div className="mt-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
           <h2 className="text-4xl font-display font-bold text-primary dark:text-primary-light mb-4">
             Instagram
           </h2>
+          <div className="w-32 h-1 bg-accent mb-6"></div>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 italic">
+            Próximamente compartiremos contenido exclusivo sobre nuestras iniciativas.
+          </p>
           
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 bg-gray-50 dark:bg-dark-bg rounded-xl p-6 lg:p-12 w-full">
-            {/* Logo de la fundación */}
-            <div className="w-40 h-40 lg:w-56 lg:h-56 flex-shrink-0">
+          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <div className="flex-shrink-0">
               <img 
                 src="/img/imagen12.png" 
-                alt="Fundación Cultura Local"
-                className="w-full h-full object-contain"
+                alt="Fundación Cultura Local" 
+                className="w-48 h-48 object-contain"
               />
             </div>
             
-            {/* Contenido */}
-            <div className="flex-1 text-center lg:text-left">
-              <p className="text-xl text-gray-700 dark:text-gray-300 mb-6">
+            <div className="flex-1">
+              <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg">
                 Síguenos en Instagram para estar al tanto de nuestras actividades y proyectos culturales.
               </p>
-              <p className="text-gray-600 dark:text-gray-400 italic mb-6">
-                Próximamente compartiremos contenido exclusivo sobre nuestras iniciativas.
-              </p>
+              
               <a
                 href="https://www.instagram.com/fundacionculturalocal"
                 target="_blank"

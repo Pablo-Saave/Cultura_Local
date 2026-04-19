@@ -295,7 +295,7 @@ function Eventos() {
 
           {/* Calendario */}
           <div className="w-full lg:w-96">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 sticky top-24">
+            <div className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 p-6 sticky top-24">
               <div className="flex items-center justify-between mb-6">
                 <button
                   onClick={goToPreviousMonth}
