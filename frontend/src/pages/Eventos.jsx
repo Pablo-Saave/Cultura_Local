@@ -88,8 +88,8 @@ function Eventos() {
           onClick={() => setSelectedDate(day)}
           className={`h-12 flex items-center justify-center text-sm font-medium transition-all relative
             ${isToday ? 'ring-2 ring-primary rounded-full' : ''}
-            ${isSelected ? 'bg-accent text-white rounded-full' : 'hover:bg-gray-100 rounded-full'}
-            ${hasEvents && !isSelected ? 'text-accent font-bold' : 'text-gray-900'}
+            ${isSelected ? 'bg-accent text-gray-900 rounded-full' : 'hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full'}
+            ${hasEvents && !isSelected ? 'text-accent font-bold' : 'text-gray-900 dark:text-gray-100'}
           `}
         >
           {day}
@@ -253,10 +253,10 @@ function Eventos() {
                   <Link
                     key={evento._id}
                     to={`/eventos/${evento._id}`}
-                    className="bg-white dark:bg-white rounded-xl overflow-hidden transition-all duration-300 block hover:scale-105"
+                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden transition-all duration-300 block hover:scale-105"
                   >
                     {/* Imagen */}
-                    <div className="relative h-64 bg-white dark:bg-white overflow-hidden flex items-center justify-center p-4">
+                    <div className="relative h-64 bg-white dark:bg-gray-700 overflow-hidden flex items-center justify-center p-4">
                       {evento.imagen ? (
                         <img 
                           src={getImageUrl(evento.imagen)} 
@@ -264,21 +264,21 @@ function Eventos() {
                           className="w-full h-full object-contain"
                         />
                       ) : (
-                        <div className="text-gray-400 text-2xl font-bold text-center">
+                        <div className="text-gray-400 dark:text-gray-500 text-2xl font-bold text-center">
                           {evento.titulo}
                         </div>
                       )}
-                      <span className="absolute top-4 right-4 px-4 py-1.5 bg-accent text-white text-xs font-bold uppercase tracking-wider rounded-full">
+                      <span className="absolute top-4 right-4 px-4 py-1.5 bg-accent text-gray-900 text-xs font-bold uppercase tracking-wider rounded-full">
                         {evento.categoria}
                       </span>
                     </div>
                     
                     {/* Contenido */}
-                    <div className="p-6 bg-white dark:bg-white">
-                      <h3 className="font-bold text-primary text-xl mb-4">
+                    <div className="p-6 bg-white dark:bg-gray-800">
+                      <h3 className="font-bold text-primary dark:text-primary-light text-xl mb-4">
                         {evento.titulo}
                       </h3>
-                      <p className="text-center text-sm text-gray-500 dark:text-gray-500">
+                      <p className="text-center text-sm text-gray-500 dark:text-gray-400">
                         {new Date(evento.fecha).toLocaleDateString('es-CL', { 
                           day: 'numeric', 
                           month: 'long', 
@@ -295,28 +295,28 @@ function Eventos() {
 
           {/* Calendario */}
           <div className="w-full lg:w-96">
-            <div className="bg-white dark:bg-white rounded-lg p-6 sticky top-24">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 sticky top-24">
               <div className="flex items-center justify-between mb-6">
                 <button
                   onClick={goToPreviousMonth}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
                   aria-label="Mes anterior"
                 >
-                  <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
                 
-                <h3 className="text-xl font-bold text-gray-900" style={{ fontFamily: "'Aktifo A', sans-serif" }}>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white" style={{ fontFamily: "'Aktifo A', sans-serif" }}>
                   {months[currentMonth]}
                 </h3>
                 
                 <button
                   onClick={goToNextMonth}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
                   aria-label="Mes siguiente"
                 >
-                  <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -324,7 +324,7 @@ function Eventos() {
 
               <div className="grid grid-cols-7 gap-2 mb-2">
                 {daysOfWeek.map(day => (
-                  <div key={day} className="text-center text-xs font-semibold text-gray-600 uppercase">
+                  <div key={day} className="text-center text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                     {day}
                   </div>
                 ))}
@@ -334,8 +334,8 @@ function Eventos() {
                 {renderCalendar()}
               </div>
 
-              <div className="mt-6 pt-4 border-t border-gray-200">
-                <p className="text-xs text-gray-600 text-center">
+              <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <p className="text-xs text-gray-600 dark:text-gray-400 text-center">
                   <span className="inline-block w-2 h-2 bg-accent rounded-full mr-1"></span>
                   Días con eventos programados
                 </p>
