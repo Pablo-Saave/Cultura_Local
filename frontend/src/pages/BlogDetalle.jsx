@@ -109,7 +109,7 @@ function BlogDetalle() {
               {post.descripcion}
             </p>
           </div>
-cle>
+        </article>
       </div>
     </div>
   )
