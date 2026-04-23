@@ -89,6 +89,12 @@ function AdminEventos() {
     setSuccess('');
 
     try {
+      // Validar que al crear se requiere imagen
+      if (!editingId && !imagen) {
+        setError('La imagen es requerida para crear un evento');
+        return;
+      }
+
       const formDataToSend = new FormData();
       Object.keys(formData).forEach(key => {
         formDataToSend.append(key, formData[key]);
@@ -137,14 +143,11 @@ function AdminEventos() {
   };
 
   const handleEdit = (evento) => {
-    // Extraer la fecha en formato UTC para evitar problemas de zona horaria
-    const fechaUTC = new Date(evento.fecha);
-    const fechaStr = fechaUTC.toISOString().split('T')[0];
-    
+    // Usar directamente la fecha sin conversión para evitar timezone issues
     setFormData({
       titulo: evento.titulo,
       descripcion: evento.descripcion,
-      fecha: fechaStr,
+      fecha: evento.fecha ? evento.fecha.split('T')[0] : '',
       ubicacion: evento.ubicacion,
       direccion: evento.direccion || '',
       categoria: evento.categoria,

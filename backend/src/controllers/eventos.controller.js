@@ -35,8 +35,19 @@ exports.getEventoById = async (req, res) => {
 // POST crear nuevo evento
 exports.createEvento = async (req, res) => {
   try {
+    const { fecha, ...otrosDatos } = req.body;
+    
+    // Procesar fecha: si es string YYYY-MM-DD, convertir a fecha al mediodía UTC
+    let fechaProcesada = null
+    if (fecha && typeof fecha === 'string' && fecha.length >= 10) {
+      fechaProcesada = new Date(`${fecha}T12:00:00Z`)
+    } else if (fecha) {
+      fechaProcesada = new Date(fecha)
+    }
+    
     const eventoData = {
-      ...req.body,
+      ...otrosDatos,
+      fecha: fechaProcesada,
       imagen: req.files?.imagen?.[0]?.path || '',
       imagenDetalle: req.files?.imagenDetalle?.[0]?.path || ''
     };
@@ -68,6 +79,15 @@ exports.updateEvento = async (req, res) => {
     // Si hay nueva imagen detalle, actualizar
     if (req.files?.imagenDetalle?.[0]) {
       req.body.imagenDetalle = req.files.imagenDetalle[0].path;
+    }
+
+    // Procesar fecha si viene en el body
+    if (req.body.fecha) {
+      if (typeof req.body.fecha === 'string' && req.body.fecha.length >= 10) {
+        req.body.fecha = new Date(`${req.body.fecha}T12:00:00Z`)
+      } else {
+        req.body.fecha = new Date(req.body.fecha)
+      }
     }
 
     // Actualizar campos

@@ -49,10 +49,10 @@ function AdminBlog() {
     if (post.categoria === 'ENTREVISTA') return 'ENTREVISTAS'
     if (post.categoria === 'ARTICULO') return 'ARTÍCULOS'
     
-    // Solo mostrar RECIENTE si no tiene categoría y es menor a 2 semanas
+    // Solo mostrar RECIENTE si no tiene categoría y la fecha es menor a 2 semanas
     const haceDosSemanass = new Date()
     haceDosSemanass.setDate(haceDosSemanass.getDate() - 14)
-    const fechaPost = new Date(post.createdAt)
+    const fechaPost = post.fecha ? new Date(post.fecha) : new Date(post.createdAt)
     
     if (fechaPost >= haceDosSemanass) {
       return 'RECIENTE'
@@ -103,13 +103,20 @@ function AdminBlog() {
     setLoading(true)
     
     try {
+      // Validar que al crear se requiere imagen
+      if (!editingPost && !formData.imagen) {
+        alert('La imagen es requerida para crear un post')
+        setLoading(false)
+        return
+      }
+      
       const token = localStorage.getItem('token')
       const formDataToSend = new FormData()
       formDataToSend.append('titulo', formData.titulo)
       formDataToSend.append('descripcion', formData.descripcion)
       formDataToSend.append('categoria', formData.categoria)
-      // Enviar fecha al mediodía UTC para evitar problemas de zona horaria
-      formDataToSend.append('fecha', formData.fecha ? `${formData.fecha}T12:00:00Z` : '')
+      // Enviar fecha sin modificaciones para evitar timezone issues
+      formDataToSend.append('fecha', formData.fecha || '')
       
       if (formData.imagen) {
         formDataToSend.append('imagen', formData.imagen)
@@ -172,19 +179,18 @@ function AdminBlog() {
   }
 
   const handleEdit = (post) => {
-    const fechaUTC = new Date(post.fecha)
-    const fechaStr = fechaUTC.toISOString().split('T')[0]
+    // Usar directamente la fecha sin conversión para evitar timezone issues
     setFormData({
       titulo: post.titulo,
       descripcion: post.descripcion,
       categoria: post.categoria,
       imagen: null,
-      fecha: post.fecha ? fechaStr : ''
+      fecha: post.fecha ? post.fecha.split('T')[0] : ''
     })
     setImagePreview(getImageUrl(post.imagen))
     setImagenDetallePreview(post.imagenDetalle ? getImageUrl(post.imagenDetalle) : '')
     setShowForm(true)
-    // Hacer scroll al top de la página donde está el formulario
+    setEditingPost(post) // ⭐ ESTO FALTABA - sin esto duplica el post
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

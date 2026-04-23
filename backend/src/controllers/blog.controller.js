@@ -46,11 +46,19 @@ const createPost = async (req, res) => {
       return res.status(400).json({ message: 'La imagen es requerida' });
     }
     
+    // Procesar fecha: si es string YYYY-MM-DD, convertir a fecha al mediodía UTC
+    let fechaProcesada = null
+    if (fecha && typeof fecha === 'string' && fecha.length >= 10) {
+      fechaProcesada = new Date(`${fecha}T12:00:00Z`)
+    } else if (fecha) {
+      fechaProcesada = new Date(fecha)
+    }
+    
     const newPost = new Blog({
       titulo,
       descripcion,
       categoria,
-      fecha: fecha || null,
+      fecha: fechaProcesada,
       imagen: req.files.imagen[0].path,
       imagenDetalle: req.files.imagenDetalle?.[0]?.path || '',
       autor: req.user.id
@@ -82,7 +90,15 @@ const updatePost = async (req, res) => {
     post.titulo = titulo || post.titulo;
     post.descripcion = descripcion || post.descripcion;
     post.categoria = categoria || post.categoria;
-    post.fecha = fecha || post.fecha;
+    
+    // Procesar fecha: si es string YYYY-MM-DD, convertir a fecha al mediodía UTC
+    if (fecha) {
+      if (typeof fecha === 'string' && fecha.length >= 10) {
+        post.fecha = new Date(`${fecha}T12:00:00Z`)
+      } else {
+        post.fecha = new Date(fecha)
+      }
+    }
     
     // Si se subió una nueva imagen
     if (req.files?.imagen?.[0]) {

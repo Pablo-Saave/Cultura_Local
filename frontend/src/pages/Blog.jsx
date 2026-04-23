@@ -55,10 +55,10 @@ function Blog() {
     if (post.categoria === 'ENTREVISTA') return 'ENTREVISTAS'
     if (post.categoria === 'ARTICULO') return 'ARTÍCULOS'
     
-    // Solo mostrar RECIENTE si no tiene categoría y es menor a 2 semanas
+    // Solo mostrar RECIENTE si no tiene categoría y la fecha es menor a 2 semanas
     const haceDosSemanass = new Date()
     haceDosSemanass.setDate(haceDosSemanass.getDate() - 14)
-    const fechaPost = new Date(post.createdAt)
+    const fechaPost = post.fecha ? new Date(post.fecha) : new Date(post.createdAt)
     
     if (fechaPost >= haceDosSemanass) {
       return 'RECIENTE'
