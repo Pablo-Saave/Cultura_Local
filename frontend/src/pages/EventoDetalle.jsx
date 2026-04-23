@@ -66,15 +66,12 @@ function EventoDetalle() {
 
           {/* Imagen */}
           {(evento.imagenDetalle || evento.imagen) && (
-            <div className="relative w-full aspect-video bg-black overflow-hidden mb-12 flex items-center justify-center">
+            <div className="relative w-full bg-black overflow-hidden mb-12 flex items-center justify-center" style={{ maxHeight: '600px' }}>
               <img 
                 src={getImageUrl(evento.imagenDetalle || evento.imagen)} 
                 alt={evento.titulo}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
-              <span className="absolute top-6 right-6 px-4 py-2 bg-accent text-white text-sm font-bold uppercase tracking-wider rounded-full">
-                {evento.categoria}
-              </span>
             </div>
           )}
 
