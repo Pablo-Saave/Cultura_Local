@@ -152,8 +152,8 @@ function AdminBlog() {
       setFormData({
         titulo: '',
         descripcion: '',
-        categoria: ',
-        fecha: ''ENTREVISTA',
+        categoria: 'ENTREVISTA',
+        fecha: '',
         imagen: null
       })
       setImagePreview('')
