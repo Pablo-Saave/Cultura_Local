@@ -96,11 +96,7 @@ function AdminBlog() {
     }
   }
 
-  const
-
-      if (imagenDetalle) {
-        formDataToSend.append('imagenDetalle', imagenDetalle)
-      } handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     
@@ -113,6 +109,10 @@ function AdminBlog() {
       
       if (formData.imagen) {
         formDataToSend.append('imagen', formData.imagen)
+      }
+      
+      if (imagenDetalle) {
+        formDataToSend.append('imagenDetalle', imagenDetalle)
       }
       
       if (editingPost) {
@@ -150,12 +150,12 @@ function AdminBlog() {
       setFormData({
         titulo: '',
         descripcion: '',
-        cImagenDetalle(null)
-      setImagenDetallePreview('')
-      setategoria: 'ENTREVISTA',
+        categoria: 'ENTREVISTA',
         imagen: null
       })
       setImagePreview('')
+      setImagenDetalle(null)
+      setImagenDetallePreview('')
       setShowForm(false)
       setEditingPost(null)
     } catch (error) {
@@ -172,8 +172,10 @@ function AdminBlog() {
       titulo: post.titulo,
       descripcion: post.descripcion,
       categoria: post.categoria,
-      imagen: null    setImagenDetallePreview(post.imagenDetalle ? getImageUrl(post.imagenDetalle) : '')    })
+      imagen: null
+    })
     setImagePreview(getImageUrl(post.imagen))
+    setImagenDetallePreview(post.imagenDetalle ? getImageUrl(post.imagenDetalle) : '')
     setShowForm(true)
     // Hacer scroll al top de la página donde está el formulario
     window.scrollTo({ top: 0, behavior: 'smooth' })
