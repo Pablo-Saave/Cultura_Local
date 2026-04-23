@@ -81,9 +81,9 @@ function BlogDetalle() {
             {post.titulo}
           </h1>
 
-          {/* Imagen Principal */}
+          {/* Imagen Principal Compacta */}
           {post.imagen && (
-            <div className="relative w-full bg-black overflow-hidden mb-12 flex items-center justify-center aspect-square">
+            <div className="relative w-full max-w-md mx-auto bg-black overflow-hidden mb-8 flex items-center justify-center aspect-square">
               <img 
                 src={getImageUrl(post.imagen)} 
                 alt={post.titulo}
@@ -92,7 +92,7 @@ function BlogDetalle() {
             </div>
           )}
 
-          {/* Imagen Detalle - Completa sin límites */}
+          {/* Imagen Detalle Grande - Sin restricciones */}
           {post.imagenDetalle && (
             <div className="relative w-full bg-black overflow-auto mb-12 flex items-center justify-center">
               <img 
