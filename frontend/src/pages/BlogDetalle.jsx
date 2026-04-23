@@ -77,28 +77,17 @@ function BlogDetalle() {
         {/* Contenido del post */}
         <article>
           {/* Título */}
-          <h1 className="text-5xl font-bold text-primary mb-2 leading-tight">
+          <h1 className="text-5xl font-bold text-primary mb-12 leading-tight">
             {post.titulo}
           </h1>
 
-          {/* Fecha */}
-          {post.fecha && (
-            <p className="text-gray-600 dark:text-gray-400 text-lg mb-12">
-              {new Date(post.fecha).toLocaleDateString('es-CL', { 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric' 
-              })}
-            </p>
-          )}
-
           {/* Imagen */}
           {(post.imagenDetalle || post.imagen) && (
-            <div className="relative w-full bg-black overflow-auto mb-12 flex items-center justify-center">
+            <div className="relative w-full bg-black overflow-hidden mb-12 flex items-center justify-center" style={{ maxHeight: '500px' }}>
               <img 
                 src={getImageUrl(post.imagenDetalle || post.imagen)} 
                 alt={post.titulo}
-                className="w-full h-auto object-contain"
+                className="w-full h-full object-contain"
               />
             </div>
           )}
