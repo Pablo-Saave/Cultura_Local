@@ -182,16 +182,9 @@ function Blog() {
                 
                 {/* Contenido */}
                 <div className="p-6 bg-white dark:bg-white">
-                  <h3 className="font-bold text-primary text-xl mb-4">
+                  <h3 className="font-bold text-primary text-xl">
                     {post.titulo}
                   </h3>
-                  <p className="text-center text-sm text-gray-500 dark:text-gray-500">
-                    {new Date(post.createdAt).toLocaleDateString('es-CL', { 
-                      day: 'numeric', 
-                      month: 'long', 
-                      year: 'numeric' 
-                    })}
-                  </p>
                 </div>
               </Link>
             ))}

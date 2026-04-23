@@ -39,7 +39,7 @@ const getPostById = async (req, res) => {
 // Crear un nuevo post
 const createPost = async (req, res) => {
   try {
-    const { titulo, descripcion, categoria } = req.body;
+    const { titulo, descripcion, categoria, fecha } = req.body;
     
     // Verificar que se subió una imagen
     if (!req.files?.imagen?.[0]) {
@@ -50,6 +50,7 @@ const createPost = async (req, res) => {
       titulo,
       descripcion,
       categoria,
+      fecha: fecha || null,
       imagen: req.files.imagen[0].path,
       imagenDetalle: req.files.imagenDetalle?.[0]?.path || '',
       autor: req.user.id
@@ -70,7 +71,7 @@ const createPost = async (req, res) => {
 // Actualizar un post
 const updatePost = async (req, res) => {
   try {
-    const { titulo, descripcion, categoria } = req.body;
+    const { titulo, descripcion, categoria, fecha } = req.body;
     const post = await Blog.findById(req.params.id);
     
     if (!post) {
@@ -81,6 +82,7 @@ const updatePost = async (req, res) => {
     post.titulo = titulo || post.titulo;
     post.descripcion = descripcion || post.descripcion;
     post.categoria = categoria || post.categoria;
+    post.fecha = fecha || post.fecha;
     
     // Si se subió una nueva imagen
     if (req.files?.imagen?.[0]) {

@@ -74,35 +74,34 @@ function BlogDetalle() {
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg py-20 px-4">
       <div className="max-w-4xl mx-auto">
-        {/* Botón volver */}
-        <Link 
-          to="/blog" 
-          className="inline-flex items-center text-primary hover:text-primary/80 mb-8"
-        >
-          <svg className="w-5 h-5 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M15 19l-7-7 7-7"></path>
-          </svg>
-          Volver al blog
-        </Link>
-
         {/* Contenido del post */}
         <article>
           {/* Título */}
-          <h1 className="text-5xl font-bold text-primary mb-12 leading-tight">
+          <h1 className="text-5xl font-bold text-primary mb-2 leading-tight">
             {post.titulo}
           </h1>
 
+          {/* Fecha */}
+          {post.fecha && (
+            <p className="text-gray-600 dark:text-gray-400 text-lg mb-12">
+              {new Date(post.fecha).toLocaleDateString('es-CL', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+              })}
+            </p>
+          )}
+
           {/* Imagen */}
-          <div className="relative h-96 bg-white rounded-xl overflow-hidden mb-12 flex items-center justify-center">
-            <img 
-              src={getImageUrl(post.imagen)} 
-              alt={post.titulo}
-              className="w-full h-full object-contain"
-            />
-            <span className="absolute top-6 right-6 px-4 py-2 bg-accent text-white text-sm font-bold uppercase tracking-wider rounded-full">
-              {getCategoriaLabel(post)}
-            </span>
-          </div>
+          {(post.imagenDetalle || post.imagen) && (
+            <div className="relative w-full bg-black overflow-auto mb-12 flex items-center justify-center">
+              <img 
+                src={getImageUrl(post.imagenDetalle || post.imagen)} 
+                alt={post.titulo}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+          )}
 
           {/* Descripción */}
           <div className="prose prose-lg max-w-none mb-12">
@@ -110,16 +109,7 @@ function BlogDetalle() {
               {post.descripcion}
             </p>
           </div>
-
-          {/* Fecha al final */}
-          <p className="text-center text-gray-500 dark:text-gray-400 text-sm pt-8 border-t border-gray-200 dark:border-gray-700">
-            {new Date(post.createdAt).toLocaleDateString('es-CL', { 
-              day: 'numeric', 
-              month: 'long', 
-              year: 'numeric' 
-            })}
-          </p>
-        </article>
+cle>
       </div>
     </div>
   )

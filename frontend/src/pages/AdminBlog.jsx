@@ -21,7 +21,8 @@ function AdminBlog() {
     titulo: '',
     descripcion: '',
     categoria: 'ENTREVISTA',
-    imagen: null
+    imagen: null,
+    fecha: ''
   })
   const [imagePreview, setImagePreview] = useState('')
   const [imagenDetalle, setImagenDetalle] = useState(null)
@@ -106,6 +107,7 @@ function AdminBlog() {
       formDataToSend.append('titulo', formData.titulo)
       formDataToSend.append('descripcion', formData.descripcion)
       formDataToSend.append('categoria', formData.categoria)
+      formDataToSend.append('fecha', formData.fecha)
       
       if (formData.imagen) {
         formDataToSend.append('imagen', formData.imagen)
@@ -150,7 +152,8 @@ function AdminBlog() {
       setFormData({
         titulo: '',
         descripcion: '',
-        categoria: 'ENTREVISTA',
+        categoria: ',
+        fecha: ''ENTREVISTA',
         imagen: null
       })
       setImagePreview('')
@@ -167,11 +170,14 @@ function AdminBlog() {
   }
 
   const handleEdit = (post) => {
-    setEditingPost(post)
+    const fechaUTC = new Date(post.fecha)
+    const fechaStr = fechaUTC.toISOString().split('T')[0]
     setFormData({
       titulo: post.titulo,
       descripcion: post.descripcion,
       categoria: post.categoria,
+      imagen: null,
+      fecha: post.fecha ? fechaStr : ''ost.categoria,
       imagen: null
     })
     setImagePreview(getImageUrl(post.imagen))
@@ -200,7 +206,8 @@ function AdminBlog() {
   }
 
   const handleCancel = () => {
-    setFormData({
+    setFormData({,
+      fecha: ''
       titulo: '',
       descripcion: '',
       categoria: 'ENTREVISTA',
@@ -298,6 +305,20 @@ function AdminBlog() {
                   <option value="NOTICIA">Noticia</option>
                   <option value="ARTICULO">Artículo</option>
                 </select>
+              </div>
+
+              {/* Fecha */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Fecha del Post
+                </label>
+                <input
+                  type="date"
+                  name="fecha"
+                  value={formData.fecha}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
               </div>
 
               {/* Descripción */}

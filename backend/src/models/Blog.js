@@ -21,6 +21,9 @@ const blogSchema = new mongoose.Schema({
     enum: ['ENTREVISTA', 'NOTICIA', 'ARTICULO'],
     required: [true, 'La categoría es requerida']
   },
+  fecha: {
+    type: Date
+  },
   imagen: {
     type: String,
     required: [true, 'La imagen es requerida']
