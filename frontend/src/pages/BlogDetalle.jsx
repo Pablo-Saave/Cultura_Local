@@ -81,22 +81,11 @@ function BlogDetalle() {
             {post.titulo}
           </h1>
 
-          {/* Imagen Principal Compacta */}
-          {post.imagen && (
-            <div className="relative w-full max-w-md mx-auto bg-black overflow-hidden mb-8 flex items-center justify-center aspect-square">
-              <img 
-                src={getImageUrl(post.imagen)} 
-                alt={post.titulo}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          )}
-
-          {/* Imagen Detalle Grande - Sin restricciones */}
-          {post.imagenDetalle && (
+          {/* Imagen */}
+          {(post.imagenDetalle || post.imagen) && (
             <div className="relative w-full bg-black overflow-auto mb-12 flex items-center justify-center">
               <img 
-                src={getImageUrl(post.imagenDetalle)} 
+                src={getImageUrl(post.imagenDetalle || post.imagen)} 
                 alt={post.titulo}
                 className="w-full h-auto object-contain"
               />
