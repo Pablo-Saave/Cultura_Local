@@ -273,7 +273,7 @@ function Eventos() {
                       
                       {/* Badge de categoría */}
                       <div className="absolute top-2 right-2">
-                        <span className="bg-accent text-gray-900 text-xs font-bold px-2 py-1 rounded-full">
+                        <span className="bg-accent text-white text-xs font-bold px-2 py-1 rounded-full">
                           {evento.categoria.toUpperCase()}
                         </span>
                       </div>
@@ -283,6 +283,16 @@ function Eventos() {
                     <h3 className="text-sm font-bold text-primary dark:text-primary-light transition-colors mt-3 group-hover:text-gray-900 dark:group-hover:text-white">
                       {evento.titulo}
                     </h3>
+                    
+                    {/* Fecha del evento */}
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+                      {new Date(evento.fecha).toLocaleDateString('es-CL', { 
+                        day: 'numeric', 
+                        month: 'long', 
+                        year: 'numeric',
+                        timeZone: 'UTC'
+                      })}
+                    </p>
                   </a>
                 ))}
               </div>

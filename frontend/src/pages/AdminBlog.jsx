@@ -24,6 +24,8 @@ function AdminBlog() {
     imagen: null
   })
   const [imagePreview, setImagePreview] = useState('')
+  const [imagenDetalle, setImagenDetalle] = useState(null)
+  const [imagenDetallePreview, setImagenDetallePreview] = useState('')
 
   // Cargar posts del backend
   useEffect(() => {
@@ -81,7 +83,24 @@ function AdminBlog() {
     }
   }
 
-  const handleSubmit = async (e) => {
+  const handleImageDetalleChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      setImagenDetalle(file)
+      // Crear preview
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagenDetallePreview(reader.result)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const
+
+      if (imagenDetalle) {
+        formDataToSend.append('imagenDetalle', imagenDetalle)
+      } handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     
@@ -131,7 +150,9 @@ function AdminBlog() {
       setFormData({
         titulo: '',
         descripcion: '',
-        categoria: 'ENTREVISTA',
+        cImagenDetalle(null)
+      setImagenDetallePreview('')
+      setategoria: 'ENTREVISTA',
         imagen: null
       })
       setImagePreview('')
@@ -151,8 +172,7 @@ function AdminBlog() {
       titulo: post.titulo,
       descripcion: post.descripcion,
       categoria: post.categoria,
-      imagen: null
-    })
+      imagen: null    setImagenDetallePreview(post.imagenDetalle ? getImageUrl(post.imagenDetalle) : '')    })
     setImagePreview(getImageUrl(post.imagen))
     setShowForm(true)
     // Hacer scroll al top de la página donde está el formulario
@@ -185,6 +205,8 @@ function AdminBlog() {
       imagen: null
     })
     setImagePreview('')
+    setImagenDetalle(null)
+    setImagenDetallePreview('')
     setShowForm(false)
     setEditingPost(null)
   }
@@ -307,6 +329,28 @@ function AdminBlog() {
                   <div className="mt-4">
                     <img 
                       src={imagePreview} 
+                      alt="Preview" 
+                      className="w-full max-w-md h-64 object-contain rounded-lg bg-gray-100"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Imagen para Página de Detalle */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Imagen para Página de Detalle
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageDetalleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+                {imagenDetallePreview && (
+                  <div className="mt-4">
+                    <img 
+                      src={imagenDetallePreview} 
                       alt="Preview" 
                       className="w-full max-w-md h-64 object-contain rounded-lg bg-gray-100"
                     />

@@ -42,7 +42,7 @@ const createPost = async (req, res) => {
     const { titulo, descripcion, categoria } = req.body;
     
     // Verificar que se subió una imagen
-    if (!req.file) {
+    if (!req.files?.imagen?.[0]) {
       return res.status(400).json({ message: 'La imagen es requerida' });
     }
     
@@ -50,7 +50,8 @@ const createPost = async (req, res) => {
       titulo,
       descripcion,
       categoria,
-      imagen: req.file.path, // Cloudinary devuelve la URL en file.path
+      imagen: req.files.imagen[0].path,
+      imagenDetalle: req.files.imagenDetalle?.[0]?.path || '',
       autor: req.user.id
     });
     
@@ -82,8 +83,13 @@ const updatePost = async (req, res) => {
     post.categoria = categoria || post.categoria;
     
     // Si se subió una nueva imagen
-    if (req.file) {
-      post.imagen = req.file.path; // Cloudinary devuelve la URL en file.path
+    if (req.files?.imagen?.[0]) {
+      post.imagen = req.files.imagen[0].path;
+    }
+
+    // Si se subió una nueva imagen detalle
+    if (req.files?.imagenDetalle?.[0]) {
+      post.imagenDetalle = req.files.imagenDetalle[0].path;
     }
     
     await post.save();

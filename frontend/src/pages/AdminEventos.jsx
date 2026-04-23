@@ -263,95 +263,24 @@ function AdminEventos() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8">
-            {/* Columna Izquierda - Vista Previa */}
-            <div className="flex flex-col gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Vista Previa del Evento
-                </label>
-                <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
-                  {/* Imagen */}
-                  {imagenPreview ? (
-                    <div className="relative w-full h-64 bg-gray-200 overflow-hidden">
-                      <img
-                        src={imagenPreview}
-                        alt="Preview"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-full h-64 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                      <div className="text-center">
-                        <svg className="w-12 h-12 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <p className="text-gray-400 text-sm">Sin imagen</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Contenido */}
-                  <div className="p-6">
-                    {/* Categoría Badge */}
-                    {formData.categoria && (
-                      <div className="mb-3">
-                        <span className="inline-block px-3 py-1 bg-accent text-gray-900 font-semibold text-xs rounded-full">
-                          {formData.categoria.toUpperCase()}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Título */}
-                    <h3 className="text-xl font-bold text-primary mb-2 line-clamp-3">
-                      {formData.titulo || 'Título del evento'}
-                    </h3>
-
-                    {/* Descripción corta */}
-                    {formData.descripcion && (
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                        {formData.descripcion}
-                      </p>
-                    )}
-
-                    {/* Info */}
-                    <div className="space-y-2 text-sm text-gray-700">
-                      {formData.fecha && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg">📅</span>
-                          <span>{new Date(formData.fecha).toLocaleDateString('es-CL', { timeZone: 'UTC' })}</span>
-                        </div>
-                      )}
-                      {formData.ubicacion && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg">📍</span>
-                          <span>{formData.ubicacion}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Título *
+              </label>
+              <input
+                type="text"
+                name="titulo"
+                value={formData.titulo}
+                onChange={handleInputChange}
+                required
+                maxLength="200"
+                placeholder="Ej: Conversatorio sobre arquitectura"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+              />
             </div>
 
-            {/* Columna Derecha - Formulario */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Título *
-                </label>
-                <input
-                  type="text"
-                  name="titulo"
-                  value={formData.titulo}
-                  onChange={handleInputChange}
-                  required
-                  maxLength="200"
-                  placeholder="Ej: Conversatorio sobre arquitectura"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
-                />
-              </div>
-
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Categoría *
@@ -383,7 +312,9 @@ function AdminEventos() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                 />
               </div>
+            </div>
 
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Ubicación *
@@ -412,7 +343,9 @@ function AdminEventos() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                 />
               </div>
+            </div>
 
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Organizador
@@ -440,24 +373,26 @@ function AdminEventos() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                 />
               </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Descripción *
-                </label>
-                <textarea
-                  name="descripcion"
-                  value={formData.descripcion}
-                  onChange={handleInputChange}
-                  required
-                  rows="5"
-                  maxLength="2000"
-                  placeholder="Describe detalladamente el evento..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition resize-none"
-                />
-                <p className="text-xs text-gray-500 mt-1">{formData.descripcion.length}/2000</p>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Descripción *
+              </label>
+              <textarea
+                name="descripcion"
+                value={formData.descripcion}
+                onChange={handleInputChange}
+                required
+                rows="4"
+                maxLength="2000"
+                placeholder="Describe detalladamente el evento..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition resize-none"
+              />
+              <p className="text-xs text-gray-500 mt-1">{formData.descripcion.length}/2000</p>
+            </div>
 
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Imagen del Evento
@@ -468,7 +403,7 @@ function AdminEventos() {
                   onChange={handleImageChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                 />
-                <p className="text-xs text-gray-500 mt-1">Formatos: JPG, PNG, WebP - Se usa en la lista de eventos</p>
+                <p className="text-xs text-gray-500 mt-1">Para la lista de eventos</p>
               </div>
 
               <div>
@@ -481,61 +416,50 @@ function AdminEventos() {
                   onChange={handleImageDetalleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                 />
-                <p className="text-xs text-gray-500 mt-1">Formatos: JPG, PNG, WebP - Imagen grande sin bordes para la página de detalle</p>
+                <p className="text-xs text-gray-500 mt-1">Imagen más grande para el detalle</p>
               </div>
+            </div>
 
-              <div className="space-y-2 pt-4">
-                <label className="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="publicado"
-                    checked={formData.publicado}
-                    onChange={handleInputChange}
-                    className="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary cursor-pointer"
-                  />
-                  <span className="ml-3 text-sm font-medium text-gray-700">Publicado (visible en la página)</span>
-                </label>
+            <div className="space-y-2">
+              <label className="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="publicado"
+                  checked={formData.publicado}
+                  onChange={handleInputChange}
+                  className="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary cursor-pointer"
+                />
+                <span className="ml-3 text-sm font-medium text-gray-700">Publicado (visible en la página)</span>
+              </label>
 
-                <label className="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="destacado"
-                    checked={formData.destacado}
-                    onChange={handleInputChange}
-                    className="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary cursor-pointer"
-                  />
-                  <span className="ml-3 text-sm font-medium text-gray-700">Destacado</span>
-                </label>
+              <label className="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="destacado"
+                  checked={formData.destacado}
+                  onChange={handleInputChange}
+                  className="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary cursor-pointer"
+                />
+                <span className="ml-3 text-sm font-medium text-gray-700">Destacado</span>
+              </label>
+            </div>
 
-                <label className="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="inscripcionAbierta"
-                    checked={formData.inscripcionAbierta}
-                    onChange={handleInputChange}
-                    className="w-4 h-4 text-primary rounded focus:ring-2 focus:ring-primary cursor-pointer"
-                  />
-                  <span className="ml-3 text-sm font-medium text-gray-700">Inscripción Abierta</span>
-                </label>
-              </div>
-
-              <div className="flex gap-3 pt-4">
+            <div className="flex gap-3 pt-4">
+              <button
+                type="submit"
+                className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+              >
+                {editingId ? 'Actualizar Evento' : 'Crear Evento'}
+              </button>
+              {editingId && (
                 <button
-                  type="submit"
-                  className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+                  type="button"
+                  onClick={resetForm}
+                  className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
                 >
-                  {editingId ? 'Actualizar Evento' : 'Crear Evento'}
+                  Cancelar
                 </button>
-                {editingId && (
-                  <button
-                    type="button"
-                    onClick={resetForm}
-                    className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
-                  >
-                    Cancelar
-                  </button>
-                )}
-              </div>
+              )}
             </div>
           </form>
         </div>
