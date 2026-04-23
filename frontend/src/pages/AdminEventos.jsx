@@ -189,13 +189,13 @@ function AdminEventos() {
       organizador: '',
       inscripcionAbierta: true,
       linkInscripcion: '',
-      pImagenDetalle(null);
-    setImagenDetallePreview('');
-    setublicado: false,
+      publicado: false,
       destacado: false
     });
     setImagen(null);
     setImagenPreview('');
+    setImagenDetalle(null);
+    setImagenDetallePreview('');
     setEditingId(null);
     setMostrarFormulario(false);
   };
