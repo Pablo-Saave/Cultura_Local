@@ -83,11 +83,11 @@ function BlogDetalle() {
 
           {/* Imagen */}
           {(post.imagenDetalle || post.imagen) && (
-            <div className="relative w-full bg-black overflow-hidden mb-12 flex items-center justify-center max-h-96">
+            <div className="relative w-full bg-black overflow-hidden mb-12 flex items-center justify-center max-w-2xl h-80">
               <img 
                 src={getImageUrl(post.imagenDetalle || post.imagen)} 
                 alt={post.titulo}
-                className="w-full h-auto object-contain"
+                className="w-full h-full object-contain"
               />
             </div>
           )}
