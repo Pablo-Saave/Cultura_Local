@@ -23,8 +23,7 @@ const eventoSchema = new mongoose.Schema({
     required: [true, 'La fecha es obligatoria']
   },
   horaInicio: {
-    type: String,
-    required: [true, 'La hora de inicio es obligatoria']
+    type: String
   },
   horaFin: {
     type: String
