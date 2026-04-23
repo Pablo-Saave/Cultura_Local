@@ -29,8 +29,7 @@ const eventosStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'cultura-local/eventos',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-    transformation: [{ quality: 'auto' }]
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp']
   }
 });
 
