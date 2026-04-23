@@ -151,11 +151,11 @@ function AdminEventos() {
       organizador: evento.organizador || '',
       inscripcionAbierta: evento.inscripcionAbierta,
       linkInscripcion: evento.linkInscripcion || '',
-      pImagenDetallePreview(evento.imagenDetalle ? getImageUrl(evento.imagenDetalle) : '');
-    setublicado: evento.publicado,
+      publicado: evento.publicado,
       destacado: evento.destacado
     });
     setImagenPreview(evento.imagen ? getImageUrl(evento.imagen) : '');
+    setImagenDetallePreview(evento.imagenDetalle ? getImageUrl(evento.imagenDetalle) : '');
     setEditingId(evento._id);
     setMostrarFormulario(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
