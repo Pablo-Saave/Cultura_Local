@@ -65,77 +65,18 @@ function EventoDetalle() {
           </h1>
 
           {/* Imagen */}
-          {evento.imagen && (
-            <div className="relative h-96 bg-white rounded-xl overflow-hidden mb-12 flex items-center justify-center">
+          {(evento.imagenDetalle || evento.imagen) && (
+            <div className="relative h-96 bg-black overflow-hidden mb-12 flex items-center justify-center">
               <img 
-                src={getImageUrl(evento.imagen)} 
+                src={getImageUrl(evento.imagenDetalle || evento.imagen)} 
                 alt={evento.titulo}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
-              <span className="absolute top-6 right-6 px-4 py-2 bg-accent text-white text-sm font-bold uppercase tracking-wider rounded-full">
+              <span className="absolute top-6 right-6 px-4 py-2 bg-accent text-gray-900 text-sm font-bold uppercase tracking-wider rounded-full">
                 {evento.categoria}
               </span>
             </div>
           )}
-
-          {/* Información del evento */}
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 mb-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Fecha</p>
-                <p className="text-gray-900 dark:text-white text-lg font-semibold">
-                  {new Date(evento.fecha).toLocaleDateString('es-CL', { 
-                    day: 'numeric', 
-                    month: 'long', 
-                    year: 'numeric',
-                    timeZone: 'UTC'
-                  })}
-                </p>
-              </div>
-              
-              <div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Horario</p>
-                <p className="text-gray-900 dark:text-white text-lg font-semibold">
-                  {evento.horaInicio} {evento.horaFin && `- ${evento.horaFin}`}
-                </p>
-              </div>
-              
-              <div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Ubicación</p>
-                <p className="text-gray-900 dark:text-white text-lg font-semibold">
-                  {evento.ubicacion}
-                  {evento.direccion && <span className="block text-base font-normal text-gray-600 dark:text-gray-400 mt-1">{evento.direccion}</span>}
-                </p>
-              </div>
-              
-              {evento.organizador && (
-                <div>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Organiza</p>
-                  <p className="text-gray-900 dark:text-white text-lg font-semibold">
-                    {evento.organizador}
-                  </p>
-                </div>
-              )}
-              
-              {evento.cuposMaximos && (
-                <div>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Cupos disponibles</p>
-                  <p className="text-gray-900 dark:text-white text-lg font-semibold">
-                    {evento.cuposMaximos}
-                  </p>
-                </div>
-              )}
-              
-              {evento.costo !== undefined && evento.costo !== null && (
-                <div>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Costo</p>
-                  <p className="text-gray-900 dark:text-white text-lg font-semibold">
-                    {evento.costo === 0 ? 'Gratuito' : `$${evento.costo.toLocaleString('es-CL')}`}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
 
           {/* Descripción */}
           <div className="prose prose-lg max-w-none mb-12">

@@ -28,6 +28,8 @@ function AdminEventos() {
   });
   const [imagen, setImagen] = useState(null);
   const [imagenPreview, setImagenPreview] = useState('');
+  const [imagenDetalle, setImagenDetalle] = useState(null);
+  const [imagenDetallePreview, setImagenDetallePreview] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -69,6 +71,18 @@ function AdminEventos() {
     }
   };
 
+  const handleImageDetalleChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImagenDetalle(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagenDetallePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -82,6 +96,10 @@ function AdminEventos() {
 
       if (imagen) {
         formDataToSend.append('imagen', imagen);
+      }
+
+      if (imagenDetalle) {
+        formDataToSend.append('imagenDetalle', imagenDetalle);
       }
 
       if (editingId) {
@@ -133,7 +151,8 @@ function AdminEventos() {
       organizador: evento.organizador || '',
       inscripcionAbierta: evento.inscripcionAbierta,
       linkInscripcion: evento.linkInscripcion || '',
-      publicado: evento.publicado,
+      pImagenDetallePreview(evento.imagenDetalle ? getImageUrl(evento.imagenDetalle) : '');
+    setublicado: evento.publicado,
       destacado: evento.destacado
     });
     setImagenPreview(evento.imagen ? getImageUrl(evento.imagen) : '');
@@ -170,7 +189,9 @@ function AdminEventos() {
       organizador: '',
       inscripcionAbierta: true,
       linkInscripcion: '',
-      publicado: false,
+      pImagenDetalle(null);
+    setImagenDetallePreview('');
+    setublicado: false,
       destacado: false
     });
     setImagen(null);
@@ -447,7 +468,20 @@ function AdminEventos() {
                   onChange={handleImageChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                 />
-                <p className="text-xs text-gray-500 mt-1">Formatos: JPG, PNG, WebP</p>
+                <p className="text-xs text-gray-500 mt-1">Formatos: JPG, PNG, WebP - Se usa en la lista de eventos</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Imagen para Página de Detalle
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageDetalleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+                />
+                <p className="text-xs text-gray-500 mt-1">Formatos: JPG, PNG, WebP - Imagen grande sin bordes para la página de detalle</p>
               </div>
 
               <div className="space-y-2 pt-4">

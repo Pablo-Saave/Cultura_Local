@@ -248,46 +248,42 @@ function Eventos() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {eventosFiltrados.map((evento) => (
-                  <Link
+                  <a
                     key={evento._id}
-                    to={`/eventos/${evento._id}`}
-                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden transition-all duration-300 block hover:shadow-xl"
+                    href={`/eventos/${evento._id}`}
+                    className="group flex flex-col"
                   >
-                    {/* Imagen */}
-                    <div className="relative h-96 bg-white dark:bg-gray-700 overflow-hidden flex items-center justify-center p-4">
+                    {/* Contenedor de imagen */}
+                    <div className="relative aspect-square overflow-hidden">
                       {evento.imagen ? (
                         <img 
                           src={getImageUrl(evento.imagen)} 
                           alt={evento.titulo}
-                          className="w-full h-full object-contain"
+                          className="w-full h-full object-cover image-shift-hover"
                         />
                       ) : (
-                        <div className="text-gray-400 dark:text-gray-500 text-2xl font-bold text-center">
-                          {evento.titulo}
+                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                          <span className="text-gray-500 dark:text-gray-400 text-xs font-bold text-center px-2">
+                            {evento.titulo}
+                          </span>
                         </div>
                       )}
-                      <span className="absolute top-4 right-4 px-4 py-1.5 bg-accent text-gray-900 text-xs font-bold uppercase tracking-wider rounded-full">
-                        {evento.categoria}
-                      </span>
+                      
+                      {/* Badge de categoría */}
+                      <div className="absolute top-2 right-2">
+                        <span className="bg-accent text-gray-900 text-xs font-bold px-2 py-1 rounded-full">
+                          {evento.categoria.toUpperCase()}
+                        </span>
+                      </div>
                     </div>
                     
-                    {/* Contenido */}
-                    <div className="p-6 bg-white dark:bg-gray-800">
-                      <h3 className="font-bold text-primary dark:text-primary-light text-2xl mb-4">
-                        {evento.titulo}
-                      </h3>
-                      <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(evento.fecha).toLocaleDateString('es-CL', { 
-                          day: 'numeric', 
-                          month: 'long', 
-                          year: 'numeric',
-                          timeZone: 'UTC'
-                        })}
-                      </p>
-                    </div>
-                  </Link>
+                    {/* Título del evento */}
+                    <h3 className="text-sm font-bold text-primary dark:text-primary-light transition-colors mt-3 group-hover:text-gray-900 dark:group-hover:text-white">
+                      {evento.titulo}
+                    </h3>
+                  </a>
                 ))}
               </div>
             )}

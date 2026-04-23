@@ -37,7 +37,8 @@ exports.createEvento = async (req, res) => {
   try {
     const eventoData = {
       ...req.body,
-      imagen: req.file ? req.file.path : '' // Cloudinary devuelve la URL en file.path
+      imagen: req.files?.imagen?.[0]?.path || '',
+      imagenDetalle: req.files?.imagenDetalle?.[0]?.path || ''
     };
 
     const evento = new Evento(eventoData);
@@ -59,10 +60,14 @@ exports.updateEvento = async (req, res) => {
       return res.status(404).json({ message: 'Evento no encontrado' });
     }
 
-    // Si hay nueva imagen, eliminar la anterior
     // Si hay nueva imagen, actualizar
-    if (req.file) {
-      req.body.imagen = req.file.path; // Cloudinary devuelve la URL en file.path
+    if (req.files?.imagen?.[0]) {
+      req.body.imagen = req.files.imagen[0].path;
+    }
+
+    // Si hay nueva imagen detalle, actualizar
+    if (req.files?.imagenDetalle?.[0]) {
+      req.body.imagenDetalle = req.files.imagenDetalle[0].path;
     }
 
     // Actualizar campos

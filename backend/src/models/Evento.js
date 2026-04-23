@@ -41,6 +41,10 @@ const eventoSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  imagenDetalle: {
+    type: String,
+    default: ''
+  },
   categoria: {
     type: String,
     enum: ['Taller', 'Conversatorio', 'Exposición', 'Encuentro', 'Festival'],

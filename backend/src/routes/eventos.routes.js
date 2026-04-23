@@ -20,8 +20,14 @@ router.get('/', getEventos);
 router.get('/:id', getEventoById);
 
 // Rutas protegidas (requieren autenticación)
-router.post('/', protect, uploadEventos.single('imagen'), createEvento);
-router.put('/:id', protect, uploadEventos.single('imagen'), updateEvento);
+router.post('/', protect, uploadEventos.fields([
+  { name: 'imagen', maxCount: 1 },
+  { name: 'imagenDetalle', maxCount: 1 }
+]), createEvento);
+router.put('/:id', protect, uploadEventos.fields([
+  { name: 'imagen', maxCount: 1 },
+  { name: 'imagenDetalle', maxCount: 1 }
+]), updateEvento);
 router.delete('/:id', protect, deleteEvento);
 
 module.exports = router;
