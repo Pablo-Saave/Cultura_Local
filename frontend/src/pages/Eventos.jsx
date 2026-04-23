@@ -209,14 +209,14 @@ function Eventos() {
                 Taller
               </button>
               <button
-                onClick={() => setFiltroActivo('charla')}
+                onClick={() => setFiltroActivo('conversatorio')}
                 className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
-                  filtroActivo === 'charla'
+                  filtroActivo === 'conversatorio'
                     ? 'bg-primary text-white'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
                 }`}
               >
-                Charla
+                Conversatorio
               </button>
               <button
                 onClick={() => setFiltroActivo('exposición')}
@@ -248,15 +248,15 @@ function Eventos() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {eventosFiltrados.map((evento) => (
                   <Link
                     key={evento._id}
                     to={`/eventos/${evento._id}`}
-                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden transition-all duration-300 block hover:scale-105"
+                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden transition-all duration-300 block hover:shadow-xl"
                   >
                     {/* Imagen */}
-                    <div className="relative h-64 bg-white dark:bg-gray-700 overflow-hidden flex items-center justify-center p-4">
+                    <div className="relative h-96 bg-white dark:bg-gray-700 overflow-hidden flex items-center justify-center p-4">
                       {evento.imagen ? (
                         <img 
                           src={getImageUrl(evento.imagen)} 
@@ -275,7 +275,7 @@ function Eventos() {
                     
                     {/* Contenido */}
                     <div className="p-6 bg-white dark:bg-gray-800">
-                      <h3 className="font-bold text-primary dark:text-primary-light text-xl mb-4">
+                      <h3 className="font-bold text-primary dark:text-primary-light text-2xl mb-4">
                         {evento.titulo}
                       </h3>
                       <p className="text-center text-sm text-gray-500 dark:text-gray-400">

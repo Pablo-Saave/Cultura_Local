@@ -57,17 +57,6 @@ function EventoDetalle() {
   return (
     <div className="min-h-screen bg-white dark:bg-dark-bg py-20 px-4">
       <div className="max-w-4xl mx-auto">
-        {/* Botón volver */}
-        <Link 
-          to="/eventos" 
-          className="inline-flex items-center text-primary hover:text-primary/80 mb-8"
-        >
-          <svg className="w-5 h-5 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M15 19l-7-7 7-7"></path>
-          </svg>
-          Volver a eventos
-        </Link>
-
         {/* Contenido del evento */}
         <article>
           {/* Título */}

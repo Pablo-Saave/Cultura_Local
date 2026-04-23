@@ -19,7 +19,7 @@ function AdminEventos() {
     fecha: '',
     ubicacion: '',
     direccion: '',
-    categoria: 'Charla',
+    categoria: 'Conversatorio',
     organizador: '',
     inscripcionAbierta: true,
     linkInscripcion: '',
@@ -164,13 +164,13 @@ function AdminEventos() {
       titulo: '',
       descripcion: '',
       fecha: '',
-      horaInicio: '',
-      horaFin: '',
-      ubicacion: '',
       ubicacion: '',
       direccion: '',
-      categoria: 'Charla',
-      organizadoralse,
+      categoria: 'Conversatorio',
+      organizador: '',
+      inscripcionAbierta: true,
+      linkInscripcion: '',
+      publicado: false,
       destacado: false
     });
     setImagen(null);
@@ -341,7 +341,7 @@ function AdminEventos() {
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
                 >
-                  <option value="Charla">Charla</option>
+                  <option value="Conversatorio">Conversatorio</option>
                   <option value="Taller">Taller</option>
                   <option value="Exposición">Exposición</option>
                   <option value="Encuentro">Encuentro</option>
@@ -541,9 +541,8 @@ function AdminEventos() {
                         )}
                       </div>
                       <p className="text-sm text-gray-600 mb-2">
-                        📅 {new Date(evento.fecha).toLocaleDateString('es-CL', { timeZone: 'UTC' })} • 
-                        🕐 {evento.horaInicio} {evento.horaFin && `- ${evento.horaFin}`} • 
-                        📍 {evento.ubicacion}
+                        {new Date(evento.fecha).toLocaleDateString('es-CL', { timeZone: 'UTC' })} • 
+                        {evento.ubicacion}
                       </p>
                       <p className="text-sm text-gray-700">{evento.descripcion}</p>
                     </div>
