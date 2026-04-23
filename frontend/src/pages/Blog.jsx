@@ -159,34 +159,53 @@ function Blog() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {postsFiltrados.map((post) => (
-              <Link
+              <a
                 key={post._id} 
-                to={`/blog/${post._id}`}
-                className="bg-white dark:bg-white rounded-xl overflow-hidden transition-all duration-300 cursor-pointer block hover:scale-105"
+                href={`/blog/${post._id}`}
+                className="group flex flex-col"
               >
-                {/* Imagen */}
-                <div className="relative h-64 bg-white dark:bg-white overflow-hidden flex items-center justify-center p-4">
-                  {post.imagen && (
+                {/* Contenedor de imagen */}
+                <div className="relative aspect-square overflow-hidden">
+                  {post.imagen ? (
                     <img 
                       src={getImageUrl(post.imagen)} 
                       alt={post.titulo}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover image-shift-hover"
                     />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                      <span className="text-gray-500 dark:text-gray-400 text-xs font-bold text-center px-2">
+                        {post.titulo}
+                      </span>
+                    </div>
                   )}
-                  <span className="absolute top-4 right-4 px-4 py-1.5 bg-accent text-white text-xs font-bold uppercase tracking-wider rounded-full">
-                    {getCategoriaLabel(post)}
-                  </span>
+                  
+                  {/* Badge de categoría */}
+                  <div className="absolute top-2 right-2">
+                    <span className="bg-accent text-white text-xs font-bold px-2 py-1 rounded-full">
+                      {getCategoriaLabel(post)}
+                    </span>
+                  </div>
                 </div>
                 
-                {/* Contenido */}
-                <div className="p-6 bg-white dark:bg-white">
-                  <h3 className="font-bold text-primary text-xl">
-                    {post.titulo}
-                  </h3>
-                </div>
-              </Link>
+                {/* Título del post */}
+                <h3 className="text-sm font-bold text-primary dark:text-primary-light transition-colors mt-3 group-hover:text-gray-900 dark:group-hover:text-white">
+                  {post.titulo}
+                </h3>
+                
+                {/* Fecha del post */}
+                {post.fecha && (
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+                    {new Date(post.fecha).toLocaleDateString('es-CL', { 
+                      day: 'numeric', 
+                      month: 'long', 
+                      year: 'numeric'
+                    })}
+                  </p>
+                )}
+              </a>
             ))}
           </div>
         )}
