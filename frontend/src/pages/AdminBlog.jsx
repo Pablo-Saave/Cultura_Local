@@ -44,20 +44,21 @@ function AdminBlog() {
   }
 
   const getCategoriaLabel = (post) => {
-    // Verificar si es reciente (últimas 2 semanas)
+    // Priorizar la categoría del post siempre
+    if (post.categoria === 'NOTICIA') return 'NOTICIAS'
+    if (post.categoria === 'ENTREVISTA') return 'ENTREVISTAS'
+    if (post.categoria === 'ARTICULO') return 'ARTÍCULOS'
+    
+    // Solo mostrar RECIENTE si no tiene categoría y es menor a 2 semanas
     const haceDosSemanass = new Date()
-    haceDosSemanass.setDate(haceDosSemanass.getDate() - 14) // 2 semanas = 14 días
+    haceDosSemanass.setDate(haceDosSemanass.getDate() - 14)
     const fechaPost = new Date(post.createdAt)
     
     if (fechaPost >= haceDosSemanass) {
       return 'RECIENTE'
     }
     
-    // Si no es reciente, mostrar la categoría
-    if (post.categoria === 'NOTICIA') return 'NOTICIAS'
-    if (post.categoria === 'ENTREVISTA') return 'ENTREVISTAS'
-    if (post.categoria === 'ARTICULO') return 'ARTÍCULOS'
-    return post.categoria
+    return post.categoria || 'SIN CATEGORÍA'
   }
 
   const handleInputChange = (e) => {
@@ -107,7 +108,8 @@ function AdminBlog() {
       formDataToSend.append('titulo', formData.titulo)
       formDataToSend.append('descripcion', formData.descripcion)
       formDataToSend.append('categoria', formData.categoria)
-      formDataToSend.append('fecha', formData.fecha)
+      // Enviar fecha al mediodía UTC para evitar problemas de zona horaria
+      formDataToSend.append('fecha', formData.fecha ? `${formData.fecha}T12:00:00Z` : '')
       
       if (formData.imagen) {
         formDataToSend.append('imagen', formData.imagen)
