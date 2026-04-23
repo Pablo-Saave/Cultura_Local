@@ -205,12 +205,12 @@ function AdminBlog() {
   }
 
   const handleCancel = () => {
-    setFormData({,
-      fecha: ''
+    setFormData({
       titulo: '',
       descripcion: '',
       categoria: 'ENTREVISTA',
-      imagen: null
+      imagen: null,
+      fecha: ''
     })
     setImagePreview('')
     setImagenDetalle(null)
