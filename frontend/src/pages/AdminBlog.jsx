@@ -177,8 +177,7 @@ function AdminBlog() {
       descripcion: post.descripcion,
       categoria: post.categoria,
       imagen: null,
-      fecha: post.fecha ? fechaStr : ''ost.categoria,
-      imagen: null
+      fecha: post.fecha ? fechaStr : ''
     })
     setImagePreview(getImageUrl(post.imagen))
     setImagenDetallePreview(post.imagenDetalle ? getImageUrl(post.imagenDetalle) : '')
