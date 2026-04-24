@@ -77,7 +77,6 @@ function EventoDetalle() {
 
           {/* Descripción */}
           <div className="prose prose-lg max-w-none mb-12">
-            <h2 className="text-2xl font-bold text-primary mb-4">Descripción</h2>
             <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed whitespace-pre-line">
               {evento.descripcion}
             </p>
