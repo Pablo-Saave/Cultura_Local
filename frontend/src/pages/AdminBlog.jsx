@@ -227,6 +227,21 @@ function AdminBlog() {
     setEditingId(null)
   }
 
+  const handleNewPost = () => {
+    setEditingId(null)
+    setFormData({
+      titulo: '',
+      descripcion: '',
+      categoria: 'ENTREVISTA',
+      fecha: '',
+      imagen: null
+    })
+    setImagePreview('')
+    setImagenDetalle(null)
+    setImagenDetallePreview('')
+    setShowForm(true)
+  }
+
   // Verificar autenticación
   if (authLoading) {
     return (
@@ -264,20 +279,7 @@ function AdminBlog() {
             </h1>
             {!showForm && (
               <button
-                onClick={() => {
-                  setShowForm(true)
-                  setEditingId(null)
-                  setFormData({
-                    titulo: '',
-                    descripcion: '',
-                    categoria: 'ENTREVISTA',
-                    fecha: '',
-                    imagen: null
-                  })
-                  setImagePreview('')
-                  setImagenDetalle(null)
-                  setImagenDetallePreview('')
-                }}
+                onClick={handleNewPost}
                 className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
               >
                 + Nuevo Post
@@ -408,7 +410,7 @@ function AdminBlog() {
                   disabled={loading}
                   className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:bg-gray-400"
                 >
-                  {loading ? 'Guardando...' : (editingPost ? 'Actualizar' : 'Publicar')}
+                  {loading ? 'Guardando...' : (editingId ? 'Actualizar' : 'Publicar')}
                 </button>
                 <button
                   type="button"
