@@ -15,7 +15,7 @@ function AdminBlog() {
   const { user, loading: authLoading } = useContext(AuthContext)
   const [posts, setPosts] = useState([])
   const [showForm, setShowForm] = useState(false)
-  const [editingPost, setEditingPost] = useState(null)
+  const [editingId, setEditingId] = useState(null)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     titulo: '',
@@ -104,7 +104,7 @@ function AdminBlog() {
     
     try {
       // Validar que al crear se requiere imagen
-      if (!editingPost && !formData.imagen) {
+      if (!editingId && !formData.imagen) {
         alert('La imagen es requerida para crear un post')
         setLoading(false)
         return
@@ -126,10 +126,10 @@ function AdminBlog() {
         formDataToSend.append('imagenDetalle', imagenDetalle)
       }
       
-      if (editingPost) {
+      if (editingId) {
         // Actualizar post existente
         await axios.put(
-          `${BLOG_URL}/${editingPost._id}`,
+          `${BLOG_URL}/${editingId}`,
           formDataToSend,
           {
             headers: {
@@ -169,7 +169,7 @@ function AdminBlog() {
       setImagenDetalle(null)
       setImagenDetallePreview('')
       setShowForm(false)
-      setEditingPost(null)
+      setEditingId(null)
     } catch (error) {
       console.error('Error al guardar post:', error)
       alert(error.response?.data?.message || 'Error al guardar el post')
@@ -190,7 +190,7 @@ function AdminBlog() {
     setImagePreview(getImageUrl(post.imagen))
     setImagenDetallePreview(post.imagenDetalle ? getImageUrl(post.imagenDetalle) : '')
     setShowForm(true)
-    setEditingPost(post) // ⭐ ESTO FALTABA - sin esto duplica el post
+    setEditingId(post._id) // Usar solo el ID
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -224,7 +224,7 @@ function AdminBlog() {
     setImagenDetalle(null)
     setImagenDetallePreview('')
     setShowForm(false)
-    setEditingPost(null)
+    setEditingId(null)
   }
 
   // Verificar autenticación
@@ -264,7 +264,20 @@ function AdminBlog() {
             </h1>
             {!showForm && (
               <button
-                onClick={() => setShowForm(true)}
+                onClick={() => {
+                  setShowForm(true)
+                  setEditingId(null)
+                  setFormData({
+                    titulo: '',
+                    descripcion: '',
+                    categoria: 'ENTREVISTA',
+                    fecha: '',
+                    imagen: null
+                  })
+                  setImagePreview('')
+                  setImagenDetalle(null)
+                  setImagenDetallePreview('')
+                }}
                 className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
               >
                 + Nuevo Post
@@ -277,7 +290,7 @@ function AdminBlog() {
         {showForm && (
           <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-gray-900 mb-6">
-              {editingPost ? 'Editar Post' : 'Nuevo Post'}
+              {editingId ? 'Editar Post' : 'Nuevo Post'}
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
