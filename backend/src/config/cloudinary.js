@@ -14,7 +14,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Configuración de transformación para mantener calidad y aspecto cuadrado
+// Transformación para imágenes principales (cuadradas)
 const highQualitySquareTransform = [
   { 
     width: 800, 
@@ -26,13 +26,33 @@ const highQualitySquareTransform = [
   }
 ];
 
-// Configuración de almacenamiento para proyectos
+// Transformación para imágenes de detalle/galería (preserva proporciones)
+const highQualityDetailTransform = [
+  { 
+    width: 1200,
+    crop: 'scale',
+    quality: 'auto',
+    fetch_format: 'auto'
+  }
+];
+
+// Configuración de almacenamiento para imagen principal de proyectos
 const proyectosStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'cultura-local/proyectos',
     allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
     transformation: highQualitySquareTransform
+  }
+});
+
+// Configuración de almacenamiento para galería de proyectos (sin recorte)
+const proyectosGaleriaStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'cultura-local/proyectos/galeria',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+    transformation: highQualityDetailTransform
   }
 });
 
@@ -52,7 +72,7 @@ const blogStorage = new CloudinaryStorage({
   params: {
     folder: 'cultura-local/blog',
     allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-    transformation: highQualitySquareTransform
+    transformation: highQualityDetailTransform
   }
 });
 
@@ -60,6 +80,11 @@ const blogStorage = new CloudinaryStorage({
 const uploadProyectos = multer({
   storage: proyectosStorage,
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+});
+
+const uploadProyectosGaleria = multer({
+  storage: proyectosGaleriaStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 const uploadEventos = multer({
@@ -75,6 +100,7 @@ const uploadBlog = multer({
 module.exports = {
   cloudinary,
   uploadProyectos,
+  uploadProyectosGaleria,
   uploadEventos,
   uploadBlog
 };
