@@ -14,13 +14,25 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+// Configuración de transformación para mantener calidad y aspecto cuadrado
+const highQualitySquareTransform = [
+  { 
+    width: 800, 
+    height: 800, 
+    crop: 'fill', 
+    gravity: 'auto',
+    quality: 'auto',
+    fetch_format: 'auto'
+  }
+];
+
 // Configuración de almacenamiento para proyectos
 const proyectosStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'cultura-local/proyectos',
     allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-    transformation: [{ width: 1200, height: 800, crop: 'limit' }]
+    transformation: highQualitySquareTransform
   }
 });
 
@@ -29,7 +41,8 @@ const eventosStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'cultura-local/eventos',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp']
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+    transformation: highQualitySquareTransform
   }
 });
 
@@ -39,7 +52,7 @@ const blogStorage = new CloudinaryStorage({
   params: {
     folder: 'cultura-local/blog',
     allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-    transformation: [{ width: 1200, height: 800, crop: 'limit' }]
+    transformation: highQualitySquareTransform
   }
 });
 
