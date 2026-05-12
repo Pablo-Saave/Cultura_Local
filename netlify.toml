@@ -1,30 +1,48 @@
-{
-  "name": "cultura-local-frontend",
-  "build": {
-    "command": "npm run build",
-    "publish": "dist",
-    "environment": {
-      "VITE_API_URL": "https://tu-backend.onrender.com"
-    }
-  },
-  "redirects": [
-    {
-      "from": "http://culturalocal.cl/*",
-      "to": "https://www.culturalocal.cl/:splat",
-      "status": 301,
-      "force": true
-    },
-    {
-      "from": "https://culturalocal.cl/*",
-      "to": "https://www.culturalocal.cl/:splat",
-      "status": 301,
-      "force": true
-    },
-    {
-      "source": "/*",
-      "destination": "/index.html",
-      "type": 301,
-      "statusCode": 301
-    }
-  ]
-}
+[build]
+command = "npm run build"
+publish = "dist"
+
+[build.environment]
+VITE_API_URL = "https://tu-backend.onrender.com"
+
+# Redirigir desde versiones sin www a www
+[[redirects]]
+from = "http://culturalocal.cl/*"
+to = "https://www.culturalocal.cl/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "https://culturalocal.cl/*"
+to = "https://www.culturalocal.cl/:splat"
+status = 301
+force = true
+
+# Archivos estáticos que NO deben ser redirigidos a index.html
+[[redirects]]
+from = "/sitemap.xml"
+to = "/sitemap.xml"
+status = 200
+
+[[redirects]]
+from = "/robots.txt"
+to = "/robots.txt"
+status = 200
+
+[[redirects]]
+from = "/static.json"
+to = "/static.json"
+status = 200
+
+# Archivos públicos
+[[redirects]]
+from = "/img/*"
+to = "/img/:splat"
+status = 200
+
+# Redirigir todo lo demás a index.html (SPA) - ÚLTIMA REGLA
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+force = false

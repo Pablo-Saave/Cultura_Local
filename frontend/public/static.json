@@ -1,5 +1,11 @@
 {
   "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/sitemap.xml", "dest": "/sitemap.xml", "statusCode": 200 },
+    { "src": "/robots.txt", "dest": "/robots.txt", "statusCode": 200 },
+    { "src": "/static.json", "dest": "/static.json", "statusCode": 200 },
+    { "src": "/img/(.*)", "dest": "/img/$1", "statusCode": 200 },
+    { "src": "/assets/(.*)", "dest": "/assets/$1", "statusCode": 200 },
+    { "src": "/(.*)\\.html", "dest": "/$1.html", "statusCode": 200 },
+    { "src": "/(.*)", "dest": "/index.html", "statusCode": 200 }
   ]
 }

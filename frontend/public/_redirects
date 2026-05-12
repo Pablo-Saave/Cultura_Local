@@ -1,1 +1,14 @@
-/*    /index.html   200
+# Archivos estáticos y SEO - servir directamente
+/sitemap.xml    /sitemap.xml    200
+/robots.txt     /robots.txt     200
+/static.json    /static.json    200
+
+# Imágenes y assets
+/img/*          /img/:splat     200
+/assets/*       /assets/:splat   200
+
+# API proxy (si aplica)
+/api/*          https://api.culturalocal.cl/api/:splat  200
+
+# Redirigir todo lo demás a index.html (SPA) - REGLA FINAL
+/*              /index.html     200
