@@ -22,7 +22,7 @@ services:
         sync: false # URL del frontend (lo configuras después)
     healthCheckPath: /api/health
 
-  # Frontend (opcional - también puedes usar Vercel/Netlify)
+  # Frontend
   - type: web
     name: cultura-local-frontend
     env: static
@@ -32,3 +32,8 @@ services:
     envVars:
       - key: VITE_API_URL
         sync: false # URL del backend (ej: https://tu-backend.onrender.com)
+    # Regla SPA: redirigir rutas desconocidas a index.html
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
