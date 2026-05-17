@@ -61,6 +61,24 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// ─── NUEVAS RUTAS ──────────────────────────────────────────────────────────────
+
+// Ruta raíz - evita error 5xx en Google Search Console
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'API Cultura Local'
+  });
+});
+
+// Bloquear rastreo de Google en la API
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nDisallow: /');
+});
+
+// ───────────────────────────────────────────────────────────────────────────────
+
 // Middleware de manejo de errores
 const errorHandler = require('./src/middleware/errorHandler');
 app.use(errorHandler);
