@@ -10,11 +10,16 @@ import axios from 'axios';
 import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
 import AdminLayout from '../components/AdminLayout';
 import AdminContentHeader from '../components/AdminContentHeader';
+import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters';
 
 function AdminProyectos() {
   const { user, loading: authLoading } = useContext(AuthContext);
   const [proyectos, setProyectos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [dateRange, setDateRange] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [editando, setEditando] = useState(null);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [formData, setFormData] = useState({
@@ -159,18 +164,15 @@ function AdminProyectos() {
     return null;
   };
 
-  if (authLoading || loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando...</p>
-        </div>
-      </div>
-    );
-  }
+  const categorias = [...new Set(proyectos.map(proyecto => proyecto.categoria).filter(Boolean))].sort();
+  const proyectosFiltrados = proyectos.filter(proyecto => {
+    const texto = `${proyecto.nombre || ''} ${proyecto.descripcion || ''}`.toLocaleLowerCase('es-CL');
+    const categoriaOk = categoryFilter === 'all' || proyecto.categoria === categoryFilter;
+    const estadoOk = statusFilter === 'all' || (statusFilter === 'destacado' && proyecto.destacado) || (statusFilter === 'educativo' && proyecto.educativo);
+    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && estadoOk && matchesAdminDate(proyecto.fechaRealizacion, dateRange);
+  });
 
-  if (!user) {
+  if (!authLoading && !user) {
     return <Navigate to="/admin/login" replace />;
   }
 
@@ -295,25 +297,35 @@ function AdminProyectos() {
         </div>
         )}
 
+        <AdminListFilters
+          search={search} onSearchChange={setSearch}
+          category={categoryFilter} onCategoryChange={setCategoryFilter} categories={categorias}
+          dateRange={dateRange} onDateRangeChange={setDateRange}
+          status={statusFilter} onStatusChange={setStatusFilter}
+          statuses={[{ value: 'destacado', label: 'Destacados' }, { value: 'educativo', label: 'Educativos' }]}
+        />
+
         {/* Lista de Proyectos */}
         <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-primary/10 sm:p-6">
-          <h2 className="mb-5 text-lg font-bold text-primary-dark">Gestión de proyectos <span className="ml-2 text-sm font-medium text-gray-400">{proyectos.length}</span></h2>
+          <h2 className="mb-5 text-lg font-bold text-primary-dark">Gestión de proyectos <span className="ml-2 text-sm font-medium text-gray-400">{proyectosFiltrados.length}</span></h2>
           
-          {proyectos.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No hay proyectos registrados</p>
+          {loading ? (
+            <p className="py-8 text-center text-sm text-gray-500">Cargando proyectos…</p>
+          ) : proyectosFiltrados.length === 0 ? (
+            <p className="py-8 text-center text-gray-500">No hay proyectos que coincidan con los filtros.</p>
           ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {proyectos.map((proyecto) => {
+            <div className="space-y-2">
+              {proyectosFiltrados.map((proyecto) => {
                 const categoria = getCategoriaLabel(proyecto);
                 
                 return (
-                  <div key={proyecto._id} className="overflow-hidden rounded-2xl border border-primary/10 bg-white transition hover:-translate-y-0.5 hover:shadow-md">
-                    <div className="relative aspect-[16/9] bg-primary/5">
+                  <div key={proyecto._id} className="grid grid-cols-1 items-center gap-3 rounded-2xl border border-primary/10 bg-white p-3 transition hover:shadow-md sm:grid-cols-[112px_minmax(0,1fr)_170px_150px_40px] sm:gap-4">
+                    <div className="relative h-24 overflow-hidden rounded-xl bg-primary/5">
                       {proyecto.imagenPrincipal ? (
                         <img 
                           src={getImageUrl(proyecto.imagenPrincipal)} 
                           alt={proyecto.nombre}
-                          className="w-full h-full object-cover"
+                          className="h-full w-full object-cover"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -330,28 +342,30 @@ function AdminProyectos() {
                       )}
                     </div>
                     
-                    <div className="p-4">
-                      <h3 className="mb-2 line-clamp-1 font-semibold text-primary-dark">{proyecto.nombre}</h3>
-                      {proyecto.fechaRealizacion && (
-                        <p className="text-sm text-gray-500 mb-3">
-                          {new Date(proyecto.fechaRealizacion).toLocaleDateString('es-CL')}
-                        </p>
-                      )}
-                      
-                      <div className="flex gap-2">
+                    <div className="min-w-0">
+                      <h3 className="truncate text-sm font-bold text-primary-dark">{proyecto.nombre}</h3>
+                      <p className="mt-1 line-clamp-2 text-xs text-gray-600">{proyecto.descripcion || 'Proyecto de Cultura Local.'}</p>
+                    </div>
+                    <div className="border-l border-primary/15 pl-4 text-xs text-primary-dark">
+                      <p className="font-medium">{proyecto.fechaRealizacion ? new Date(proyecto.fechaRealizacion).toLocaleDateString('es-CL') : 'Fecha por definir'}</p>
+                      <span className="mt-2 inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-primary-dark">{proyecto.categoria || 'Proyectos'}</span>
+                    </div>
+                    <div>
+                      {categoria ? <span className="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">{categoria.label === 'DESTACADO' ? 'Destacado' : categoria.label === 'EDUCATIVO' ? 'Educativo' : 'Reciente'}</span> : <span className="inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">Publicado</span>}
+                    </div>
+                    <div className="flex gap-2 sm:justify-end">
                         <button
                           onClick={() => handleEdit(proyecto)}
-                          className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-dark"
+                          className="rounded-xl bg-primary px-3 py-2 text-xs font-semibold text-white transition hover:bg-primary-dark"
                         >
                           Editar
                         </button>
                         <button
                           onClick={() => handleDelete(proyecto._id)}
-                          className="flex-1 rounded-xl border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                          className="rounded-xl border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-50"
                         >
                           Eliminar
                         </button>
-                      </div>
                     </div>
                   </div>
                 );

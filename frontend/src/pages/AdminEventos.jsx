@@ -10,11 +10,16 @@ import { Navigate } from 'react-router-dom';
 import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
 import AdminLayout from '../components/AdminLayout';
 import AdminContentHeader from '../components/AdminContentHeader';
+import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters';
 
 function AdminEventos() {
   const { user, token, loading: authLoading } = useContext(AuthContext);
   const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [dateRange, setDateRange] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [formData, setFormData] = useState({
     titulo: '',
     descripcion: '',
@@ -205,6 +210,14 @@ function AdminEventos() {
     setMostrarFormulario(false);
   };
 
+  const categorias = [...new Set(eventos.map(evento => evento.categoria).filter(Boolean))].sort();
+  const eventosFiltrados = eventos.filter(evento => {
+    const texto = `${evento.titulo || ''} ${evento.descripcion || ''} ${evento.ubicacion || ''}`.toLocaleLowerCase('es-CL');
+    const categoriaOk = categoryFilter === 'all' || evento.categoria === categoryFilter;
+    const estadoOk = statusFilter === 'all' || (statusFilter === 'publicado' && evento.publicado) || (statusFilter === 'borrador' && !evento.publicado) || (statusFilter === 'destacado' && evento.destacado);
+    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && estadoOk && matchesAdminDate(evento.fecha, dateRange);
+  });
+
   // Verificar autenticación
   if (authLoading) {
     return (
@@ -212,8 +225,7 @@ function AdminEventos() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-gray-600">Cargando...</p>
-        </div>
-      </div>
+                  </div>
     );
   }
 
@@ -447,60 +459,58 @@ function AdminEventos() {
         </div>
         )}
 
+        <AdminListFilters
+          search={search} onSearchChange={setSearch}
+          category={categoryFilter} onCategoryChange={setCategoryFilter} categories={categorias}
+          dateRange={dateRange} onDateRangeChange={setDateRange}
+          status={statusFilter} onStatusChange={setStatusFilter}
+          statuses={[{ value: 'publicado', label: 'Publicados' }, { value: 'borrador', label: 'Borradores' }, { value: 'destacado', label: 'Destacados' }]}
+        />
+
         {/* Lista de eventos */}
         <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-primary/10 sm:p-6">
-          <h2 className="mb-5 text-lg font-bold text-primary-dark">Eventos registrados <span className="ml-2 text-sm font-medium text-gray-400">{eventos.length}</span></h2>
+          <h2 className="mb-5 text-lg font-bold text-primary-dark">Eventos registrados <span className="ml-2 text-sm font-medium text-gray-400">{eventosFiltrados.length}</span></h2>
           
           {loading ? (
             <p className="text-center text-gray-500 py-8">Cargando eventos...</p>
-          ) : eventos.length === 0 ? (
-            <p className="text-center text-gray-500 py-8">No hay eventos registrados</p>
+          ) : eventosFiltrados.length === 0 ? (
+            <p className="py-8 text-center text-gray-500">No hay eventos que coincidan con los filtros.</p>
           ) : (
-            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-              {eventos.map(evento => (
+            <div className="space-y-2">
+              {eventosFiltrados.map(evento => (
                 <div
                   key={evento._id}
-                  className="flex gap-4 rounded-2xl border border-primary/10 bg-white p-4 transition hover:shadow-md"
+                  className="grid grid-cols-1 items-center gap-3 rounded-2xl border border-primary/10 bg-white p-3 transition hover:shadow-md sm:grid-cols-[112px_minmax(0,1fr)_170px_120px_auto] sm:gap-4"
                 >
-                  {evento.imagen && <img src={getImageUrl(evento.imagen)} alt="" className="h-24 w-28 shrink-0 rounded-xl object-cover" />}
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-base font-bold text-primary-dark">{evento.titulo}</h3>
-                        <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary-dark">
-                          {evento.categoria}
-                        </span>
-                        {evento.publicado && (
-                          <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700">
-                            Publicado
-                          </span>
-                        )}
-                        {evento.destacado && (
-                          <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700">
-                            Destacado
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-gray-600 mb-2">
-                        {new Date(evento.fecha).toLocaleDateString('es-CL', { timeZone: 'UTC' })} • 
-                        {evento.ubicacion}
-                      </p>
-                      <p className="text-sm text-gray-700">{evento.descripcion}</p>
-                    </div>
-                    <div className="flex gap-2 ml-4">
+                  <div className="h-24 overflow-hidden rounded-xl bg-primary/5">
+                    {evento.imagen ? <img src={getImageUrl(evento.imagen)} alt="" className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-xs text-gray-400">Sin imagen</div>}
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="truncate text-sm font-bold text-primary-dark">{evento.titulo}</h3>
+                    <p className="mt-1 line-clamp-2 text-xs text-gray-600">{evento.descripcion}</p>
+                  </div>
+                  <div className="border-l border-primary/15 pl-4 text-xs text-primary-dark">
+                    <p className="font-medium">{new Date(evento.fecha).toLocaleDateString('es-CL', { timeZone: 'UTC' })}</p>
+                    <p className="mt-1 truncate text-gray-500">{evento.ubicacion}</p>
+                    <span className="mt-2 inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-primary-dark">{evento.categoria}</span>
+                  </div>
+                  <div>
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${evento.publicado ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>{evento.publicado ? 'Publicado' : 'Borrador'}</span>
+                    {evento.destacado && <span className="ml-1 inline-flex rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">★</span>}
+                  </div>
+                  <div className="flex gap-2 sm:justify-end">
                       <button
                         onClick={() => handleEdit(evento)}
-                        className="rounded-lg bg-primary px-3 py-2 text-sm font-medium text-white transition hover:bg-primary-dark"
+                        className="rounded-xl bg-primary px-3 py-2 text-xs font-semibold text-white transition hover:bg-primary-dark"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => handleDelete(evento._id)}
-                        className="rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
+                        className="rounded-xl border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-50"
                       >
                         Eliminar
                       </button>
-                    </div>
                   </div>
                 </div>
               ))}

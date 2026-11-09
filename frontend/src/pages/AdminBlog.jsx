@@ -10,12 +10,17 @@ import { AuthContext } from '../context/AuthContext'
 import { API_URL, getImageUrl } from '../config/api.config'
 import AdminLayout from '../components/AdminLayout'
 import AdminContentHeader from '../components/AdminContentHeader'
+import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters'
 
 const BLOG_URL = `${API_URL}/api/blog`
 
 function AdminBlog() {
   const { user, loading: authLoading } = useContext(AuthContext)
   const [posts, setPosts] = useState([])
+  const [search, setSearch] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('all')
+  const [dateRange, setDateRange] = useState('all')
+  const [statusFilter, setStatusFilter] = useState('all')
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -62,6 +67,14 @@ function AdminBlog() {
     
     return post.categoria || 'SIN CATEGORÍA'
   }
+
+  const categorias = [...new Set(posts.map(post => post.categoria).filter(Boolean))].sort()
+  const postsFiltrados = posts.filter(post => {
+    const texto = `${post.titulo || ''} ${post.descripcion || ''}`.toLocaleLowerCase('es-CL')
+    const categoriaOk = categoryFilter === 'all' || post.categoria === categoryFilter
+    const estadoOk = statusFilter === 'all' || (statusFilter === 'publicado' && post.estado !== 'borrador') || (statusFilter === 'borrador' && post.estado === 'borrador')
+    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && estadoOk && matchesAdminDate(post.fecha || post.createdAt, dateRange)
+  })
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -401,66 +414,62 @@ function AdminBlog() {
           </div>
         )}
 
+        <AdminListFilters
+          search={search} onSearchChange={setSearch}
+          category={categoryFilter} onCategoryChange={setCategoryFilter} categories={categorias}
+          dateRange={dateRange} onDateRangeChange={setDateRange}
+          status={statusFilter} onStatusChange={setStatusFilter}
+          statuses={[{ value: 'publicado', label: 'Publicados' }, { value: 'borrador', label: 'Borradores' }]}
+        />
+
         {/* Lista de Posts */}
         <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-primary/10 sm:p-6">
-        <h2 className="mb-5 text-lg font-bold text-primary-dark">Publicaciones <span className="ml-2 text-sm font-medium text-gray-400">{posts.length}</span></h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {posts.length === 0 ? (
+        <h2 className="mb-5 text-lg font-bold text-primary-dark">Publicaciones <span className="ml-2 text-sm font-medium text-gray-400">{postsFiltrados.length}</span></h2>
+        <div className="space-y-2">
+          {postsFiltrados.length === 0 ? (
             <div className="col-span-full text-center py-12 text-gray-500">
-              No hay posts publicados aún
+              No hay publicaciones que coincidan con los filtros.
             </div>
           ) : (
-            posts.map((post) => (
-              <div key={post._id} className="overflow-hidden rounded-2xl border border-primary/10 bg-white transition hover:-translate-y-0.5 hover:shadow-md">
-                {/* Imagen */}
-                <div className="relative bg-primary/5 p-3">
+            postsFiltrados.map((post) => (
+              <div key={post._id} className="grid grid-cols-1 items-center gap-3 rounded-2xl border border-primary/10 bg-white p-3 transition hover:shadow-md sm:grid-cols-[112px_minmax(0,1fr)_170px_120px_auto] sm:gap-4">
+                <div className="relative h-24 overflow-hidden rounded-xl bg-primary/5">
                   {post.imagen ? (
                     <img 
                       src={getImageUrl(post.imagen)} 
                       alt={post.titulo}
-                      className="h-48 w-full rounded-xl object-cover"
+                      className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-48 flex items-center justify-center bg-gray-200">
+                    <div className="flex h-full items-center justify-center bg-gray-200">
                       <span className="text-gray-400">Sin imagen</span>
                     </div>
                   )}
-                  <span className="absolute top-6 right-6 px-4 py-1.5 bg-accent text-white text-xs font-bold rounded-full uppercase">
-                    {getCategoriaLabel(post)}
-                  </span>
                 </div>
-                
-                {/* Contenido */}
-                <div className="p-4">
-                  <h3 className="mb-2 line-clamp-2 text-base font-semibold text-primary-dark">
-                    {post.titulo}
-                  </h3>
-                  <p className="mb-3 line-clamp-2 text-sm text-gray-600">
-                    {post.descripcion}
-                  </p>
-                  <p className="mb-4 text-xs text-gray-500">
-                    {new Date(post.createdAt).toLocaleDateString('es-CL', { 
-                      day: 'numeric', 
-                      month: 'long', 
-                      year: 'numeric' 
-                    })}
-                  </p>
-                  
-                  {/* Acciones */}
-                  <div className="flex gap-3">
+                <div className="min-w-0">
+                  <h3 className="truncate text-sm font-bold text-primary-dark">{post.titulo}</h3>
+                  <p className="mt-1 line-clamp-2 text-xs text-gray-600">{post.descripcion}</p>
+                </div>
+                <div className="border-l border-primary/15 pl-4 text-xs text-primary-dark">
+                  <p className="font-medium">{new Date(post.createdAt).toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+                  <span className="mt-2 inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-primary-dark">{getCategoriaLabel(post)}</span>
+                </div>
+                <div>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${post.estado === 'borrador' ? 'bg-orange-100 text-orange-700' : 'bg-emerald-100 text-emerald-700'}`}>{post.estado === 'borrador' ? 'Borrador' : 'Publicado'}</span>
+                </div>
+                <div className="flex gap-2 sm:justify-end">
                     <button
                       onClick={() => handleEdit(post)}
-                      className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-dark"
+                      className="rounded-xl bg-primary px-3 py-2 text-xs font-semibold text-white transition hover:bg-primary-dark"
                     >
                       Editar
                     </button>
                     <button
                       onClick={() => handleDelete(post._id)}
-                      className="flex-1 rounded-xl border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                      className="rounded-xl border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-50"
                     >
                       Eliminar
                     </button>
-                  </div>
                 </div>
               </div>
             ))
