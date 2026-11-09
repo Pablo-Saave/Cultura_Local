@@ -252,7 +252,7 @@ function Eventos() {
                 {eventosFiltrados.map((evento) => (
                   <a
                     key={evento._id}
-                    href={`/eventos/${evento._id}`}
+                    href={`/eventos/${evento.slug || evento._id}`}
                     className="group flex flex-col"
                   >
                     {/* Contenedor de imagen */}
@@ -355,4 +355,3 @@ function Eventos() {
 }
 
 export default Eventos
-

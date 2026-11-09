@@ -8,6 +8,7 @@ const Evento = require('../models/Evento');
 const { handleError } = require('../utils/http');
 const { parseDate, safeUrl, pick } = require('../utils/validators');
 const { destroyImages } = require('../utils/cloudinaryHelpers');
+const { filtroIdOSlug } = require('../utils/slug');
 
 // Campos que el cliente puede enviar (whitelist). Evita mass assignment.
 const CAMPOS_PERMITIDOS = [
@@ -43,10 +44,10 @@ exports.getEventos = async (req, res) => {
   }
 };
 
-// GET evento por ID
+// GET evento por slug (links nuevos) o por ID (links antiguos)
 exports.getEventoById = async (req, res) => {
   try {
-    const evento = await Evento.findOne({ _id: req.params.id, ...filtroVisibilidad(req) });
+    const evento = await Evento.findOne({ ...filtroIdOSlug(req.params.id), ...filtroVisibilidad(req) });
 
     if (!evento) {
       return res.status(404).json({ message: 'Evento no encontrado' });

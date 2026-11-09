@@ -21,6 +21,10 @@ function BlogDetalle() {
     try {
       const response = await axios.get(API_ENDPOINTS.blogById(id))
       setPost(response.data)
+      // Link antiguo (con ID): mostrar la URL amigable sin recargar
+      if (response.data.slug && response.data.slug !== id) {
+        window.history.replaceState(null, '', `/blog/${response.data.slug}`)
+      }
     } catch (error) {
       console.error('Error al cargar post:', error.message)
     } finally {

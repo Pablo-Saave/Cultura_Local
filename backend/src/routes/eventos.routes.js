@@ -23,7 +23,7 @@ const camposImagen = uploadEventos.fields([
 
 // Rutas públicas (optionalAuth: el panel admin ve también los no publicados)
 router.get('/', optionalAuth, getEventos);
-router.get('/:id', validateObjectId(), optionalAuth, getEventoById);
+router.get('/:id', optionalAuth, getEventoById); // acepta slug o ID
 
 // Rutas protegidas. Autenticación ANTES de multer (no subir archivos sin sesión).
 router.post('/', verifyToken, requireRole('admin', 'editor'), camposImagen, createEvento);

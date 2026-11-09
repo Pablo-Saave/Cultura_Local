@@ -66,12 +66,13 @@ async function pedirJSON(endpoint) {
 }
 
 const ID_VALIDO = /^[a-f0-9]{24}$/i;
+const SLUG_VALIDO = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function aUrls(lista, prefijo, changefreq, priority) {
   return (lista || [])
-    .filter((item) => item && ID_VALIDO.test(String(item._id)))
+    .filter((item) => item && (SLUG_VALIDO.test(String(item.slug)) || ID_VALIDO.test(String(item._id))))
     .map((item) => ({
-      loc: `${SITE_URL}${prefijo}/${item._id}`,
+      loc: `${SITE_URL}${prefijo}/${SLUG_VALIDO.test(String(item.slug)) ? item.slug : item._id}`,
       lastmod: fechaISO(item.updatedAt || item.createdAt),
       changefreq,
       priority,

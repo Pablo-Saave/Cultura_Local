@@ -17,7 +17,7 @@ const camposImagen = uploadBlog.fields([
 
 // Rutas públicas (optionalAuth: el panel admin ve también los borradores)
 router.get('/', optionalAuth, getPosts);
-router.get('/:id', validateObjectId(), optionalAuth, getPostById);
+router.get('/:id', optionalAuth, getPostById); // acepta slug o ID
 
 // Rutas protegidas. La autenticación va ANTES de multer para que
 // nadie sin sesión pueda subir archivos a Cloudinary.

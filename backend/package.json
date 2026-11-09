@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "seed": "node src/seeders/userSeeder.js"
+    "seed": "node src/seeders/userSeeder.js",
+    "slugs": "node src/seeders/addSlugs.js"
   },
   "keywords": [
     "cultura",

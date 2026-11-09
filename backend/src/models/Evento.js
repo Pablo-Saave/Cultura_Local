@@ -5,6 +5,7 @@
  */
 
 const mongoose = require('mongoose');
+const { generarSlugUnico } = require('../utils/slug');
 
 const eventoSchema = new mongoose.Schema({
   titulo: {
@@ -12,6 +13,15 @@ const eventoSchema = new mongoose.Schema({
     required: [true, 'El título es obligatorio'],
     trim: true,
     maxlength: [200, 'El título no puede exceder 200 caracteres']
+  },
+  // URL amigable (se genera sola a partir del título)
+  slug: {
+    type: String,
+    unique: true,
+    sparse: true,
+    lowercase: true,
+    trim: true,
+    index: true
   },
   descripcion: {
     type: String,
@@ -75,6 +85,18 @@ const eventoSchema = new mongoose.Schema({
   }
 }, {
   timestamps: true
+});
+
+// Genera el slug la primera vez (no cambia al editar, para no romper links ya compartidos)
+eventoSchema.pre('validate', async function (next) {
+  try {
+    if (!this.slug && this.titulo) {
+      this.slug = await generarSlugUnico(this.constructor, this.titulo, this._id);
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = mongoose.model('Evento', eventoSchema);

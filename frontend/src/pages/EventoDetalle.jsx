@@ -21,6 +21,10 @@ function EventoDetalle() {
     try {
       const response = await axios.get(API_ENDPOINTS.eventoById(id))
       setEvento(response.data)
+      // Link antiguo (con ID): mostrar la URL amigable sin recargar
+      if (response.data.slug && response.data.slug !== id) {
+        window.history.replaceState(null, '', `/eventos/${response.data.slug}`)
+      }
     } catch (error) {
       console.error('Error al cargar evento:', error.message)
     } finally {

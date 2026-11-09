@@ -164,7 +164,7 @@ function Blog() {
             {postsFiltrados.map((post) => (
               <a
                 key={post._id} 
-                href={`/blog/${post._id}`}
+                href={`/blog/${post.slug || post._id}`}
                 className="group flex flex-col"
               >
                 {/* Contenedor de imagen */}
@@ -255,4 +255,3 @@ function Blog() {
 }
 
 export default Blog
-

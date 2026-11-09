@@ -7,6 +7,7 @@ const Blog = require('../models/Blog');
 const { handleError } = require('../utils/http');
 const { parseDate, pick } = require('../utils/validators');
 const { destroyImages } = require('../utils/cloudinaryHelpers');
+const { filtroIdOSlug } = require('../utils/slug');
 
 // Campos que el cliente puede enviar (whitelist)
 const CAMPOS_PERMITIDOS = ['titulo', 'descripcion', 'categoria'];
@@ -27,10 +28,10 @@ const getPosts = async (req, res) => {
   }
 };
 
-// Obtener un post por ID
+// Obtener un post por slug (links nuevos) o por ID (links antiguos)
 const getPostById = async (req, res) => {
   try {
-    const post = await Blog.findOne({ _id: req.params.id, ...filtroVisibilidad(req) })
+    const post = await Blog.findOne({ ...filtroIdOSlug(req.params.id), ...filtroVisibilidad(req) })
       .populate('autor', 'nombre');
 
     if (!post) {
