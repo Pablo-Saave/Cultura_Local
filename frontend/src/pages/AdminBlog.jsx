@@ -4,10 +4,12 @@
  */
 
 import { useState, useEffect, useContext } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
 import { API_URL, getImageUrl } from '../config/api.config'
+import AdminLayout from '../components/AdminLayout'
+import AdminContentHeader from '../components/AdminContentHeader'
 
 const BLOG_URL = `${API_URL}/api/blog`
 
@@ -259,39 +261,14 @@ function AdminBlog() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <Link 
-            to="/admin/dashboard" 
-            className="inline-flex items-center text-primary hover:text-primary/80 mb-4"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M15 19l-7-7 7-7"></path>
-            </svg>
-            Volver al Dashboard
-          </Link>
-          
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Administrar Blog
-            </h1>
-            {!showForm && (
-              <button
-                onClick={handleNewPost}
-                className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-              >
-                + Nuevo Post
-              </button>
-            )}
-          </div>
-        </div>
+    <AdminLayout>
+      <div className="mx-auto max-w-6xl">
+        <AdminContentHeader title="Blog" description="Publica historias, entrevistas y noticias de la cultura local." actionLabel={showForm ? 'Cerrar formulario' : 'Nuevo post'} onAction={() => showForm ? handleCancel() : handleNewPost()} />
 
         {/* Formulario */}
         {showForm && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">
+          <div className="mb-5 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
+            <h2 className="mb-6 text-xl font-bold text-primary-dark">
               {editingId ? 'Editar Post' : 'Nuevo Post'}
             </h2>
             
@@ -425,21 +402,23 @@ function AdminBlog() {
         )}
 
         {/* Lista de Posts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-primary/10 sm:p-6">
+        <h2 className="mb-5 text-lg font-bold text-primary-dark">Publicaciones <span className="ml-2 text-sm font-medium text-gray-400">{posts.length}</span></h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {posts.length === 0 ? (
             <div className="col-span-full text-center py-12 text-gray-500">
               No hay posts publicados aún
             </div>
           ) : (
             posts.map((post) => (
-              <div key={post._id} className="bg-gray-100 rounded-xl overflow-hidden">
+              <div key={post._id} className="overflow-hidden rounded-2xl border border-primary/10 bg-white transition hover:-translate-y-0.5 hover:shadow-md">
                 {/* Imagen */}
-                <div className="relative bg-white p-4">
+                <div className="relative bg-primary/5 p-3">
                   {post.imagen ? (
                     <img 
                       src={getImageUrl(post.imagen)} 
                       alt={post.titulo}
-                      className="w-full h-48 object-contain"
+                      className="h-48 w-full rounded-xl object-cover"
                     />
                   ) : (
                     <div className="w-full h-48 flex items-center justify-center bg-gray-200">
@@ -452,14 +431,14 @@ function AdminBlog() {
                 </div>
                 
                 {/* Contenido */}
-                <div className="p-6 bg-white">
-                  <h3 className="font-bold text-gray-900 text-lg mb-3 line-clamp-2">
+                <div className="p-4">
+                  <h3 className="mb-2 line-clamp-2 text-base font-semibold text-primary-dark">
                     {post.titulo}
                   </h3>
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                  <p className="mb-3 line-clamp-2 text-sm text-gray-600">
                     {post.descripcion}
                   </p>
-                  <p className="text-sm text-gray-500 mb-6">
+                  <p className="mb-4 text-xs text-gray-500">
                     {new Date(post.createdAt).toLocaleDateString('es-CL', { 
                       day: 'numeric', 
                       month: 'long', 
@@ -471,13 +450,13 @@ function AdminBlog() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => handleEdit(post)}
-                      className="flex-1 px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+                      className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-dark"
                     >
                       Editar
                     </button>
                     <button
                       onClick={() => handleDelete(post._id)}
-                      className="flex-1 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
+                      className="flex-1 rounded-xl border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50"
                     >
                       Eliminar
                     </button>
@@ -487,8 +466,9 @@ function AdminBlog() {
             ))
           )}
         </div>
+        </section>
       </div>
-    </div>
+    </AdminLayout>
   )
 }
 

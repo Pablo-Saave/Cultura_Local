@@ -6,8 +6,10 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
+import AdminLayout from '../components/AdminLayout';
+import AdminContentHeader from '../components/AdminContentHeader';
 
 function AdminEventos() {
   const { user, token, loading: authLoading } = useContext(AuthContext);
@@ -220,37 +222,14 @@ function AdminEventos() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between gap-4">
-            <Link 
-              to="/admin/dashboard" 
-              className="inline-flex items-center text-primary hover:text-primary/80"
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M15 19l-7-7 7-7"></path>
-              </svg>
-              Volver al Dashboard
-            </Link>
-            
-            {!mostrarFormulario && (
-              <button
-                onClick={() => setMostrarFormulario(true)}
-                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
-              >
-                <span>+</span>
-                <span>Nuevo Evento</span>
-              </button>
-            )}
-          </div>
-        </div>
+    <AdminLayout>
+      <div className="mx-auto max-w-6xl">
+        <AdminContentHeader title="Eventos" description="Organiza actividades y mantén al día la agenda cultural." actionLabel={mostrarFormulario ? 'Cerrar formulario' : 'Nuevo evento'} onAction={() => mostrarFormulario ? resetForm() : setMostrarFormulario(true)} />
 
         {/* Formulario */}
         {mostrarFormulario && (
-        <div className="bg-white rounded-lg shadow p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">
+        <div className="mb-5 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
+          <h2 className="mb-6 text-xl font-bold text-primary-dark">
             {editingId ? 'Editar Evento' : 'Crear Nuevo Evento'}
           </h2>
 
@@ -469,34 +448,35 @@ function AdminEventos() {
         )}
 
         {/* Lista de eventos */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Eventos Registrados</h2>
+        <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-primary/10 sm:p-6">
+          <h2 className="mb-5 text-lg font-bold text-primary-dark">Eventos registrados <span className="ml-2 text-sm font-medium text-gray-400">{eventos.length}</span></h2>
           
           {loading ? (
             <p className="text-center text-gray-500 py-8">Cargando eventos...</p>
           ) : eventos.length === 0 ? (
             <p className="text-center text-gray-500 py-8">No hay eventos registrados</p>
           ) : (
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {eventos.map(evento => (
                 <div
                   key={evento._id}
-                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                  className="flex gap-4 rounded-2xl border border-primary/10 bg-white p-4 transition hover:shadow-md"
                 >
+                  {evento.imagen && <img src={getImageUrl(evento.imagen)} alt="" className="h-24 w-28 shrink-0 rounded-xl object-cover" />}
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-lg font-bold text-gray-900">{evento.titulo}</h3>
-                        <span className="text-xs px-2 py-1 bg-primary/20 text-primary rounded">
+                        <h3 className="text-base font-bold text-primary-dark">{evento.titulo}</h3>
+                        <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary-dark">
                           {evento.categoria}
                         </span>
                         {evento.publicado && (
-                          <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">
+                          <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700">
                             Publicado
                           </span>
                         )}
                         {evento.destacado && (
-                          <span className="text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded">
+                          <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700">
                             Destacado
                           </span>
                         )}
@@ -510,13 +490,13 @@ function AdminEventos() {
                     <div className="flex gap-2 ml-4">
                       <button
                         onClick={() => handleEdit(evento)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                        className="rounded-lg bg-primary px-3 py-2 text-sm font-medium text-white transition hover:bg-primary-dark"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => handleDelete(evento._id)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                        className="rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
                       >
                         Eliminar
                       </button>
@@ -528,7 +508,7 @@ function AdminEventos() {
           )}
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }
 

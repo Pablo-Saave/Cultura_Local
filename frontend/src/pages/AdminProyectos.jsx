@@ -4,10 +4,12 @@
  */
 
 import { useState, useEffect, useContext } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { API_ENDPOINTS, getImageUrl } from '../config/api.config';
+import AdminLayout from '../components/AdminLayout';
+import AdminContentHeader from '../components/AdminContentHeader';
 
 function AdminProyectos() {
   const { user, loading: authLoading } = useContext(AuthContext);
@@ -173,37 +175,12 @@ function AdminProyectos() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <Link 
-                to="/admin/dashboard"
-                className="text-primary hover:text-primary-dark flex items-center gap-2"
-              >
-                <span>←</span>
-                <span>Volver al Dashboard</span>
-              </Link>
-            </div>
-            {!mostrarFormulario && (
-              <button
-                onClick={() => setMostrarFormulario(true)}
-                className="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg transition-colors font-semibold"
-              >
-                + Nuevo Proyecto
-              </button>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <AdminLayout>
+      <div className="mx-auto max-w-6xl">
+        <AdminContentHeader title="Proyectos" description="Gestiona tus proyectos y mantén el contenido actualizado." actionLabel={mostrarFormulario ? 'Cerrar formulario' : 'Nuevo proyecto'} onAction={() => mostrarFormulario ? resetForm() : setMostrarFormulario(true)} />
         {mostrarFormulario && (
-          <div className="bg-white rounded-lg shadow p-6 mb-8">
-            <h2 className="text-2xl font-bold text-primary mb-6">
+          <div className="mb-5 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-primary/10">
+            <h2 className="mb-6 text-xl font-bold text-primary-dark">
               {editando ? 'Editar Proyecto' : 'Nuevo Proyecto'}
             </h2>
             
@@ -319,19 +296,19 @@ function AdminProyectos() {
         )}
 
         {/* Lista de Proyectos */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-2xl font-bold text-primary mb-6">Gestión de Proyectos</h2>
+        <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-primary/10 sm:p-6">
+          <h2 className="mb-5 text-lg font-bold text-primary-dark">Gestión de proyectos <span className="ml-2 text-sm font-medium text-gray-400">{proyectos.length}</span></h2>
           
           {proyectos.length === 0 ? (
             <p className="text-gray-500 text-center py-8">No hay proyectos registrados</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {proyectos.map((proyecto) => {
                 const categoria = getCategoriaLabel(proyecto);
                 
                 return (
-                  <div key={proyecto._id} className="border rounded-lg overflow-hidden">
-                    <div className="relative aspect-video bg-gray-100">
+                  <div key={proyecto._id} className="overflow-hidden rounded-2xl border border-primary/10 bg-white transition hover:-translate-y-0.5 hover:shadow-md">
+                    <div className="relative aspect-[16/9] bg-primary/5">
                       {proyecto.imagenPrincipal ? (
                         <img 
                           src={getImageUrl(proyecto.imagenPrincipal)} 
@@ -354,7 +331,7 @@ function AdminProyectos() {
                     </div>
                     
                     <div className="p-4">
-                      <h3 className="font-bold text-gray-900 mb-2">{proyecto.nombre}</h3>
+                      <h3 className="mb-2 line-clamp-1 font-semibold text-primary-dark">{proyecto.nombre}</h3>
                       {proyecto.fechaRealizacion && (
                         <p className="text-sm text-gray-500 mb-3">
                           {new Date(proyecto.fechaRealizacion).toLocaleDateString('es-CL')}
@@ -364,13 +341,13 @@ function AdminProyectos() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleEdit(proyecto)}
-                          className="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm transition-colors"
+                          className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-dark"
                         >
                           Editar
                         </button>
                         <button
                           onClick={() => handleDelete(proyecto._id)}
-                          className="flex-1 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm transition-colors"
+                          className="flex-1 rounded-xl border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50"
                         >
                           Eliminar
                         </button>
@@ -382,8 +359,8 @@ function AdminProyectos() {
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminLayout>
   );
 }
 
