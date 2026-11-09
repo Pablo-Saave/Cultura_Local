@@ -5,7 +5,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/authMiddleware');
+const { verifyToken } = require('../middleware/auth.middleware');
 const { uploadEventos } = require('../config/cloudinary');
 const {
   getEventos,

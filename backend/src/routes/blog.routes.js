@@ -6,7 +6,7 @@
 const express = require('express');
 const router = express.Router();
 const { getPosts, getPostById, createPost, updatePost, deletePost } = require('../controllers/blog.controller');
-const { protect } = require('../middleware/authMiddleware');
+const { verifyToken } = require('../middleware/auth.middleware');
 const { uploadBlog } = require('../config/cloudinary');
 
 // Rutas públicas

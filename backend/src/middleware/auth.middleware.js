@@ -1,81 +1,72 @@
 /**
- * auth.middleware.js - Middleware de Autenticación
- * Verifica tokens JWT y protege rutas
+ * auth.middleware.js - Middleware de autenticación y autorización
+ * Único middleware de auth del proyecto (reemplaza a authMiddleware.js).
+ *  - verifyToken: exige JWT válido y usuario existente y activo
+ *  - optionalAuth: identifica al usuario si hay token válido; si no, sigue como anónimo
+ *  - requireRole: restringe por rol
  */
 
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { getJwtSecret } = require('../config/auth.config');
 
-// Middleware para verificar token JWT
+const extractToken = (req) => {
+  const header = req.headers.authorization;
+  if (!header || !header.startsWith('Bearer ')) return null;
+  return header.slice(7).trim() || null;
+};
+
+// Devuelve el usuario si el token es válido y la cuenta sigue activa; null en caso contrario
+const resolveUser = async (token) => {
+  const decoded = jwt.verify(token, getJwtSecret(), { algorithms: ['HS256'] });
+  const user = await User.findById(decoded.id);
+  if (!user || !user.activo) return null;
+  return user;
+};
+
+const unauthorized = (res, message) =>
+  res.status(401).json({ success: false, message });
+
 exports.verifyToken = async (req, res, next) => {
+  const token = extractToken(req);
+  if (!token) return unauthorized(res, 'No se proporcionó token de autenticación');
+
   try {
-    // Obtener token del header Authorization
-    const token = req.headers.authorization?.split(' ')[1]; // "Bearer TOKEN"
-    
-    if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: 'No se proporcionó token de autenticación'
-      });
-    }
+    const user = await resolveUser(token);
+    if (!user) return unauthorized(res, 'Usuario no autorizado');
 
-    // Verificar token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'cultura_local_secret_2026');
-    
-    // Buscar usuario
-    const user = await User.findById(decoded.id);
-    
-    if (!user || !user.activo) {
-      return res.status(401).json({
-        success: false,
-        message: 'Usuario no autorizado'
-      });
-    }
-
-    // Agregar usuario a request
     req.user = user;
-    next();
-    
+    return next();
   } catch (error) {
-    if (error.name === 'JsonWebTokenError') {
-      return res.status(401).json({
-        success: false,
-        message: 'Token inválido'
-      });
+    if (error.name === 'TokenExpiredError') return unauthorized(res, 'Token expirado');
+    if (error.name === 'JsonWebTokenError' || error.name === 'NotBeforeError') {
+      return unauthorized(res, 'Token inválido');
     }
-    if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({
-        success: false,
-        message: 'Token expirado'
-      });
-    }
-    
-    return res.status(500).json({
-      success: false,
-      message: 'Error en autenticación',
-      error: error.message
-    });
+    return next(error);
   }
 };
 
-// Middleware para verificar rol de administrador
-exports.isAdmin = (req, res, next) => {
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({
-      success: false,
-      message: 'Acceso denegado: Se requieren permisos de administrador'
-    });
+// Para rutas públicas que muestran más datos a usuarios autenticados (ej. borradores)
+exports.optionalAuth = async (req, res, next) => {
+  const token = extractToken(req);
+  if (!token) return next();
+
+  try {
+    const user = await resolveUser(token);
+    if (user) req.user = user;
+  } catch (error) {
+    // Token inválido o expirado: se trata como visitante anónimo
   }
-  next();
+  return next();
 };
 
-// Middleware para verificar rol de editor o superior
-exports.isEditor = (req, res, next) => {
-  if (!['admin', 'editor'].includes(req.user.role)) {
+// Uso: router.delete('/:id', verifyToken, requireRole('admin'), handler)
+exports.requireRole = (...roles) => (req, res, next) => {
+  if (!req.user || !roles.includes(req.user.role)) {
     return res.status(403).json({
       success: false,
-      message: 'Acceso denegado: Se requieren permisos de editor'
+      message: 'Acceso denegado: no tienes permisos para esta acción'
     });
   }
-  next();
+  return next();
 };
