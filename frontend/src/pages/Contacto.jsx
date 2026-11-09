@@ -62,7 +62,7 @@ function Contacto() {
                   href="https://www.google.com/maps/place/Concepción,+Chile" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors cursor-pointer"
+                  className="text-primary hover:underline"
                 >
                   Concepción, Chile
                 </a>

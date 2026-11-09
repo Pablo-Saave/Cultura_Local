@@ -12,6 +12,8 @@ import AdminLayout from '../components/AdminLayout';
 import AdminContentHeader from '../components/AdminContentHeader';
 import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters';
 
+const CATEGORIAS_PROYECTO = ['Cartografía', 'Fotografía', 'Arte Visual', 'Relatos', 'Patrimonio', 'Comunidad', 'Otro'];
+
 function AdminProyectos() {
   const { user, loading: authLoading } = useContext(AuthContext);
   const [proyectos, setProyectos] = useState([]);
@@ -164,7 +166,7 @@ function AdminProyectos() {
     return null;
   };
 
-  const categorias = [...new Set(proyectos.map(proyecto => proyecto.categoria).filter(Boolean))].sort();
+  const categorias = CATEGORIAS_PROYECTO;
   const proyectosFiltrados = proyectos.filter(proyecto => {
     const texto = `${proyecto.nombre || ''} ${proyecto.descripcion || ''}`.toLocaleLowerCase('es-CL');
     const categoriaOk = categoryFilter === 'all' || proyecto.categoria === categoryFilter;
@@ -187,7 +189,7 @@ function AdminProyectos() {
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Nombre del Proyecto *
@@ -200,6 +202,22 @@ function AdminProyectos() {
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Categoría
+                </label>
+                <select
+                  name="categoria"
+                  value={formData.categoria}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-primary"
+                >
+                  <option value="">Selecciona una categoría</option>
+                  {CATEGORIAS_PROYECTO.map(opcion => <option key={opcion} value={opcion}>{opcion}</option>)}
+                </select>
               </div>
 
               <div>
@@ -319,7 +337,7 @@ function AdminProyectos() {
                 const categoria = getCategoriaLabel(proyecto);
                 
                 return (
-                  <div key={proyecto._id} className="grid grid-cols-1 items-center gap-3 rounded-2xl border border-primary/10 bg-white p-3 transition hover:shadow-md sm:grid-cols-[112px_minmax(0,1fr)_170px_150px_40px] sm:gap-4">
+                  <div key={proyecto._id} className="grid grid-cols-1 items-center gap-3 rounded-2xl border border-primary/10 bg-white p-3 transition hover:shadow-md sm:grid-cols-[112px_minmax(0,1fr)_170px_auto] sm:gap-4">
                     <div className="relative h-24 overflow-hidden rounded-xl bg-primary/5">
                       {proyecto.imagenPrincipal ? (
                         <img 
@@ -348,10 +366,7 @@ function AdminProyectos() {
                     </div>
                     <div className="border-l border-primary/15 pl-4 text-xs text-primary-dark">
                       <p className="font-medium">{proyecto.fechaRealizacion ? new Date(proyecto.fechaRealizacion).toLocaleDateString('es-CL') : 'Fecha por definir'}</p>
-                      <span className="mt-2 inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-primary-dark">{proyecto.categoria || 'Proyectos'}</span>
-                    </div>
-                    <div>
-                      {categoria ? <span className="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">{categoria.label === 'DESTACADO' ? 'Destacado' : categoria.label === 'EDUCATIVO' ? 'Educativo' : 'Reciente'}</span> : <span className="inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">Publicado</span>}
+                      {proyecto.categoria && proyecto.categoria !== 'Otro' && <span className="mt-2 inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-primary-dark">{proyecto.categoria}</span>}
                     </div>
                     <div className="flex gap-2 sm:justify-end">
                         <button
