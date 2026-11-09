@@ -214,7 +214,7 @@ function AdminLogin() {
                      bg-gradient-to-b from-primary-light/25 to-primary/40"
         />
         {/* Ilustración: más pequeña y más a la izquierda, sobresale del arco */}
-        <div className="absolute bottom-[4%] right-[32%] h-[64%] w-[54%]">
+        <div className="absolute bottom-[4%] right-[40%] h-[72%] w-[59%]">
           <img
             src="/img/login.png"
             alt=""
