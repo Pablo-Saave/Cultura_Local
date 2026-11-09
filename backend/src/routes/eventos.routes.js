@@ -5,7 +5,8 @@
 
 const express = require('express');
 const router = express.Router();
-const { verifyToken } = require('../middleware/auth.middleware');
+const { verifyToken, optionalAuth, requireRole } = require('../middleware/auth.middleware');
+const { validateObjectId } = require('../utils/validators');
 const { uploadEventos } = require('../config/cloudinary');
 const {
   getEventos,
@@ -15,19 +16,18 @@ const {
   deleteEvento
 } = require('../controllers/eventos.controller');
 
-// Rutas públicas
-router.get('/', getEventos);
-router.get('/:id', getEventoById);
+const camposImagen = uploadEventos.fields([
+  { name: 'imagen', maxCount: 1 },
+  { name: 'imagenDetalle', maxCount: 1 }
+]);
 
-// Rutas protegidas (requieren autenticación)
-router.post('/', verifyToken, uploadEventos.fields([
-  { name: 'imagen', maxCount: 1 },
-  { name: 'imagenDetalle', maxCount: 1 }
-]), createEvento);
-router.put('/:id', verifyToken, uploadEventos.fields([
-  { name: 'imagen', maxCount: 1 },
-  { name: 'imagenDetalle', maxCount: 1 }
-]), updateEvento);
-router.delete('/:id', verifyToken, deleteEvento);
+// Rutas públicas (optionalAuth: el panel admin ve también los no publicados)
+router.get('/', optionalAuth, getEventos);
+router.get('/:id', validateObjectId(), optionalAuth, getEventoById);
+
+// Rutas protegidas. Autenticación ANTES de multer (no subir archivos sin sesión).
+router.post('/', verifyToken, requireRole('admin', 'editor'), camposImagen, createEvento);
+router.put('/:id', validateObjectId(), verifyToken, requireRole('admin', 'editor'), camposImagen, updateEvento);
+router.delete('/:id', validateObjectId(), verifyToken, requireRole('admin'), deleteEvento);
 
 module.exports = router;

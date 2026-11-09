@@ -4,138 +4,142 @@
  */
 
 const Blog = require('../models/Blog');
+const { handleError } = require('../utils/http');
+const { parseDate, pick } = require('../utils/validators');
+const { destroyImages } = require('../utils/cloudinaryHelpers');
+
+// Campos que el cliente puede enviar (whitelist)
+const CAMPOS_PERMITIDOS = ['titulo', 'descripcion', 'categoria'];
+
+// Visitantes: solo posts publicados. Usuarios autenticados (panel admin): todos.
+const filtroVisibilidad = (req) => (req.user ? {} : { estado: { $ne: 'borrador' } });
 
 // Obtener todos los posts
 const getPosts = async (req, res) => {
   try {
-    const posts = await Blog.find()
-      .populate('autor', 'nombre email')
+    const posts = await Blog.find(filtroVisibilidad(req))
+      .populate('autor', 'nombre') // el email del autor NO se expone públicamente
       .sort({ createdAt: -1 });
-    
+
     res.json(posts);
   } catch (error) {
-    console.error('Error al obtener posts:', error);
-    res.status(500).json({ message: 'Error al obtener posts', error: error.message });
+    handleError(res, error, 'Error al obtener posts');
   }
 };
 
 // Obtener un post por ID
 const getPostById = async (req, res) => {
   try {
-    const post = await Blog.findById(req.params.id)
-      .populate('autor', 'nombre email');
-    
+    const post = await Blog.findOne({ _id: req.params.id, ...filtroVisibilidad(req) })
+      .populate('autor', 'nombre');
+
     if (!post) {
       return res.status(404).json({ message: 'Post no encontrado' });
     }
-    
+
     res.json(post);
   } catch (error) {
-    console.error('Error al obtener post:', error);
-    res.status(500).json({ message: 'Error al obtener post', error: error.message });
+    handleError(res, error, 'Error al obtener post');
   }
 };
 
 // Crear un nuevo post
 const createPost = async (req, res) => {
+  const imagenSubida = req.files?.imagen?.[0]?.path;
+  const detalleSubido = req.files?.imagenDetalle?.[0]?.path;
+
   try {
-    const { titulo, descripcion, categoria, fecha } = req.body;
-    
-    // Verificar que se subió una imagen
-    if (!req.files?.imagen?.[0]) {
+    if (!imagenSubida) {
+      await destroyImages([detalleSubido]);
       return res.status(400).json({ message: 'La imagen es requerida' });
     }
-    
-    // Procesar fecha: si es string YYYY-MM-DD, convertir a fecha al mediodía UTC
-    let fechaProcesada = null
-    if (fecha && typeof fecha === 'string' && fecha.length >= 10) {
-      fechaProcesada = new Date(`${fecha}T12:00:00Z`)
-    } else if (fecha) {
-      fechaProcesada = new Date(fecha)
+
+    const fecha = parseDate(req.body.fecha);
+    if (fecha === null) {
+      await destroyImages([imagenSubida, detalleSubido]);
+      return res.status(400).json({ message: 'Fecha inválida' });
     }
-    
+
     const newPost = new Blog({
-      titulo,
-      descripcion,
-      categoria,
-      fecha: fechaProcesada,
-      imagen: req.files.imagen[0].path,
-      imagenDetalle: req.files.imagenDetalle?.[0]?.path || '',
+      ...pick(req.body, CAMPOS_PERMITIDOS),
+      fecha,
+      imagen: imagenSubida,
+      imagenDetalle: detalleSubido || '',
       autor: req.user.id
     });
-    
+
     await newPost.save();
-    
-    // Poblar el autor antes de devolver
-    await newPost.populate('autor', 'nombre email');
-    
+    await newPost.populate('autor', 'nombre');
+
     res.status(201).json(newPost);
   } catch (error) {
-    console.error('Error al crear post:', error);
-    res.status(500).json({ message: 'Error al crear post', error: error.message });
+    // Si falla el guardado, no dejar imágenes huérfanas en Cloudinary
+    await destroyImages([imagenSubida, detalleSubido]);
+    handleError(res, error, 'Error al crear post');
   }
 };
 
 // Actualizar un post
 const updatePost = async (req, res) => {
+  const imagenNueva = req.files?.imagen?.[0]?.path;
+  const detalleNueva = req.files?.imagenDetalle?.[0]?.path;
+
   try {
-    const { titulo, descripcion, categoria, fecha } = req.body;
     const post = await Blog.findById(req.params.id);
-    
+
     if (!post) {
+      await destroyImages([imagenNueva, detalleNueva]);
       return res.status(404).json({ message: 'Post no encontrado' });
     }
-    
-    // Actualizar campos
-    post.titulo = titulo || post.titulo;
-    post.descripcion = descripcion || post.descripcion;
-    post.categoria = categoria || post.categoria;
-    
-    // Procesar fecha: si es string YYYY-MM-DD, convertir a fecha al mediodía UTC
-    if (fecha) {
-      if (typeof fecha === 'string' && fecha.length >= 10) {
-        post.fecha = new Date(`${fecha}T12:00:00Z`)
-      } else {
-        post.fecha = new Date(fecha)
-      }
-    }
-    
-    // Si se subió una nueva imagen
-    if (req.files?.imagen?.[0]) {
-      post.imagen = req.files.imagen[0].path;
+
+    const fecha = parseDate(req.body.fecha);
+    if (fecha === null) {
+      await destroyImages([imagenNueva, detalleNueva]);
+      return res.status(400).json({ message: 'Fecha inválida' });
     }
 
-    // Si se subió una nueva imagen detalle
-    if (req.files?.imagenDetalle?.[0]) {
-      post.imagenDetalle = req.files.imagenDetalle[0].path;
+    const campos = pick(req.body, CAMPOS_PERMITIDOS);
+    CAMPOS_PERMITIDOS.forEach((campo) => {
+      if (campos[campo]) post[campo] = campos[campo];
+    });
+    if (fecha) post.fecha = fecha;
+
+    const imagenesAntiguas = [];
+    if (imagenNueva) {
+      imagenesAntiguas.push(post.imagen);
+      post.imagen = imagenNueva;
     }
-    
+    if (detalleNueva) {
+      imagenesAntiguas.push(post.imagenDetalle);
+      post.imagenDetalle = detalleNueva;
+    }
+
     await post.save();
-    await post.populate('autor', 'nombre email');
-    
+    await post.populate('autor', 'nombre');
+
+    await destroyImages(imagenesAntiguas); // solo si el guardado fue exitoso
+
     res.json(post);
   } catch (error) {
-    console.error('Error al actualizar post:', error);
-    res.status(500).json({ message: 'Error al actualizar post', error: error.message });
+    await destroyImages([imagenNueva, detalleNueva]);
+    handleError(res, error, 'Error al actualizar post');
   }
 };
 
 // Eliminar un post
 const deletePost = async (req, res) => {
   try {
-    const post = await Blog.findById(req.params.id);
-    
+    const post = await Blog.findByIdAndDelete(req.params.id);
+
     if (!post) {
       return res.status(404).json({ message: 'Post no encontrado' });
     }
-    
-    // Con Cloudinary, las imágenes permanecen en la nube
-    await Blog.findByIdAndDelete(req.params.id);
-    
+
+    await destroyImages([post.imagen, post.imagenDetalle]);
+
     res.json({ message: 'Post eliminado correctamente' });
   } catch (error) {
-    console.error('Error al eliminar post:', error);
-    res.status(500).json({ message: 'Error al eliminar post', error: error.message });
+    handleError(res, error, 'Error al eliminar post');
   }
 };
 

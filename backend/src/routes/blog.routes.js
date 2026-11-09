@@ -6,22 +6,23 @@
 const express = require('express');
 const router = express.Router();
 const { getPosts, getPostById, createPost, updatePost, deletePost } = require('../controllers/blog.controller');
-const { verifyToken } = require('../middleware/auth.middleware');
+const { verifyToken, optionalAuth, requireRole } = require('../middleware/auth.middleware');
+const { validateObjectId } = require('../utils/validators');
 const { uploadBlog } = require('../config/cloudinary');
 
-// Rutas públicas
-router.get('/', getPosts);
-router.get('/:id', getPostById);
+const camposImagen = uploadBlog.fields([
+  { name: 'imagen', maxCount: 1 },
+  { name: 'imagenDetalle', maxCount: 1 }
+]);
 
-// Rutas protegidas (requieren autenticación)
-router.post('/', verifyToken, uploadBlog.fields([
-  { name: 'imagen', maxCount: 1 },
-  { name: 'imagenDetalle', maxCount: 1 }
-]), createPost);
-router.put('/:id', verifyToken, uploadBlog.fields([
-  { name: 'imagen', maxCount: 1 },
-  { name: 'imagenDetalle', maxCount: 1 }
-]), updatePost);
-router.delete('/:id', verifyToken, deletePost);
+// Rutas públicas (optionalAuth: el panel admin ve también los borradores)
+router.get('/', optionalAuth, getPosts);
+router.get('/:id', validateObjectId(), optionalAuth, getPostById);
+
+// Rutas protegidas. La autenticación va ANTES de multer para que
+// nadie sin sesión pueda subir archivos a Cloudinary.
+router.post('/', verifyToken, requireRole('admin', 'editor'), camposImagen, createPost);
+router.put('/:id', validateObjectId(), verifyToken, requireRole('admin', 'editor'), camposImagen, updatePost);
+router.delete('/:id', validateObjectId(), verifyToken, requireRole('admin'), deletePost);
 
 module.exports = router;
