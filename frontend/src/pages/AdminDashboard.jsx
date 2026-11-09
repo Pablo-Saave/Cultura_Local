@@ -39,7 +39,7 @@ function AdminDashboard() {
         proyectos: proyectosRes.data.length
       });
     } catch (error) {
-      console.error('Error al obtener estadísticas:', error);
+      console.error('Error al obtener estadísticas:', error.message);
     }
   };
 

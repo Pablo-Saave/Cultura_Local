@@ -27,7 +27,7 @@ function Eventos() {
       setEventos(response.data.filter(e => e.publicado));
       setLoading(false);
     } catch (error) {
-      console.error('Error al cargar eventos:', error);
+      console.error('Error al cargar eventos:', error.message);
       setLoading(false);
     }
   };

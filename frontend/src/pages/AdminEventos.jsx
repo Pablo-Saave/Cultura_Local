@@ -45,7 +45,7 @@ function AdminEventos() {
       setEventos(response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error al cargar eventos:', error);
+      console.error('Error al cargar eventos:', error.message);
       setError('Error al cargar eventos');
       setLoading(false);
     }
@@ -137,7 +137,7 @@ function AdminEventos() {
       resetForm();
       fetchEventos();
     } catch (error) {
-      console.error('Error al guardar evento:', error);
+      console.error('Error al guardar evento:', error.message);
       setError(error.response?.data?.message || 'Error al guardar evento');
     }
   };
@@ -176,7 +176,7 @@ function AdminEventos() {
       setSuccess('Evento eliminado exitosamente');
       fetchEventos();
     } catch (error) {
-      console.error('Error al eliminar evento:', error);
+      console.error('Error al eliminar evento:', error.message);
       setError('Error al eliminar evento');
     }
   };

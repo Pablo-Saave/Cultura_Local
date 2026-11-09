@@ -27,7 +27,7 @@ function Publicaciones() {
       setProyectos(response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error al cargar proyectos:', error);
+      console.error('Error al cargar proyectos:', error.message);
       setLoading(false);
     }
   };

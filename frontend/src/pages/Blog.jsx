@@ -28,7 +28,7 @@ function Blog() {
       const response = await axios.get(API_ENDPOINTS.blog)
       setPosts(response.data)
     } catch (error) {
-      console.error('Error al cargar posts:', error)
+      console.error('Error al cargar posts:', error.message)
     } finally {
       setLoading(false)
     }

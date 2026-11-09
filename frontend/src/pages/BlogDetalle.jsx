@@ -22,7 +22,7 @@ function BlogDetalle() {
       const response = await axios.get(API_ENDPOINTS.blogById(id))
       setPost(response.data)
     } catch (error) {
-      console.error('Error al cargar post:', error)
+      console.error('Error al cargar post:', error.message)
     } finally {
       setLoading(false)
     }

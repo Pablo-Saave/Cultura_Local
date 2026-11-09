@@ -37,9 +37,13 @@ export function AuthProvider({ children }) {
         const response = await axios.get(`${AUTH_URL}/verify`);
         setUser(response.data.data);
       } catch (error) {
-        console.error('Token inválido:', error);
-        localStorage.removeItem('token');
-        setToken(null);
+        // Solo se descarta el token si el servidor lo rechaza.
+        // Si la API está dormida o sin red, se conserva para no cerrar la sesión por error.
+        const status = error.response?.status;
+        if (status === 401 || status === 403) {
+          localStorage.removeItem('token');
+          setToken(null);
+        }
         setUser(null);
       } finally {
         setLoading(false);
@@ -52,29 +56,22 @@ export function AuthProvider({ children }) {
   // Login
   const login = async (username, password) => {
     try {
-      console.log('Intentando login con:', { username, url: `${AUTH_URL}/login` });
-      
       const response = await axios.post(`${AUTH_URL}/login`, {
         username,
         password
       });
 
-      console.log('Respuesta del servidor:', response.data);
-
       const { token: newToken, user: userData } = response.data.data;
-      
+
       localStorage.setItem('token', newToken);
       setToken(newToken);
       setUser(userData);
-      
+
       return { success: true };
     } catch (error) {
-      console.error('Error completo:', error);
-      console.error('Error response:', error.response);
-      
       return {
         success: false,
-        message: error.response?.data?.message || error.message || 'Error al iniciar sesión'
+        message: error.response?.data?.message || 'Error al iniciar sesión'
       };
     }
   };

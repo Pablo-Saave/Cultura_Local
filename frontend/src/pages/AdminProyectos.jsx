@@ -38,7 +38,7 @@ function AdminProyectos() {
       setProyectos(response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error al cargar proyectos:', error);
+      console.error('Error al cargar proyectos:', error.message);
       setLoading(false);
     }
   };
@@ -92,7 +92,7 @@ function AdminProyectos() {
       resetForm();
       fetchProyectos();
     } catch (error) {
-      console.error('Error al guardar proyecto:', error);
+      console.error('Error al guardar proyecto:', error.message);
       alert('Error al guardar el proyecto');
     }
   };
@@ -122,7 +122,7 @@ function AdminProyectos() {
       alert('Proyecto eliminado exitosamente');
       fetchProyectos();
     } catch (error) {
-      console.error('Error al eliminar proyecto:', error);
+      console.error('Error al eliminar proyecto:', error.message);
       alert('Error al eliminar el proyecto');
     }
   };

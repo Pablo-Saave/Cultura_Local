@@ -22,7 +22,7 @@ function EventoDetalle() {
       const response = await axios.get(API_ENDPOINTS.eventoById(id))
       setEvento(response.data)
     } catch (error) {
-      console.error('Error al cargar evento:', error)
+      console.error('Error al cargar evento:', error.message)
     } finally {
       setLoading(false)
     }

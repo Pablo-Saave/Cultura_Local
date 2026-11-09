@@ -38,7 +38,7 @@ function AdminBlog() {
       const response = await axios.get(BLOG_URL)
       setPosts(response.data)
     } catch (error) {
-      console.error('Error al cargar posts:', error)
+      console.error('Error al cargar posts:', error.message)
       alert('Error al cargar los posts')
     }
   }
@@ -171,7 +171,7 @@ function AdminBlog() {
       setShowForm(false)
       setEditingId(null)
     } catch (error) {
-      console.error('Error al guardar post:', error)
+      console.error('Error al guardar post:', error.message)
       alert(error.response?.data?.message || 'Error al guardar el post')
     } finally {
       setLoading(false)
@@ -206,7 +206,7 @@ function AdminBlog() {
         alert('Post eliminado correctamente')
         await fetchPosts()
       } catch (error) {
-        console.error('Error al eliminar post:', error)
+        console.error('Error al eliminar post:', error.message)
         alert('Error al eliminar el post')
       }
     }
