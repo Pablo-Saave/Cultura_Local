@@ -13,7 +13,7 @@ const BG = 'bg-[#F7F3FB]';
 
 function IconUser() {
   return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"
          strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="8" r="4" />
       <path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" />
@@ -23,7 +23,7 @@ function IconUser() {
 
 function IconLock() {
   return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"
          strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="5" y="11" width="14" height="9" rx="2" />
       <path d="M8 11V8a4 4 0 018 0v3" />
@@ -33,7 +33,7 @@ function IconLock() {
 
 function IconEye({ off }) {
   return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8"
          strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" />
       <circle cx="12" cy="12" r="3" />
@@ -78,37 +78,34 @@ function AdminLogin() {
   // Estilos compartidos por los dos campos (forma de píldora, borde lila)
   const fieldWrap = 'relative';
   const fieldLabel =
-    `absolute -top-2.5 left-6 px-2 text-sm font-medium text-[#4B3B6B] ${BG}`;
+    `absolute -top-3 left-8 px-2 text-base font-medium text-[#4B3B6B] ${BG}`;
   const fieldBox =
-    'flex items-center gap-3 rounded-full border border-[#C9BEDD] bg-transparent px-5 ' +
+    'flex items-center gap-4 rounded-full border border-[#C9BEDD] bg-transparent px-7 ' +
     'text-[#8C7BAF] transition-all focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30';
+  // Las dos últimas clases quitan el fondo azul que el navegador pone al autocompletar
   const fieldInput =
-    'w-full bg-transparent py-3.5 text-sm text-gray-900 placeholder-gray-400 ' +
-    'outline-none disabled:opacity-60';
+    'w-full bg-transparent py-4 text-base text-gray-900 placeholder-gray-400 outline-none disabled:opacity-60 ' +
+    '[&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_#F7F3FB] ' +
+    '[&:-webkit-autofill]:[-webkit-text-fill-color:#111827]';
 
   return (
     <div className={`min-h-screen w-full ${BG} flex flex-col lg:flex-row`}>
       {/* ── Columna izquierda: formulario ───────────────────────────── */}
       <main className="flex-1 flex items-center justify-center px-6 py-12 lg:px-16">
-        <div className="w-full max-w-md">
-          <div className="mb-10">
-            <h1
-              className="text-3xl font-bold text-primary-dark"
-              style={{ fontFamily: 'Outfit, sans-serif' }}
-            >
-              Panel de Administración
-            </h1>
-            <p className="mt-2 text-sm text-gray-600">
-              Ingresa con tu cuenta para gestionar el sitio.
-            </p>
-          </div>
+        <div className="w-full max-w-xl">
+          <h1
+            className="mb-12 text-center text-4xl font-bold text-primary-dark"
+            style={{ fontFamily: 'Outfit, sans-serif' }}
+          >
+            Panel de Administración
+          </h1>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-10">
             {/* Mensaje de error */}
             {error && (
               <div
                 role="alert"
-                className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-base text-red-700"
               >
                 {error}
               </div>
@@ -169,8 +166,8 @@ function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center rounded-full bg-primary-light/40 py-3.5
-                         text-base font-semibold text-[#4B3B6B] transition-all duration-300
+              className="flex w-full items-center justify-center rounded-full bg-primary-light/40 py-4
+                         text-lg font-semibold text-[#4B3B6B] transition-all duration-300
                          hover:bg-primary-light/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60
                          disabled:cursor-not-allowed disabled:opacity-60"
             >
@@ -189,10 +186,10 @@ function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-8 text-center">
+          <div className="mt-10 text-center">
             <Link
               to="/"
-              className="text-sm text-primary-dark transition-colors hover:text-primary hover:underline"
+              className="text-base text-primary-dark transition-colors hover:text-primary hover:underline"
             >
               ← Volver al sitio web
             </Link>
@@ -207,12 +204,14 @@ function AdminLogin() {
           className="absolute bottom-0 right-[8%] h-[88%] w-[72%] rounded-t-full
                      bg-gradient-to-b from-primary-light/25 to-primary/40"
         />
-        {/* Ilustración */}
-        <img
-          src="/img/login.png"
-          alt=""
-          className="absolute bottom-[5%] right-[10%] w-[64%] max-w-[560px] object-contain"
-        />
+        {/* Ilustración: más a la izquierda, sobresale del arco */}
+        <div className="absolute bottom-[4%] right-[20%] h-[82%] w-[72%]">
+          <img
+            src="/img/login.png"
+            alt=""
+            className="h-full w-full object-contain object-right-bottom"
+          />
+        </div>
       </aside>
     </div>
   );
