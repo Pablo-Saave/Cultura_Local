@@ -12,7 +12,7 @@ import AdminLayout from '../components/AdminLayout';
 import AdminContentHeader from '../components/AdminContentHeader';
 import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters';
 
-const CATEGORIAS_PROYECTO = ['Cartografía', 'Fotografía', 'Arte Visual', 'Relatos', 'Patrimonio', 'Comunidad', 'Otro'];
+const CATEGORIAS_PROYECTO = ['Fotografía', 'Arte Visual', 'Patrimonio', 'Otro'];
 const FILTROS_PROYECTO = [
   ...CATEGORIAS_PROYECTO.map(value => ({ value, label: value })),
   { value: '__destacado', label: 'Destacados' },
@@ -208,7 +208,7 @@ function AdminProyectos() {
 
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Categoría
+                  Categoría y distinciones
                 </label>
                 <select
                   name="categoria"
@@ -220,6 +220,19 @@ function AdminProyectos() {
                   <option value="">Selecciona una categoría</option>
                   {CATEGORIAS_PROYECTO.map(opcion => <option key={opcion} value={opcion}>{opcion}</option>)}
                 </select>
+                <div className="mt-3 flex flex-wrap gap-2" aria-label="Distinciones del proyecto">
+                  {[['destacado', 'Destacado'], ['educativo', 'Educativo']].map(([name, label]) => (
+                    <button
+                      key={name}
+                      type="button"
+                      aria-pressed={formData[name]}
+                      onClick={() => setFormData(prev => ({ ...prev, [name]: !prev[name] }))}
+                      className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${formData[name] ? 'border-primary bg-primary text-white' : 'border-primary/20 bg-white text-primary-dark hover:bg-primary/5'}`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div>
@@ -270,30 +283,6 @@ function AdminProyectos() {
                   ))}
                 </div>
               )}
-            </div>
-
-            <div className="flex gap-6">
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="destacado"
-                  checked={formData.destacado}
-                  onChange={handleInputChange}
-                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
-                />
-                <span className="text-sm font-medium text-gray-700">Destacado</span>
-              </label>
-
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="educativo"
-                  checked={formData.educativo}
-                  onChange={handleInputChange}
-                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
-                />
-                <span className="text-sm font-medium text-gray-700">Educativo</span>
-              </label>
             </div>
 
             <div className="flex gap-4">
