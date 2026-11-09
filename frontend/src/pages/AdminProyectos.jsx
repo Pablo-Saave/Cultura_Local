@@ -12,13 +12,24 @@ import AdminLayout from '../components/AdminLayout';
 import AdminContentHeader from '../components/AdminContentHeader';
 import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters';
 
-const CATEGORIAS_PROYECTO = ['Fotografía', 'Arte Visual', 'Patrimonio', 'Otro'];
+const CATEGORIAS_PROYECTO = ['Fotografía', 'Arte Visual', 'Patrimonio'];
 const FILTROS_PROYECTO = [
   ...CATEGORIAS_PROYECTO.map(value => ({ value, label: value })),
+  { value: 'Otro', label: 'Categoría por definir' },
   { value: '__destacado', label: 'Destacados' },
   { value: '__reciente', label: 'Recientes' },
   { value: '__educativo', label: 'Educativos' },
 ];
+const FORM_CATEGORIAS = [...CATEGORIAS_PROYECTO, 'Otro'];
+const FORM_OPCIONES_CATEGORIA = FORM_CATEGORIAS.flatMap(categoria => {
+  const label = categoria === 'Otro' ? 'Categoría por definir' : categoria;
+  return [
+    { value: JSON.stringify([categoria, false, false]), label },
+    { value: JSON.stringify([categoria, true, false]), label: `${label} · Destacado` },
+    { value: JSON.stringify([categoria, false, true]), label: `${label} · Educativo` },
+    { value: JSON.stringify([categoria, true, true]), label: `${label} · Destacado y Educativo` },
+  ];
+});
 
 function AdminProyectos() {
   const { user, loading: authLoading } = useContext(AuthContext);
@@ -207,32 +218,20 @@ function AdminProyectos() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Categoría y distinciones
-                </label>
+                <label className="mb-2 block text-sm font-medium text-gray-700">Categoría</label>
                 <select
-                  name="categoria"
-                  value={formData.categoria}
-                  onChange={handleInputChange}
+                  value={formData.categoria ? JSON.stringify([formData.categoria, formData.destacado, formData.educativo]) : ''}
+                  onChange={event => {
+                    if (!event.target.value) return;
+                    const [categoria, destacado, educativo] = JSON.parse(event.target.value);
+                    setFormData(prev => ({ ...prev, categoria, destacado, educativo }));
+                  }}
                   required
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-primary"
                 >
                   <option value="">Selecciona una categoría</option>
-                  {CATEGORIAS_PROYECTO.map(opcion => <option key={opcion} value={opcion}>{opcion}</option>)}
+                  {FORM_OPCIONES_CATEGORIA.map(opcion => <option key={opcion.value} value={opcion.value}>{opcion.label}</option>)}
                 </select>
-                <div className="mt-3 flex flex-wrap gap-2" aria-label="Distinciones del proyecto">
-                  {[['destacado', 'Destacado'], ['educativo', 'Educativo']].map(([name, label]) => (
-                    <button
-                      key={name}
-                      type="button"
-                      aria-pressed={formData[name]}
-                      onClick={() => setFormData(prev => ({ ...prev, [name]: !prev[name] }))}
-                      className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${formData[name] ? 'border-primary bg-primary text-white' : 'border-primary/20 bg-white text-primary-dark hover:bg-primary/5'}`}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               <div>

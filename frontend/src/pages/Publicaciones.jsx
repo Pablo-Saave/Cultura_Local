@@ -49,6 +49,8 @@ function Publicaciones() {
         }
         return false;
       });
+    } else if (['Fotografía', 'Arte Visual', 'Patrimonio'].includes(filtroActivo)) {
+      filtrados = filtrados.filter(proyecto => proyecto.categoria === filtroActivo);
     }
 
     setProyectosFiltrados(filtrados);
@@ -142,6 +144,19 @@ function Publicaciones() {
           >
             Educativos
           </button>
+          {['Fotografía', 'Arte Visual', 'Patrimonio'].map(categoria => (
+            <button
+              key={categoria}
+              onClick={() => setFiltroActivo(categoria)}
+              className={`px-6 py-2 rounded-full font-semibold text-sm transition-all ${
+                filtroActivo === categoria
+                  ? 'bg-primary text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm'
+              }`}
+            >
+              {categoria}
+            </button>
+          ))}
         </div>
 
         {/* Grid de proyectos */}
