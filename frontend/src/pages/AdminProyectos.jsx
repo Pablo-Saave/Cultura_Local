@@ -13,6 +13,12 @@ import AdminContentHeader from '../components/AdminContentHeader';
 import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters';
 
 const CATEGORIAS_PROYECTO = ['Cartografía', 'Fotografía', 'Arte Visual', 'Relatos', 'Patrimonio', 'Comunidad', 'Otro'];
+const FILTROS_PROYECTO = [
+  ...CATEGORIAS_PROYECTO.map(value => ({ value, label: value })),
+  { value: '__destacado', label: 'Destacados' },
+  { value: '__reciente', label: 'Recientes' },
+  { value: '__educativo', label: 'Educativos' },
+];
 
 function AdminProyectos() {
   const { user, loading: authLoading } = useContext(AuthContext);
@@ -21,7 +27,6 @@ function AdminProyectos() {
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [dateRange, setDateRange] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
   const [editando, setEditando] = useState(null);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [formData, setFormData] = useState({
@@ -151,28 +156,25 @@ function AdminProyectos() {
     setMostrarFormulario(false);
   };
 
-  const getCategoriaLabel = (proyecto) => {
-    if (proyecto.destacado) return { label: 'DESTACADO', color: 'bg-accent' };
-    if (proyecto.educativo) return { label: 'EDUCATIVO', color: 'bg-accent' };
-    
-    if (proyecto.fechaRealizacion) {
-      const fechaProyecto = new Date(proyecto.fechaRealizacion);
-      const haceDosSemanass = new Date();
-      haceDosSemanass.setDate(haceDosSemanass.getDate() - 14); // 2 semanas = 14 días
-      if (fechaProyecto >= haceDosSemanass) {
-        return { label: 'RECIENTE', color: 'bg-accent' };
-      }
-    }
-    return null;
-  };
-
-  const categorias = CATEGORIAS_PROYECTO;
+  const categorias = FILTROS_PROYECTO;
   const proyectosFiltrados = proyectos.filter(proyecto => {
     const texto = `${proyecto.nombre || ''} ${proyecto.descripcion || ''}`.toLocaleLowerCase('es-CL');
-    const categoriaOk = categoryFilter === 'all' || proyecto.categoria === categoryFilter;
-    const estadoOk = statusFilter === 'all' || (statusFilter === 'destacado' && proyecto.destacado) || (statusFilter === 'educativo' && proyecto.educativo);
-    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && estadoOk && matchesAdminDate(proyecto.fechaRealizacion, dateRange);
+    const fechaReciente = proyecto.fechaRealizacion && new Date(proyecto.fechaRealizacion) >= new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+    const categoriaOk = categoryFilter === 'all'
+      || proyecto.categoria === categoryFilter
+      || (categoryFilter === '__destacado' && proyecto.destacado)
+      || (categoryFilter === '__educativo' && proyecto.educativo)
+      || (categoryFilter === '__reciente' && fechaReciente);
+    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && matchesAdminDate(proyecto.fechaRealizacion, dateRange);
   });
+
+  const getProyectoBadges = (proyecto) => {
+    const badges = [];
+    if (proyecto.destacado) badges.push('Destacado');
+    if (proyecto.educativo) badges.push('Educativo');
+    if (!badges.length && proyecto.fechaRealizacion && new Date(proyecto.fechaRealizacion) >= new Date(Date.now() - 14 * 24 * 60 * 60 * 1000)) badges.push('Reciente');
+    return badges;
+  };
 
   if (!authLoading && !user) {
     return <Navigate to="/admin/login" replace />;
@@ -319,8 +321,7 @@ function AdminProyectos() {
           search={search} onSearchChange={setSearch}
           category={categoryFilter} onCategoryChange={setCategoryFilter} categories={categorias}
           dateRange={dateRange} onDateRangeChange={setDateRange}
-          status={statusFilter} onStatusChange={setStatusFilter}
-          statuses={[{ value: 'destacado', label: 'Destacados' }, { value: 'educativo', label: 'Educativos' }]}
+          categoryPlaceholder="Todos los proyectos"
         />
 
         {/* Lista de Proyectos */}
@@ -334,11 +335,11 @@ function AdminProyectos() {
           ) : (
             <div className="space-y-2">
               {proyectosFiltrados.map((proyecto) => {
-                const categoria = getCategoriaLabel(proyecto);
+                const badges = getProyectoBadges(proyecto);
                 
                 return (
-                  <div key={proyecto._id} className="grid grid-cols-1 items-center gap-3 rounded-2xl border border-primary/10 bg-white p-3 transition hover:shadow-md sm:grid-cols-[112px_minmax(0,1fr)_170px_auto] sm:gap-4">
-                    <div className="relative h-24 overflow-hidden rounded-xl bg-primary/5">
+                  <div key={proyecto._id} className="grid grid-cols-1 items-center gap-3 rounded-2xl border border-primary/10 bg-white p-3 transition hover:shadow-md sm:grid-cols-[112px_minmax(0,1fr)_150px_minmax(240px,auto)] sm:gap-4">
+                    <div className="h-24 overflow-hidden rounded-xl bg-primary/5">
                       {proyecto.imagenPrincipal ? (
                         <img 
                           src={getImageUrl(proyecto.imagenPrincipal)} 
@@ -351,13 +352,6 @@ function AdminProyectos() {
                         </div>
                       )}
                       
-                      {categoria && (
-                        <div className="absolute top-2 right-2">
-                          <span className={`${categoria.color} text-white text-xs font-bold px-4 py-1.5 rounded-full`}>
-                            {categoria.label}
-                          </span>
-                        </div>
-                      )}
                     </div>
                     
                     <div className="min-w-0">
@@ -366,9 +360,10 @@ function AdminProyectos() {
                     </div>
                     <div className="border-l border-primary/15 pl-4 text-xs text-primary-dark">
                       <p className="font-medium">{proyecto.fechaRealizacion ? new Date(proyecto.fechaRealizacion).toLocaleDateString('es-CL') : 'Fecha por definir'}</p>
-                      {proyecto.categoria && proyecto.categoria !== 'Otro' && <span className="mt-2 inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-primary-dark">{proyecto.categoria}</span>}
                     </div>
-                    <div className="flex gap-2 sm:justify-end">
+                    <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+                        {proyecto.categoria && proyecto.categoria !== 'Otro' && <span className="rounded-full bg-primary/10 px-3 py-2 text-xs font-medium text-primary-dark">{proyecto.categoria}</span>}
+                        {badges.map(badge => <span key={badge} className="rounded-full bg-primary/10 px-3 py-2 text-xs font-semibold text-primary-dark">{badge}</span>)}
                         <button
                           onClick={() => handleEdit(proyecto)}
                           className="rounded-xl bg-primary px-3 py-2 text-xs font-semibold text-white transition hover:bg-primary-dark"

@@ -13,6 +13,11 @@ import AdminContentHeader from '../components/AdminContentHeader'
 import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters'
 
 const BLOG_URL = `${API_URL}/api/blog`
+const CATEGORIAS_BLOG = [
+  { value: 'ENTREVISTA', label: 'Entrevista' },
+  { value: 'NOTICIA', label: 'Noticia' },
+  { value: 'ARTICULO', label: 'Artículo' },
+]
 
 function AdminBlog() {
   const { user, loading: authLoading } = useContext(AuthContext)
@@ -20,7 +25,6 @@ function AdminBlog() {
   const [search, setSearch] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [dateRange, setDateRange] = useState('all')
-  const [statusFilter, setStatusFilter] = useState('all')
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -68,12 +72,11 @@ function AdminBlog() {
     return post.categoria || 'SIN CATEGORÍA'
   }
 
-  const categorias = [...new Set(posts.map(post => post.categoria).filter(Boolean))].sort()
+  const categorias = CATEGORIAS_BLOG
   const postsFiltrados = posts.filter(post => {
     const texto = `${post.titulo || ''} ${post.descripcion || ''}`.toLocaleLowerCase('es-CL')
     const categoriaOk = categoryFilter === 'all' || post.categoria === categoryFilter
-    const estadoOk = statusFilter === 'all' || (statusFilter === 'publicado' && post.estado !== 'borrador') || (statusFilter === 'borrador' && post.estado === 'borrador')
-    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && estadoOk && matchesAdminDate(post.fecha || post.createdAt, dateRange)
+    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && matchesAdminDate(post.fecha || post.createdAt, dateRange)
   })
 
   const handleInputChange = (e) => {
@@ -418,8 +421,6 @@ function AdminBlog() {
           search={search} onSearchChange={setSearch}
           category={categoryFilter} onCategoryChange={setCategoryFilter} categories={categorias}
           dateRange={dateRange} onDateRangeChange={setDateRange}
-          status={statusFilter} onStatusChange={setStatusFilter}
-          statuses={[{ value: 'publicado', label: 'Publicados' }, { value: 'borrador', label: 'Borradores' }]}
         />
 
         {/* Lista de Posts */}

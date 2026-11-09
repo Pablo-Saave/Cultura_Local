@@ -12,6 +12,8 @@ import AdminLayout from '../components/AdminLayout';
 import AdminContentHeader from '../components/AdminContentHeader';
 import AdminListFilters, { matchesAdminDate } from '../components/AdminListFilters';
 
+const CATEGORIAS_EVENTO = ['Conversatorio', 'Taller', 'Exposición', 'Encuentro', 'Festival'];
+
 function AdminEventos() {
   const { user, token, loading: authLoading } = useContext(AuthContext);
   const [eventos, setEventos] = useState([]);
@@ -19,7 +21,6 @@ function AdminEventos() {
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [dateRange, setDateRange] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
   const [formData, setFormData] = useState({
     titulo: '',
     descripcion: '',
@@ -210,12 +211,11 @@ function AdminEventos() {
     setMostrarFormulario(false);
   };
 
-  const categorias = [...new Set(eventos.map(evento => evento.categoria).filter(Boolean))].sort();
+  const categorias = CATEGORIAS_EVENTO;
   const eventosFiltrados = eventos.filter(evento => {
     const texto = `${evento.titulo || ''} ${evento.descripcion || ''} ${evento.ubicacion || ''}`.toLocaleLowerCase('es-CL');
     const categoriaOk = categoryFilter === 'all' || evento.categoria === categoryFilter;
-    const estadoOk = statusFilter === 'all' || (statusFilter === 'publicado' && evento.publicado) || (statusFilter === 'borrador' && !evento.publicado) || (statusFilter === 'destacado' && evento.destacado);
-    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && estadoOk && matchesAdminDate(evento.fecha, dateRange);
+    return texto.includes(search.toLocaleLowerCase('es-CL')) && categoriaOk && matchesAdminDate(evento.fecha, dateRange);
   });
 
   // Verificar autenticación
@@ -464,8 +464,6 @@ function AdminEventos() {
           search={search} onSearchChange={setSearch}
           category={categoryFilter} onCategoryChange={setCategoryFilter} categories={categorias}
           dateRange={dateRange} onDateRangeChange={setDateRange}
-          status={statusFilter} onStatusChange={setStatusFilter}
-          statuses={[{ value: 'publicado', label: 'Publicados' }, { value: 'borrador', label: 'Borradores' }, { value: 'destacado', label: 'Destacados' }]}
         />
 
         {/* Lista de eventos */}
