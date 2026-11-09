@@ -71,7 +71,7 @@ function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-primary" style={{ fontFamily: "'Aktifo A', sans-serif" }}>Panel de Administración</h1>
+              <h1 className="text-3xl font-bold text-primary" style={{ fontFamily: "'Outfit', sans-serif" }}>Panel de Administración</h1>
               <p className="text-sm text-gray-600 mt-1">
                 Bienvenido, <span className="font-semibold">{user.nombre}</span>
               </p>
@@ -107,7 +107,7 @@ function AdminDashboard() {
         {/* Menú de administración */}
         <div className="bg-white rounded-lg shadow">
           <div className="p-6">
-            <h2 className="text-2xl font-bold text-primary mb-6" style={{ fontFamily: "'Aktifo A', sans-serif" }}>Gestión de Contenidos</h2>
+            <h2 className="text-2xl font-bold text-primary mb-6" style={{ fontFamily: "'Outfit', sans-serif" }}>Gestión de Contenidos</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
                 { name: 'Blog', path: '/admin/blog', color: 'bg-blue-500' },

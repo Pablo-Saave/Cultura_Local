@@ -313,7 +313,7 @@ function Eventos() {
                   </svg>
                 </button>
                 
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white" style={{ fontFamily: "'Aktifo A', sans-serif" }}>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white" style={{ fontFamily: "'Outfit', sans-serif" }}>
                   {months[currentMonth]}
                 </h3>
                 

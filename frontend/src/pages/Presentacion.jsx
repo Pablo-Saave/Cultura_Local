@@ -134,7 +134,7 @@ function Presentacion() {
               className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 group-hover:translate-x-2"
             />
             <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/45 transition-all duration-300 flex items-end justify-start px-5 pb-9 md:px-6 md:pb-10">
-              <span className="text-white text-xl sm:text-2xl font-bold text-left leading-none transition-transform duration-500 ease-out group-hover:translate-x-1" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+              <span className="text-white text-xl sm:text-2xl font-bold text-left leading-none transition-transform duration-500 ease-out group-hover:translate-x-1" style={{fontFamily: 'Outfit, sans-serif'}}>
                 PROYECTOS
               </span>
             </div>
@@ -151,7 +151,7 @@ function Presentacion() {
               className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 group-hover:translate-x-2"
             />
             <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/45 transition-all duration-300 flex items-end justify-start px-5 pb-9 md:px-6 md:pb-10">
-              <span className="text-white text-xl sm:text-2xl font-bold text-left leading-none transition-transform duration-500 ease-out group-hover:translate-x-1" style={{fontFamily: 'Aktifo A, sans-serif'}}>
+              <span className="text-white text-xl sm:text-2xl font-bold text-left leading-none transition-transform duration-500 ease-out group-hover:translate-x-1" style={{fontFamily: 'Outfit, sans-serif'}}>
                 EVENTOS
               </span>
             </div>
