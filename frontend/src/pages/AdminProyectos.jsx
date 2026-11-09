@@ -21,15 +21,14 @@ const FILTROS_PROYECTO = [
   { value: '__educativo', label: 'Educativos' },
 ];
 const FORM_CATEGORIAS = [...CATEGORIAS_PROYECTO, 'Otro'];
-const FORM_OPCIONES_CATEGORIA = FORM_CATEGORIAS.flatMap(categoria => {
-  const label = categoria === 'Otro' ? 'Categoría por definir' : categoria;
-  return [
-    { value: JSON.stringify([categoria, false, false]), label },
-    { value: JSON.stringify([categoria, true, false]), label: `${label} · Destacado` },
-    { value: JSON.stringify([categoria, false, true]), label: `${label} · Educativo` },
-    { value: JSON.stringify([categoria, true, true]), label: `${label} · Destacado y Educativo` },
-  ];
-});
+const FORM_OPCIONES_CATEGORIA = [
+  ...FORM_CATEGORIAS.map(categoria => ({
+    value: categoria,
+    label: categoria === 'Otro' ? 'Categoría por definir' : categoria,
+  })),
+  { value: '__destacado', label: 'Destacado' },
+  { value: '__educativo', label: 'Educativo' },
+];
 
 function AdminProyectos() {
   const { user, loading: authLoading } = useContext(AuthContext);
@@ -220,15 +219,19 @@ function AdminProyectos() {
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">Categoría</label>
                 <select
-                  value={formData.categoria ? JSON.stringify([formData.categoria, formData.destacado, formData.educativo]) : ''}
+                  value={formData.destacado ? '__destacado' : formData.educativo ? '__educativo' : formData.categoria === '' ? '' : (FORM_CATEGORIAS.includes(formData.categoria) ? formData.categoria : 'Otro')}
                   onChange={event => {
-                    if (!event.target.value) return;
-                    const [categoria, destacado, educativo] = JSON.parse(event.target.value);
-                    setFormData(prev => ({ ...prev, categoria, destacado, educativo }));
+                    const value = event.target.value;
+                    if (value === '__destacado' || value === '__educativo') {
+                      setFormData(prev => ({ ...prev, destacado: value === '__destacado', educativo: value === '__educativo' }));
+                    } else {
+                      setFormData(prev => ({ ...prev, categoria: value, destacado: false, educativo: false }));
+                    }
                   }}
                   required
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-primary"
                 >
+                  <option value="">Selecciona una categoría</option>
                   <option value="">Selecciona una categoría</option>
                   {FORM_OPCIONES_CATEGORIA.map(opcion => <option key={opcion.value} value={opcion.value}>{opcion.label}</option>)}
                 </select>

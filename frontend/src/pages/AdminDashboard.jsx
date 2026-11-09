@@ -143,7 +143,7 @@ function AdminDashboard() {
                   <Ico className="h-5 w-5" />
                 </div>
                 <div className="flex-1 leading-tight">
-                  <h3 className="font-semibold text-gray-900">{name}</h3>
+                  <h3 className="font-sans font-semibold text-gray-900">{name}</h3>
                   <p className="text-sm text-gray-500">Gestionar</p>
                 </div>
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary-dark transition-colors group-hover:bg-accent group-hover:text-white">

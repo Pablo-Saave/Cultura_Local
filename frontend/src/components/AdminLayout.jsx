@@ -81,15 +81,11 @@ function AdminLayout({ children }) {
           <p className="text-base font-semibold" style={{ fontFamily: "'Playfair Display', serif" }}>
             CulturaLocal
           </p>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-white/70">Panel admin</p>
         </div>
       </div>
 
       {/* Navegación */}
       <nav className="flex-1 space-y-1 px-3 py-2" aria-label="Navegación del panel">
-        <p className="px-3.5 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-widest text-white/50">
-          Menú
-        </p>
         {NAV_ITEMS.map(({ name, path, icon: ItemIcon }) => (
           <NavLink key={path} to={path} className={linkClase} onClick={() => setMenuAbierto(false)}>
             <ItemIcon />
