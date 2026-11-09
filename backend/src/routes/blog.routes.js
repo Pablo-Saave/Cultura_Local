@@ -14,14 +14,14 @@ router.get('/', getPosts);
 router.get('/:id', getPostById);
 
 // Rutas protegidas (requieren autenticación)
-router.post('/', protect, uploadBlog.fields([
+router.post('/', verifyToken, uploadBlog.fields([
   { name: 'imagen', maxCount: 1 },
   { name: 'imagenDetalle', maxCount: 1 }
 ]), createPost);
-router.put('/:id', protect, uploadBlog.fields([
+router.put('/:id', verifyToken, uploadBlog.fields([
   { name: 'imagen', maxCount: 1 },
   { name: 'imagenDetalle', maxCount: 1 }
 ]), updatePost);
-router.delete('/:id', protect, deletePost);
+router.delete('/:id', verifyToken, deletePost);
 
 module.exports = router;

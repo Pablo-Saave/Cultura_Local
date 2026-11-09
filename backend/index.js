@@ -12,6 +12,11 @@ require('dotenv').config();
 
 const app = express();
 
+// Render (y Cloudflare, si lo usas) están delante de la app: sin esto el rate limit
+// vería la IP del proxy y bloquearía a todos los usuarios juntos.
+// TRUST_PROXY = número de proxies (Render = 1; Render + Cloudflare = 2).
+app.set('trust proxy', Number(process.env.TRUST_PROXY ?? 1));
+
 // Configurar CORS dinámicamente
 const allowedOrigins = process.env.CORS_ORIGIN 
   ? process.env.CORS_ORIGIN.split(',')
