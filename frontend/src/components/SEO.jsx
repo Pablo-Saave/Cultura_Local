@@ -13,7 +13,7 @@ const SEO = ({
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
   const defaultDescription = 'Plataforma de gestión y difusión de prácticas culturales locales en Chile. Descubre eventos, proyectos y publicaciones sobre cultura local.';
   const defaultKeywords = 'cultura local, Chile, eventos culturales, proyectos culturales, prácticas culturales, patrimonio cultural';
-  const defaultImage = 'https://www.culturalocal.cl/img/og-image.jpg';
+  const defaultImage = 'https://www.culturalocal.cl/img/logo.jpeg';
   const siteUrl = 'https://www.culturalocal.cl';
 
   return (

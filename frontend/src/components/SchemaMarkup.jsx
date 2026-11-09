@@ -8,7 +8,7 @@ const SchemaMarkup = ({ type = 'Organization' }) => {
     '@type': 'Organization',
     name: 'Fundación Cultura Local',
     url: 'https://www.culturalocal.cl',
-    logo: 'https://www.culturalocal.cl/img/logo.png',
+    logo: 'https://www.culturalocal.cl/img/logo.jpeg',
     description: 'Plataforma de gestión y difusión de prácticas culturales locales en Chile',
     sameAs: [
       'https://www.facebook.com/culturalocal',
@@ -29,7 +29,7 @@ const SchemaMarkup = ({ type = 'Organization' }) => {
     '@type': 'LocalBusiness',
     name: 'Fundación Cultura Local',
     url: 'https://www.culturalocal.cl',
-    image: 'https://www.culturalocal.cl/img/logo.png',
+    image: 'https://www.culturalocal.cl/img/logo.jpeg',
     description: 'Potenciamos la cultura local a través de la participación juvenil',
     address: {
       '@type': 'PostalAddress',
